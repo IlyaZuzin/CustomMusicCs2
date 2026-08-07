@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="CustomMusicCs2\**" />
+    <EmbeddedResource Remove="CustomMusicCs2\**" />
+    <None Remove="CustomMusicCs2\**" />
+    <Page Remove="CustomMusicCs2\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="NAudio" Version="2.3.0" />
   </ItemGroup>
 

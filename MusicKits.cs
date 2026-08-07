@@ -85,9 +85,9 @@ namespace MusicComanderGUI
             Kit_Sound? load = loadJson(path);
 
             Music buf = new Music();
-            buf.image = settings.Last.image;
-            buf.name = settings.Last.name;
-            buf.path = settings.Last.path;
+            buf.image = load?.image ?? settings?.Last?.image;
+            buf.name = load?.name ?? settings?.Last?.name;
+            buf.path = load?.path ?? settings?.Last?.path ?? path;
             settings.Music_Paths.Add(buf);
             return load;
         }

@@ -260,7 +260,9 @@ namespace MusicComanderGUI
             form.imageList1.Images.Add(Image.FromFile(MusicKits.settings.Music_Paths[size - 1].image));
             int newImageIndex = form.imageList1.Images.Count - 1;
             ListViewItem item = new ListViewItem(name, newImageIndex);
-            form.MusicNumbers.Items.Add(item); ;
+            form.MusicNumbers.Items.Add(item);
+            form.TSide.Items.Add(name);
+            form.CtSide.Items.Add(name);
         }
     }
 }

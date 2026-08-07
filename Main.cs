@@ -1,6 +1,7 @@
 
 using Microsoft.VisualBasic.Logging;
 using System.IO;
+using System.Windows.Documents;
 
 namespace MusicComanderGUI
 {
@@ -112,20 +113,31 @@ namespace MusicComanderGUI
 
         private void LoadJson_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog direct = new FolderBrowserDialog();
-            if (direct.ShowDialog() == DialogResult.OK)
+            try
             {
-                Kit_Sound? load = MusicKits.AddMusicKit(direct.SelectedPath);
-                LoadJsonSetings(load);
-                int size = MusicKits.settings.Music_Paths.Count();
-                string name = MusicKits.settings.Music_Paths[size - 1].name;
-                imageList1.Images.Add(Image.FromFile(MusicKits.settings.Music_Paths[size - 1].image));
-                int newImageIndex = imageList1.Images.Count - 1;
-                ListViewItem item = new ListViewItem(name, newImageIndex);
-                MusicNumbers.Items.Add(item);
-                TSide.Items.Add(name);
-                CtSide.Items.Add(name);
+                FolderBrowserDialog direct = new FolderBrowserDialog();
+                if (direct.ShowDialog() == DialogResult.OK)
+                {
+                    Kit_Sound? load = MusicKits.AddMusicKit(direct.SelectedPath);
+                    LoadJsonSetings(load);
+                    int size = MusicKits.settings.Music_Paths.Count() - 1;
+                    string name = MusicKits.settings.Music_Paths[size].name;
+                    if(load.image == null)
+                    {
+                        imageList1.Images.Add(SystemIcons.Application.ToBitmap());
+                    }
+                    else
+                    {
+                        imageList1.Images.Add (Image.FromFile(load.image));
+                    }
+                    int newImageIndex = imageList1.Images.Count - 1;
+                    ListViewItem item = new ListViewItem(name, newImageIndex);
+                    MusicNumbers.Items.Add(item);
+                    TSide.Items.Add(name);
+                    CtSide.Items.Add(name);
+                }
             }
+            catch(Exception ex) { SetConsoleLog(ex.Message); }
         }
 
         private void LoadJsonSetings(Kit_Sound? load)

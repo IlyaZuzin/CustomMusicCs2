@@ -433,9 +433,7 @@
         private Button LoadJson;
         private TextBox textBox7;
         private TextBox textBox6;
-        private ComboBox CtSide;
         private TextBox textBox2;
-        private ComboBox TSide;
         private TextBox textBox1;
         private Panel ServerMenu;
         private Panel MusicKitMenu;
@@ -452,5 +450,7 @@
         private TextBox textBox8;
         private Button SaveSettings;
         private CheckBox DoubleMode;
+        public ComboBox CtSide;
+        public ComboBox TSide;
     }
 }
