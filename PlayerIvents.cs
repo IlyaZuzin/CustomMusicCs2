@@ -154,75 +154,75 @@ namespace MusicComanderGUI
         private static async Task Game(CancellationToken cts)
         {
             try { 
-            Main.Instance?.SetConsoleLog($"Запуск game");
-            // StartRound
-            if (player?.round == null && player?.player?.activity == "menu") { WavPlayer.IfEnable("menu", IsMenu); StartRound = false; }
+                Main.Instance?.SetConsoleLog($"Запуск game");
+                // StartRound
+                if (player?.round == null && player?.player?.activity == "menu") { WavPlayer.IfEnable("menu", IsMenu); StartRound = false; }
                 if (player?.map?.mode == "competitive")
-                {
-                    Round_Timer = 115;
-                    IsCompetitive = true;
-                }
+                    {
+                        Round_Timer = 115;
+                        IsCompetitive = true;
+                    }
                 else if (player?.map?.mode == "casual")
-                {
-                    Round_Timer = 135;
-                    IsCompetitive = false;
-                }
-                if (!StartRound)
-                {
-                    if (IsCompetitive == true && player?.map?.round == 0 && LastMusic == "menu" && player?.map?.phase == "live")
                     {
-                        StartRound = true;
-                        WavPlayer.IfEnable("StartGame", IsStartGame);
-                            Main.Instance?.SetConsoleLog($"Начался отсчет начала игры");
+                        Round_Timer = 135;
+                        IsCompetitive = false;
+                    }
+                if (!StartRound){
 
-                        for (int i = 0; i < 8; i++)
+                    if (IsCompetitive == true && player?.map?.round == 0 && LastMusic == "menu" && player?.map?.phase == "live")
                         {
-                            Main.Instance?.SetConsoleLog($"{i}");
-                            
-                            await Task.Delay(1000);
-                            if (cts.IsCancellationRequested)
+                            StartRound = true;
+                            WavPlayer.IfEnable("StartGame", IsStartGame);
+                                Main.Instance?.SetConsoleLog($"Начался отсчет начала игры");
+
+                            for (int i = 0; i < 8; i++)
                             {
-                                StartRound = false;
-                                return;
+                                Main.Instance?.SetConsoleLog($"{i}");
+                            
+                                await Task.Delay(1000);
+                                if (cts.IsCancellationRequested)
+                                {
+                                    StartRound = false;
+                                    return;
+                                }
                             }
+                            WavPlayer.IfEnable("StartRound", IsStartRound);
+                            StartRound = false;
                         }
-                        WavPlayer.IfEnable("StartRound", IsStartRound);
-                        StartRound = false;
-                    }
-                    else if (player?.map?.phase == "warmup")
-                    {
-                        WavPlayer.StopMusic();
-                    }
-                    else if (IsCompetitive == true && (player?.map?.team_ct?.score == 13 || player?.map?.team_t?.score == 13))
-                    {
-                        WavPlayer.IfEnable("EndGame", IsEndGame);
-                    }
+
+                    else if (player?.map?.phase == "warmup") { WavPlayer.StopMusic();}
+
+                    else if (IsCompetitive == true && player?.map?.phase == "gameover")
+                        {
+                            WavPlayer.IfEnable("EndGame", IsEndGame);
+                        }
+
                     else if (player?.round?.phase == "freezetime")
-                    {
-                        WavPlayer.IfEnable("StartRound", IsStartRound);
-                        isDead = false;
-                    }
+                        {
+                            WavPlayer.IfEnable("StartRound", IsStartRound);
+                            isDead = false;
+                        }
+                
                     // StartAction
                     else if (player?.round?.phase == "live" && LastMusic == "StartRound" )
-                    {
-                        Mvp = player?.player?.MVP?.mvp;
-
-                        WavPlayer.IfEnable("StartAction", IsStartAction);
-                        kills_r = 0;
-                        Main.Instance?.SetConsoleLog($"Начался отсчет начала раунла");
-
-                        for (int i = 0; i < Round_Timer - 10; i++)
                         {
-                            Main.Instance?.SetConsoleLog($"{i}");
-                            await Task.Delay(1000);
-                            if (cts.IsCancellationRequested || LastMusic != "StartAction")
-                                return;
+                            Mvp = player?.player?.MVP?.mvp;
+
+                            WavPlayer.IfEnable("StartAction", IsStartAction);
+                            kills_r = 0;
+                            Main.Instance?.SetConsoleLog($"Начался отсчет начала раунла");
+
+                            for (int i = 0; i < Round_Timer - 10; i++)
+                            {
+                                Main.Instance?.SetConsoleLog($"{i}");
+                                await Task.Delay(1000);
+                                if (cts.IsCancellationRequested || LastMusic != "StartAction")
+                                    return;
+                            }
+                            WavPlayer.IfEnable("TenSecondRound", IsTenSecondRound);
+
                         }
-                        WavPlayer.IfEnable("TenSecondRound", IsTenSecondRound);
-
-                    }
                 }
-
             }
             catch { StartRound = false; }
         }

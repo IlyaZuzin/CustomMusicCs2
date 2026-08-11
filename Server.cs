@@ -100,6 +100,7 @@ namespace MusicComanderGUI
                 {
                     stats = await JsonSerializer.DeserializeAsync<PlayerStats>(body, JsonOptions).ConfigureAwait(false);
                 }
+
                 await Ivents.Tick(stats, cts.Token);
                 Task.Delay(5);
                 try
@@ -120,6 +121,15 @@ namespace MusicComanderGUI
             {
                 Console.WriteLine($"Error parsing JSON: {ex.Message}");
             }
+        }
+
+        private static string? GetUpdate(string json)
+        {
+            int index = json.LastIndexOf("update");
+            if (index == -1)
+                return null;
+            
+            return json.Substring(index);
         }
     }
 }
