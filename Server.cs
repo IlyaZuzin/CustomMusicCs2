@@ -57,8 +57,7 @@ namespace MusicComanderGUI
                 WavPlayer.AudioStop();
                 listener?.Stop();
                 is_Running = false;
-                Ivents.LastMusic = "kill";
-                Ivents.Team = "Ct";
+                Ivents.Stop();
                 cts?.Cancel();
                 Main.Instance?.SetConsoleLog("Сервер остановлен.");
             }

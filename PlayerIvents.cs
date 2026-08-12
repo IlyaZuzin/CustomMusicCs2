@@ -2,7 +2,8 @@
 using static PlayerStats;
 namespace MusicComanderGUI
 {
-    public enum gamemode {
+    public enum Mode
+    { 
         Menu,
         Competitive,
         Public,
@@ -16,6 +17,7 @@ namespace MusicComanderGUI
         private static int Round_Timer = 115;
         public static bool IsMenu = true;
         private static int? Mvp = 0;
+        private static bool GameEnd = false;
         public static string? Team = "Ct";
         public static bool IsBomb = true;
         public static bool IsStartGame = true;
@@ -35,25 +37,48 @@ namespace MusicComanderGUI
         private static bool? IsCompetitive;
         public static PlayerStats? player = null;
         private static PlayerStats? currect_player = null;
-        private static gamemode = gamemode.Menu;
-        
+        private static Mode gamemode = Mode.Menu;
+
         public static async Task Tick(PlayerStats NewData, CancellationToken cts)
         {
             player = NewData;
-            currect_player = NewData
-            
+            currect_player = NewData;
 
-            Task.Run(() => PlayerIvents(cts));
-            Task.Run(() => Bomb(cts));
-            Task.Run(() => WinLose(cts));
-            Task.Run(() => Game(cts));
+            Update(cts);
+
+            if (gamemode == Mode.Menu)
+            {
+                StartRound = false;
+                WavPlayer.IfEnable("menu", IsMenu);
+            }
+            else if (gamemode == Mode.Competitive)
+            {
+                Round_Timer = 115;
+                Task.Run(() => PlayerIvents(cts));
+                Task.Run(() => Bomb(cts));
+                Task.Run(() => WinLose(cts));
+                Task.Run(() => Competitive(cts));
+            }
+            else if (gamemode == Mode.Public)
+            {
+                Round_Timer = 135;
+                Task.Run(() => Competitive(cts));
+                Task.Run(() => Bomb(cts));
+                Task.Run(() => WinLose(cts));
+                Task.Run(() => Competitive(cts));
+            }
+            else if (gamemode == Mode.Deathmatch)
+            {
+                Round_Timer = 600;
+                Task.Run(() => PlayerIvents(cts));
+            }
+            
         }
 
         private static async Task PlayerIvents(CancellationToken cts)
         {
             try
             {
-                Main.Instance?.SetConsoleLog($"Проверка игровых ивентов");
                 if (kills_r != player?.player?.state?.round_kills && player?.player?.steamid == player?.client?.steamid &&
                     player?.player?.state?.round_kills != null && player?.player?.state?.round_kills != 0)
                 {
@@ -137,73 +162,51 @@ namespace MusicComanderGUI
 
         private static async Task WinLose(CancellationToken cts)
         {
-            try
-            {
-                Main.Instance?.SetConsoleLog($"Проверка победы");
-                // Победа и MVP
+            try{
                 if (player?.player?.team == player?.round?.win_team && player?.round != null && player?.player?.MVP?.mvp != null)
                 {
                     if (player?.player?.MVP?.mvp != Mvp && player?.client?.steamid == player?.player?.steamid)
-                    {
                         WavPlayer.IfEnable("MVP", IsWinRound);
-                    }
                     else
                         WavPlayer.IfEnable("WinRound", IsWinRound);
                 }
-                // Проигрыш
                 else if (player?.player?.team != player?.round?.win_team && player?.round?.win_team != null && player?.player?.team != null)
-                {
                     WavPlayer.IfEnable("LoseRound", IsLoseRound);
-                }
             }
             catch { }
         }
 
-        private static async Task Game(CancellationToken cts)
+        private static async Task Competitive(CancellationToken cts)
         {
             try { 
-                Main.Instance?.SetConsoleLog($"Запуск game");
-                // StartRound
-                if (player?.round == null && player?.player?.activity == "menu") { WavPlayer.IfEnable("menu", IsMenu); StartRound = false; }
-                if (player?.map?.mode == "competitive")
+                if (!StartRound) { 
+                    if (gamemode == Mode.Competitive && player?.map?.round == 0 && LastMusic == "menu" && player?.map?.phase == "live")
                     {
-                        Round_Timer = 115;
-                        IsCompetitive = true;
-                    }
-                else if (player?.map?.mode == "casual")
-                    {
-                        Round_Timer = 135;
-                        IsCompetitive = false;
-                    }
-                if (!StartRound){
+                        GameEnd = false;
+                        StartRound = true;
+                        WavPlayer.IfEnable("StartGame", IsStartGame);
+                        Main.Instance?.SetConsoleLog($"Начался отсчет начала игры");
 
-                    if (IsCompetitive == true && player?.map?.round == 0 && LastMusic == "menu" && player?.map?.phase == "live")
-                        {
-                            StartRound = true;
-                            WavPlayer.IfEnable("StartGame", IsStartGame);
-                                Main.Instance?.SetConsoleLog($"Начался отсчет начала игры");
-
-                            for (int i = 0; i < 8; i++)
-                            {
-                                Main.Instance?.SetConsoleLog($"{i}");
+                        for (int i = 0; i < 8; i++){
+                            Main.Instance?.SetConsoleLog($"{i}");
                             
-                                await Task.Delay(1000);
-                                if (cts.IsCancellationRequested)
-                                {
-                                    StartRound = false;
-                                    return;
-                                }
+                            await Task.Delay(1000);
+                            if (cts.IsCancellationRequested){
+                                StartRound = false;
+                                return;
                             }
-                            WavPlayer.IfEnable("StartRound", IsStartRound);
-                            StartRound = false;
                         }
+                        WavPlayer.IfEnable("StartRound", IsStartRound);
+                        StartRound = false;
+                    }
 
                     else if (player?.map?.phase == "warmup") { WavPlayer.StopMusic();}
 
-                    else if (IsCompetitive == true && player?.map?.phase == "gameover")
-                        {
-                            WavPlayer.IfEnable("EndGame", IsEndGame);
-                        }
+                    else if (player?.map?.phase == "gameover"){
+                       
+                        WavPlayer.IfEnable("EndGame", IsEndGame);
+                        GameEnd = true;
+                    }
 
                     else if (player?.round?.phase == "freezetime")
                         {
@@ -211,7 +214,6 @@ namespace MusicComanderGUI
                             isDead = false;
                         }
                 
-                    // StartAction
                     else if (player?.round?.phase == "live" && LastMusic == "StartRound" )
                         {
                             Mvp = player?.player?.MVP?.mvp;
@@ -233,6 +235,26 @@ namespace MusicComanderGUI
                 }
             }
             catch { StartRound = false; }
+        }
+        
+        private static async Task Update(CancellationToken cts)
+        {
+            if (cts.IsCancellationRequested) return;
+            if (player?.round == null && player?.player?.activity == "menu")
+                gamemode = Mode.Menu;
+            else if (player?.map?.mode == "competitive")
+                gamemode = Mode.Competitive;
+            else if (player?.map?.mode == "casual")
+                gamemode = Mode.Deathmatch;
+            else if (player?.map?.mode == "deathmatch")
+                gamemode = Mode.Deathmatch;
+        }
+
+        public static void Stop()
+        {
+            GameEnd = false;
+            Ivents.LastMusic = "kill";
+            Ivents.Team = "Ct";
         }
     }
 }
