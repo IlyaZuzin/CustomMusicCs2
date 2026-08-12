@@ -2,6 +2,13 @@
 using static PlayerStats;
 namespace MusicComanderGUI
 {
+    public enum gamemode {
+        Menu,
+        Competitive,
+        Public,
+        Deathmatch
+    }
+
     static class Ivents 
     {
         public static string? LastMusic = "kill";
@@ -9,7 +16,6 @@ namespace MusicComanderGUI
         private static int Round_Timer = 115;
         public static bool IsMenu = true;
         private static int? Mvp = 0;
-        
         public static string? Team = "Ct";
         public static bool IsBomb = true;
         public static bool IsStartGame = true;
@@ -29,11 +35,13 @@ namespace MusicComanderGUI
         private static bool? IsCompetitive;
         public static PlayerStats? player = null;
         private static PlayerStats? currect_player = null;
-
+        private static gamemode = gamemode.Menu;
+        
         public static async Task Tick(PlayerStats NewData, CancellationToken cts)
         {
             player = NewData;
-            currect_player = NewData;
+            currect_player = NewData
+            
 
             Task.Run(() => PlayerIvents(cts));
             Task.Run(() => Bomb(cts));
