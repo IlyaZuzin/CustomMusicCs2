@@ -11,9 +11,9 @@ namespace MusicComanderGUI
     class Server 
     {
         private static HttpListener listener = new HttpListener();
-        private static PlayerStats? player = null;
         public static bool is_Running = false;
         public static bool DebugMode = false;
+
         // Ключи асинхронной функции
         private static CancellationTokenSource? cts;
         private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions{
@@ -37,8 +37,8 @@ namespace MusicComanderGUI
                 // Запускаем полностью асин обработку
                 Task.Run(() => ReadJsonAsync(cts.Token));
                 Main.Instance?.SetConsoleLog($"Start server {Addr}");
-                MusicKits.settings.Last = MusicKits.loadJson(Main.Ct);
-                WavPlayer.SetupMusic();
+                Kit_Sound load = MusicKits.loadJson(Main.Comp.Ct);
+                WavPlayer.SetupMusic(load);
                 is_Running = true; 
             }
             catch (Exception ex)

@@ -11,29 +11,36 @@ namespace MusicComanderGUI
     public partial class Creater : Form
     {
         private Main form;
+        private Kit_Sound? kit = new Kit_Sound();   
         public Creater(Main _form)
         {
+            kit.Musics = new MusicSettings[13];
+            for (int i =0; i < 13; i++)
+            {
+                kit.Musics[i] = new MusicSettings();
+            }
             InitializeComponent();
-            LoadJsonSetings();
+            //LoadJsonSetings();
             form = _form;
         }
 
         private void LoadJsonSetings()
         {
-            MusicKitImage.ImageLocation = MusicKits.settings?.Last?.image;
-            MainMenu_dir.Text = MusicKits.settings?.Last?.menu;
-            DeathCam_dir.Text = MusicKits.settings?.Last?.deathCam;
-            WinRound_dir.Text = MusicKits.settings?.Last?.WinRound;
-            LoseRound_dir.Text = MusicKits.settings?.Last?.LoseRound;
-            Bomb_dir.Text = MusicKits.settings?.Last?.Bomb;
-            StartAction_dir.Text = MusicKits.settings?.Last.StartAction;
-            MVPDir.Text = MusicKits.settings?.Last.MVP;
-            StartGameDir.Text = MusicKits.settings?.Last.StartGame;
-            StartRoundDir.Text = MusicKits.settings?.Last.StartRound;
-            TenSecondDir.Text = MusicKits.settings?.Last.TenSecond;
-            KillSoundDir.Text = MusicKits.settings?.Last.KillSound;
-            TenSecondRoundDir.Text = MusicKits.settings?.Last.TenSecondRound;
-            EndGameDir.Text = MusicKits.settings?.Last.EndGame;
+            kit.image = MusicKitImage.ImageLocation;
+            kit.name = NameKit.Text;
+            kit.Musics[(int)MusicIvents.Menu].path = MainMenu_dir.Text;
+            kit.Musics[(int)MusicIvents.DeathCam].path = DeathCam_dir.Text;
+            kit.Musics[(int)MusicIvents.WinRound].path = WinRound_dir.Text;
+            kit.Musics[(int)MusicIvents.LoseRound].path = LoseRound_dir.Text;
+            kit.Musics[(int)MusicIvents.Bomb].path = Bomb_dir.Text;
+            kit.Musics[(int)MusicIvents.StartAction].path = StartAction_dir.Text;
+            kit.Musics[(int)MusicIvents.Mvp].path = MVPDir.Text;
+            kit.Musics[(int)MusicIvents.StartGame].path = StartGameDir.Text;
+            kit.Musics[(int)MusicIvents.StartRound].path = StartRoundDir.Text;
+            kit.Musics[(int)MusicIvents.TenSecondBomb].path = TenSecondDir.Text;
+            kit.Musics[(int)MusicIvents.KillSound].path = KillSoundDir.Text;
+            kit.Musics[(int)MusicIvents.TenSecondRound].path = TenSecondRoundDir.Text;
+            kit.Musics[(int)MusicIvents.EndGame].path = EndGameDir.Text;
 
             MusicKits.SaveSetting();
         }
@@ -47,8 +54,7 @@ namespace MusicComanderGUI
             OpenFileDialog direct = new OpenFileDialog();
             if (direct.ShowDialog() == DialogResult.OK)
             {
-                MusicKits.settings?.Last?.menu = direct.FileName;
-                MainMenu_dir.Text = MusicKits.settings?.Last?.menu;
+                MainMenu_dir.Text = direct.FileName;
             }
         }
 
@@ -57,8 +63,7 @@ namespace MusicComanderGUI
             OpenFileDialog direct = new OpenFileDialog();
             if (direct.ShowDialog() == DialogResult.OK)
             {
-                MusicKits.settings?.Last?.StartGame = direct.FileName;
-                StartGameDir.Text = MusicKits.settings?.Last?.StartGame;
+                StartGameDir.Text = direct.FileName;
             }
         }
 
@@ -67,8 +72,7 @@ namespace MusicComanderGUI
             OpenFileDialog direct = new OpenFileDialog();
             if (direct.ShowDialog() == DialogResult.OK)
             {
-                MusicKits.settings?.Last?.StartRound = direct.FileName;
-                StartRoundDir.Text = MusicKits.settings?.Last?.StartRound;
+                StartRoundDir.Text = direct.FileName;
             }
         }
 
@@ -77,8 +81,7 @@ namespace MusicComanderGUI
             OpenFileDialog direct = new OpenFileDialog();
             if (direct.ShowDialog() == DialogResult.OK)
             {
-                MusicKits.settings?.Last?.StartAction = direct.FileName;
-                StartAction_dir.Text = MusicKits.settings?.Last?.StartAction;
+                StartAction_dir.Text = direct.FileName;
             }
         }
 
@@ -87,8 +90,7 @@ namespace MusicComanderGUI
             OpenFileDialog direct = new OpenFileDialog();
             if (direct.ShowDialog() == DialogResult.OK)
             {
-                MusicKits.settings.Last.WinRound = direct.FileName;
-                WinRound_dir.Text = MusicKits.settings.Last.WinRound;
+                WinRound_dir.Text = direct.FileName;
             }
         }
 
@@ -97,8 +99,7 @@ namespace MusicComanderGUI
             OpenFileDialog direct = new OpenFileDialog();
             if (direct.ShowDialog() == DialogResult.OK)
             {
-                MusicKits.settings.Last.LoseRound = direct.FileName;
-                LoseRound_dir.Text = MusicKits.settings.Last.LoseRound;
+                LoseRound_dir.Text = direct.FileName;
             }
         }
 
@@ -107,8 +108,7 @@ namespace MusicComanderGUI
             OpenFileDialog direct = new OpenFileDialog();
             if (direct.ShowDialog() == DialogResult.OK)
             {
-                MusicKits.settings?.Last?.MVP = direct.FileName;
-                MVPDir.Text = MusicKits.settings?.Last?.MVP;
+                MVPDir.Text = direct.FileName;
             }
         }
 
@@ -117,8 +117,7 @@ namespace MusicComanderGUI
             OpenFileDialog direct = new OpenFileDialog();
             if (direct.ShowDialog() == DialogResult.OK)
             {
-                MusicKits.settings?.Last.Bomb = direct.FileName;
-                Bomb_dir.Text = MusicKits.settings?.Last.Bomb;
+                Bomb_dir.Text = direct.FileName;
             }
         }
 
@@ -127,8 +126,7 @@ namespace MusicComanderGUI
             OpenFileDialog direct = new OpenFileDialog();
             if (direct.ShowDialog() == DialogResult.OK)
             {
-                MusicKits.settings?.Last?.TenSecond = direct.FileName;
-                TenSecondDir.Text = MusicKits.settings?.Last?.TenSecond;
+                TenSecondDir.Text = direct.FileName;
             }
         }
 
@@ -137,8 +135,7 @@ namespace MusicComanderGUI
             OpenFileDialog direct = new OpenFileDialog();
             if (direct.ShowDialog() == DialogResult.OK)
             {
-                MusicKits.settings?.Last?.TenSecondRound = direct.FileName;
-                TenSecondRoundDir.Text = MusicKits.settings?.Last?.TenSecondRound;
+                TenSecondRoundDir.Text = direct.FileName;
             }
         }
 
@@ -147,8 +144,7 @@ namespace MusicComanderGUI
             OpenFileDialog direct = new OpenFileDialog();
             if (direct.ShowDialog() == DialogResult.OK)
             {
-                MusicKits.settings?.Last?.EndGame = direct.FileName;
-                EndGameDir.Text = MusicKits.settings?.Last?.EndGame;
+                EndGameDir.Text = direct.FileName;
             }
         }
 
@@ -157,8 +153,7 @@ namespace MusicComanderGUI
             OpenFileDialog direct = new OpenFileDialog();
             if (direct.ShowDialog() == DialogResult.OK)
             {
-                MusicKits.settings?.Last?.KillSound = direct.FileName;
-                KillSoundDir.Text = MusicKits.settings?.Last?.KillSound;
+                KillSoundDir.Text = direct.FileName;
             }
         }
 
@@ -167,8 +162,7 @@ namespace MusicComanderGUI
             OpenFileDialog direct = new OpenFileDialog();
             if (direct.ShowDialog() == DialogResult.OK)
             {
-                MusicKits.settings?.Last?.deathCam = direct.FileName;
-                DeathCam_dir.Text = MusicKits.settings?.Last?.deathCam;
+                DeathCam_dir.Text = direct.FileName;
             }
         }
 
@@ -177,8 +171,8 @@ namespace MusicComanderGUI
             OpenFileDialog direct = new OpenFileDialog();
             if (direct.ShowDialog() == DialogResult.OK)
             {
-                MusicKits.settings?.Last?.image = direct.FileName;
                 MusicKitImage.ImageLocation = direct.FileName;
+                ImageDir.Text = direct.FileName;
             }
         }
 
@@ -243,26 +237,30 @@ namespace MusicComanderGUI
 
         private void Update_Click(object sender, EventArgs e)
         {
-            MusicKits.UpdateMusicKit();
+            MusicKits.UpdateMusicKit(kit);
         }
 
         private void CreateKit_Click(object sender, EventArgs e)
         {
-            MusicKits.settings.Last.name = NameKit.Text;
             FolderBrowserDialog direct = new FolderBrowserDialog();
+            LoadJsonSetings();
             if (direct.ShowDialog() == DialogResult.OK)
-            {
-                MusicKits.CreateMusicKit(direct.SelectedPath);
-            }
+                MusicKits.CreateMusicKit(direct.SelectedPath, NameKit.Text, kit);
+
             int size = MusicKits.settings.Music_Paths.Count();
-            string name = MusicKits.settings.Music_Paths[size - 1].name;
-            
-            form.imageList1.Images.Add(Image.FromFile(MusicKits.settings.Music_Paths[size - 1].image));
+            string name = NameKit.Text;
+
+            form.imageList1.Images.Add(Image.FromFile(ImageDir.Text));
             int newImageIndex = form.imageList1.Images.Count - 1;
             ListViewItem item = new ListViewItem(name, newImageIndex);
             form.MusicNumbers.Items.Add(item);
             form.TSide.Items.Add(name);
             form.CtSide.Items.Add(name);
+        }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

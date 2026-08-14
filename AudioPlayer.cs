@@ -7,51 +7,29 @@ namespace MusicComanderGUI
     static class WavPlayer
     {
         private static float volume = 1.0f;
-        public static Dictionary<string, SoundPlayer> Music = new Dictionary<string, SoundPlayer>();
+        public static SoundPlayer[]? music;
 
-        public static async void SetupMusic()
-        {
+        public static async void SetupMusic(Kit_Sound load)
+        { 
             AudioStop();
-            Music.Clear();
+            
+            music = new SoundPlayer[13];
 
-            // Словарь сопоставления состояний и путей к файлам из настроек
-            var settingsMap = new Dictionary<string, string>
-            {
-                { "menu", MusicKits.settings?.Last?.menu },
-                { "WinRound", MusicKits.settings?.Last?.WinRound },
-                { "LoseRound", MusicKits.settings?.Last?.LoseRound },
-                { "bomb", MusicKits.settings?.Last?.Bomb },
-                { "deathCam", MusicKits.settings?.Last?.deathCam },
-                { "StartAction", MusicKits.settings?.Last?.StartAction },
-                { "StartRound", MusicKits.settings?.Last?.StartRound },
-                { "intermission", MusicKits.settings?.Last?.intermission },
-                { "MVP", MusicKits.settings?.Last?.MVP },
-                { "TenSecond", MusicKits.settings?.Last?.TenSecond },
-                { "StartGame", MusicKits.settings?.Last?.StartGame },
-                { "kill", MusicKits.settings?.Last?.KillSound },
-                { "EndGame", MusicKits.settings?.Last?.EndGame },
-                { "TenSecondRound", MusicKits.settings?.Last?.TenSecondRound }
-            };
-
-            foreach (var kvp in settingsMap)
-            {
-                string state = kvp.Key;
-                string filePath = kvp.Value;
-
+            for (int i = 0; i < 13; i++) {
                 // Если путь к файлу не задан, просто пропускаем или пишем null
-                if (string.IsNullOrEmpty(filePath))
+                if (string.IsNullOrEmpty(load.Musics[i].path))
                 {
-                    Music[state] = null;
+                    music[i] = null;
                     continue; // Переходим к следующему треку, а не выходим из цикла!
                 }
 
                 try
                 {
                     WaveOutEvent player = new WaveOutEvent();
-                    AudioFileReader file = new AudioFileReader(filePath);
-
+                    AudioFileReader file = new AudioFileReader(load.Musics[i].path);
+                    file.Volume = load.Musics[i].volume / 100;
                     // Настройка зацикливания для определенных треков
-                    if (state == "menu" || state == "StartRound")
+                    if (i ==  (int)MusicIvents.Menu || i == (int)MusicIvents.StartRound)
                     {
                         LoopStream loop = new LoopStream(file);
                         player.Init(loop);
@@ -67,49 +45,51 @@ namespace MusicComanderGUI
                         player = player
                     };
 
-                    Music[state] = buf;
-                    Main.Instance?.SetConsoleLog($"[GSI]: Звук '{state}' успешно загружен.");
+                    music[i] = buf;
+                    Main.Instance?.SetConsoleLog($"[GSI]: Звук '{Enum.GetName(typeof(MusicIvents), i)}' успешно загружен.");
                 }
                 catch (Exception ex)
                 {
-                    Main.Instance?.SetConsoleLog($"[Ошибка загрузки {state}]: {ex.Message}");
-                    Music[state] = null;
+                    Main.Instance?.SetConsoleLog($"[Ошибка загрузки {Enum.GetName(typeof(MusicIvents), i)}]: {ex.Message}");
+                    music[i] = null;
                 }
             }
         }
 
-        public static void PlayMusic(string state)
+        public static void PlayMusic(MusicIvents state)
         {
             if (Ivents.LastMusic == state) return;
+            Main.Instance?.SetConsoleLog($"[GSI]: Звук '{music[(int)state].file?.FileName}' успешно запущен.");
             StopMusic();
-            Main.Instance?.SetConsoleLog($"[GSI]: Звук '{Music[state].file?.FileName}' успешно запущен.");
-            if (Music[state] != null)
+            if (music[(int)state] != null)
             {
-                Music[state].file.Position = 0;
-                Music[state].file.Volume = volume;
-                Music[state].player.Play();
+                music[(int)state].file.Position = 0;
+                music[(int)state].file.Volume = volume;
+                music[(int)state].player.Play();
             }
         }
 
         public static void StopMusic()
         {
-            if (Music[Ivents.LastMusic] != null)
+            try
             {
-                Music[Ivents.LastMusic].player?.Stop();
-                Music[Ivents.LastMusic].file?.Position = 0;
+                if (music[(int)Ivents.LastMusic] != null)
+                {
+                    music[(int)Ivents.LastMusic].player?.Stop();
+                    music[(int)Ivents.LastMusic].file?.Position = 0;
+                }
+            }catch(Exception ex) {
+                Main.Instance?.SetConsoleLog($"{ex.Message}");
             }
         }
 
-        public static void SetVolume(float i)
+        public static void SetVolume(MusicIvents mode, float i)
         {
-                if (Ivents.LastMusic != null && Server.is_Running && Music[Ivents.LastMusic] != null)
-                {
-                    Music[Ivents.LastMusic]?.file?.Volume = i;
-                }
-                volume = i;
+                if (music[(int)mode] != null)
+                    music[(int)mode]?.file?.Volume = i;
         }
 
-        public static void IfEnable(string song, bool Check)
+        public static void IfEnable(MusicIvents song, bool Check)
         {
             if (Check)
                 PlayMusic(song);
@@ -121,26 +101,27 @@ namespace MusicComanderGUI
 
         public static void AudioStop()
         {
-            foreach (var b in Music)
+            if(music == null) return;
+            foreach (var b in music)
             {
-                if (b.Value == null) { continue; }
-                b.Value?.player?.Stop();
-                b.Value?.player?.Dispose();
-                b.Value?.file.Dispose();
+                if (b == null) { continue; }
+                b.player?.Stop();
+                b.player?.Dispose();
+                b.file?.Dispose();
             }
         }
 
-        public static async void ReloadMusicKit(CancellationToken cts)
+        public static async void ReloadMusicKit(CancellationToken cts, string path)
         {
+            Kit_Sound load = MusicKits.loadJson(path);
             AudioStop();
-            await Task.Run(() => SetupMusic(), cts);
+            await Task.Run(() => SetupMusic(load), cts);
             await Task.Delay(500);
-            if (Music[Ivents.LastMusic] != null)
+            if (music[(int)Ivents.LastMusic] != null)
             {
-                
-                Music[Ivents.LastMusic].file.Position = 0;
-                Music[Ivents.LastMusic].file.Volume = volume;
-                Music[Ivents.LastMusic].player.Play();
+                music[(int)Ivents.LastMusic].file.Position = 0;
+                music[(int)Ivents.LastMusic].file.Volume = volume;
+                music[(int)Ivents.LastMusic].player.Play();
             }
         }
     }
@@ -148,7 +129,6 @@ namespace MusicComanderGUI
     class SoundPlayer
     {
         public AudioFileReader? file { get; set; }
-
         public WaveOutEvent? player { get; set; }
     }
 
@@ -215,4 +195,6 @@ namespace MusicComanderGUI
             return totalBytesRead;
         }
     }
+
+
 }
