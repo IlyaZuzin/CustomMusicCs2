@@ -15,7 +15,6 @@ namespace MusicComanderGUI
     static class Ivents 
     {
         public static MusicIvents? LastMusic;
-        private static float volume = 1.0f;
         private static int Round_Timer = 115;
         public static bool IsMenu = true;
         private static int? Mvp = 0;
@@ -103,7 +102,7 @@ namespace MusicComanderGUI
                         { 
                             WavPlayer.music[(int)MusicIvents.KillSound].file?.Position = 0;
                             WavPlayer.music[(int)MusicIvents.KillSound].player?.Play();
-                            WavPlayer.music[(int)MusicIvents.KillSound].player?.Volume = volume;
+                            WavPlayer.music[(int)MusicIvents.KillSound].player?.Volume = MusicKits.settings.Volume[(int)MusicIvents.KillSound];
                         }
                     }
                 }
@@ -116,7 +115,7 @@ namespace MusicComanderGUI
                         {
                             WavPlayer.music[(int)MusicIvents.DeathCam].file?.Position = 0;
                             WavPlayer.music[(int)MusicIvents.DeathCam].player?.Play();
-                            WavPlayer.music[(int)MusicIvents.DeathCam].player?.Volume = volume;
+                            WavPlayer.music[(int)MusicIvents.DeathCam].player?.Volume = MusicKits.settings.Volume[(int)MusicIvents.DeathCam];
                         }
                     }
                 }
@@ -202,7 +201,7 @@ namespace MusicComanderGUI
                         WavPlayer.IfEnable(MusicIvents.StartGame, IsStartGame);
                         Main.Instance?.SetConsoleLog($"Начался отсчет начала игры");
 
-                        for (int i = 0; i < 8; i++){
+                        for (int i = 0; i < 7; i++){
                             Main.Instance?.SetConsoleLog($"{i}");
                             
                             await Task.Delay(1000);

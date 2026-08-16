@@ -438,6 +438,7 @@
             MenuVolume.Size = new Size(401, 23);
             MenuVolume.TabIndex = 194;
             MenuVolume.Value = 100;
+            MenuVolume.Scroll += MenuVolume_Scroll;
             // 
             // textBox16
             // 

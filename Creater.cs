@@ -252,6 +252,7 @@ namespace MusicComanderGUI
             form.MusicNumbers.Items.Add(item);
             form.TSide.Items.Add(name);
             form.CtSide.Items.Add(name);
+            form.MainMusic.Items.Add(name);
         }
 
         private void panel3_Paint(object sender, PaintEventArgs e)
