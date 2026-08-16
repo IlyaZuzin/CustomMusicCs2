@@ -1,0 +1,57 @@
+{
+  "Music_Paths": [
+    {
+      "name": "usedcvnt",
+      "image": "C:\\Users\\\u0438\u043B\u044C\u044F\\Videos\\usedcvnt\\Image.png",
+      "path": "C:\\Users\\\u0438\u043B\u044C\u044F\\Videos\\usedcvnt"
+    },
+    {
+      "name": "bhop",
+      "image": "C:\\Users\\\u0438\u043B\u044C\u044F\\Documents\\bhop\\Image.png",
+      "path": "C:\\Users\\\u0438\u043B\u044C\u044F\\Documents\\bhop"
+    },
+    {
+      "name": "\u0418\u043D\u0442\u0435\u0440\u043D\u044B",
+      "image": "C:\\Users\\\u0438\u043B\u044C\u044F\\Documents\\\u0418\u043D\u0442\u0435\u0440\u043D\u044B\\\u0418\u043D\u0442\u0435\u0440\u043D\u044B\\Image.png",
+      "path": "C:\\Users\\\u0438\u043B\u044C\u044F\\Documents\\\u0418\u043D\u0442\u0435\u0440\u043D\u044B\\\u0418\u043D\u0442\u0435\u0440\u043D\u044B"
+    },
+    {
+      "name": "Altare \u2014 Change My Mind",
+      "image": "C:\\Users\\\u0438\u043B\u044C\u044F\\Documents\\Altare \u2014 Change My Mind\\Image.png",
+      "path": "C:\\Users\\\u0438\u043B\u044C\u044F\\Documents\\Altare \u2014 Change My Mind\\"
+    },
+    {
+      "name": "Altare \u2014 Change My Mind",
+      "image": "C:\\Users\\\u0438\u043B\u044C\u044F\\Documents\\Altare \u2014 Change My Mind\\Image.png",
+      "path": "C:\\Users\\\u0438\u043B\u044C\u044F\\Documents\\Altare \u2014 Change My Mind"
+    }
+  ],
+  "Competitive": {
+    "T": 0,
+    "Ct": 0
+  },
+  "Deathmatch": null,
+  "Wingmans": {
+    "T": null,
+    "Ct": null
+  },
+  "Public": {
+    "T": null,
+    "Ct": null
+  },
+  "Volume": [
+    58,
+    10,
+    12,
+    9,
+    5,
+    12,
+    9,
+    19,
+    15,
+    8,
+    14,
+    11,
+    8
+  ]
+}
