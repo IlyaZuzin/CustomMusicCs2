@@ -8,6 +8,7 @@ namespace MusicComanderGUI
         Competitive,
         Public,
         Deathmatch,
+        Wingmans,
         Null
     }
 
@@ -61,6 +62,15 @@ namespace MusicComanderGUI
                 Task.Run(() => Competitive(cts));
                 Task.Run(() => CheckTeam(cts));
             }
+            else if (gamemode == Mode.Wingmans)
+            {
+                Round_Timer = 90;
+                Task.Run(() => PlayerIvents(cts));
+                Task.Run(() => Bomb(cts));
+                Task.Run(() => WinLose(cts));
+                Task.Run(() => Competitive(cts));
+                Task.Run(() => CheckTeam(cts));
+            }
             else if (gamemode == Mode.Public)
             {
                 Round_Timer = 135;
@@ -74,8 +84,9 @@ namespace MusicComanderGUI
             {
                 Round_Timer = 600;
                 Task.Run(() => PlayerIvents(cts));
+                Task.Run(() => CheckTeam(cts));
             }
-            
+            Main.Instance?.SetConsoleLog($"Last Player state: {Enum.GetName(typeof(MusicIvents), (int)LastMusic)} \t Mode: {Enum.GetName(typeof(Mode), gamemode)} {Environment.NewLine}Map mode: {player?.map?.mode}");
         }
 
         private static async Task PlayerIvents(CancellationToken cts)
@@ -250,26 +261,30 @@ namespace MusicComanderGUI
                 teams = Main.Comp;
                 gamemode = Mode.Competitive;
             }
-            else if (player?.map?.mode == "casual") {
+            else if (player?.map?.mode == "scrimcomp2v2")
+            {
+                teams = Main.Wingmans;
+                gamemode = Mode.Wingmans;
+            }
+            else if (player?.map?.mode == "casual")
+            {
                 teams = Main.Public;
-                gamemode = Mode.Deathmatch;
+                gamemode = Mode.Public;
             }
             else if (player?.map?.mode == "deathmatch")
+            {
+                teams.Ct = Main.Dm;
+                teams.T = Main.Dm;
                 gamemode = Mode.Deathmatch;
+            }
         }
 
         public static void Stop()
         {
             GameEnd = false;
+            LastMusic = null;
         }
 
-        private static void ChangeMusicKit()
-        {
-            if(gamemode == Mode.Menu)
-            {
-                
-            }
-        }
     }
 }
 
@@ -278,7 +293,6 @@ class PlayerStats
 {
     [JsonPropertyName("provider")]
     public Provider? client { get; set; }
-
 
     [JsonPropertyName("round")]
     public Round? round { get; set; }

@@ -1,7 +1,4 @@
-
-using Microsoft.VisualBasic.Logging;
 using System.IO;
-using System.Windows.Documents;
 
 namespace MusicComanderGUI
 {
@@ -11,6 +8,8 @@ namespace MusicComanderGUI
         public static string? Dm;
         public static TeamPath? Comp = new TeamPath();
         public static TeamPath? Public = new TeamPath();
+        public static TeamPath? Wingmans = new TeamPath();
+        public static string? main;
         public static Mode mode;
         public Main()
         {
@@ -18,13 +17,14 @@ namespace MusicComanderGUI
             Instance = this;
             MusicKits.LoadSetting();
             MusicNumbers.SelectedIndexChanged += MusicNumbers_SelectedIndexChanged;
-            int? volume = MusicKits.settings?.Volume;
-
+            Load();
             int newImageIndex = 0;
             if (MusicKits.settings?.Music_Paths != null)
             {
-                foreach (var b in MusicKits.settings?.Music_Paths)
+                for (int i = 0; i < MusicKits.settings.Music_Paths.Count - 1; i++)
                 {
+                    var b = MusicKits.settings.Music_Paths[i];
+
                     if (Path.Exists(b.path + "\\profile.json"))
                     {
                         try
@@ -40,15 +40,17 @@ namespace MusicComanderGUI
                             }
                             TSide.Items.Add(b.name);
                             CtSide.Items.Add(b.name);
+                            MainMusic.Items.Add(b.name);
+                            
                             ListViewItem item = new ListViewItem(b.name, newImageIndex);
                             MusicNumbers.Items.Add(item);
-
                         }
                         catch { }
                     }
                     else
                     {
-                        SetConsoleLog($"Not found profile {b.name}");
+                        i--;
+                        MusicKits.settings.Music_Paths.RemoveAt(i);
                     }
                 }
             }
@@ -56,15 +58,33 @@ namespace MusicComanderGUI
             {
                 int? index = MusicKits.settings?.Competitivie?.Ct;
                 CtSide.SelectedIndex = index.Value;
-                Comp.Ct = MusicKits.settings.Music_Paths[index.Value].path;
+                Comp?.Ct = MusicKits.settings?.Music_Paths[index.Value].path;
             }
             if (MusicKits.settings?.Competitivie?.T != null && MusicKits.settings?.Competitivie?.T != -1)
             {
                 int? index = MusicKits.settings?.Competitivie?.T;
                 TSide.SelectedIndex = index.Value;
-                Comp.T = MusicKits.settings.Music_Paths[index.Value].path;
-
+                Comp?.T = MusicKits.settings?.Music_Paths[index.Value].path;
             }
+            if (MusicKits.settings?.Public?.Ct != null && MusicKits.settings?.Public?.Ct != -1)
+            {
+                int? index = MusicKits.settings?.Public?.Ct;
+                CtSide.SelectedIndex = index.Value;
+                Public?.Ct = MusicKits.settings?.Music_Paths[index.Value].path;
+            }
+            if (MusicKits.settings?.Public?.T != null && MusicKits.settings?.Public?.T != -1)
+            {
+                int? index = MusicKits.settings?.Public?.T;
+                TSide.SelectedIndex = index.Value;
+                Public?.T = MusicKits.settings?.Music_Paths[index.Value].path;
+            }
+            if (MusicKits.settings?.Deathmatch != null && MusicKits.settings?.Deathmatch != -1)
+            {
+                int? index = MusicKits.settings?.Competitivie?.Ct;
+                CtSide.SelectedIndex = index.Value;
+                Dm = MusicKits.settings?.Music_Paths[index.Value].path;
+            }
+
             MusicNumbers.LargeImageList = imageList1;
         }
 
@@ -100,12 +120,6 @@ namespace MusicComanderGUI
 
                 }
             }
-        }
-
-        private void trackBar1_Scroll(object sender, EventArgs e)
-        {
-            textBox7.Text = trackBar1.Value.ToString();
-            MusicKits.settings?.Volume = trackBar1.Value;
         }
 
         private void LoadJson_Click(object sender, EventArgs e)
@@ -161,17 +175,18 @@ namespace MusicComanderGUI
                     case Mode.Competitive:
                         MusicKits.settings.Competitivie.Ct = selectedIndex;
                         Comp.Ct = MusicKits.settings.Music_Paths[selectedIndex].path;
-                        CtSelectMusic(Comp.Ct);
                         break;
                     case Mode.Public:
                         MusicKits.settings.Public.Ct = selectedIndex;
                         Public.Ct = MusicKits.settings.Music_Paths[selectedIndex].path;
-                        CtSelectMusic(Public.Ct);
                         break;
                     case Mode.Deathmatch:
                         Dm = MusicKits.settings.Music_Paths[selectedIndex].path;
                         MusicKits.settings.Deathmatch = selectedIndex;
-                        CtSelectMusic(Dm);
+                        break;
+                    case Mode.Wingmans:
+                        Wingmans.Ct = MusicKits.settings.Music_Paths[selectedIndex].path;
+                        MusicKits.settings.Wingmans.Ct = selectedIndex;
                         break;
                 }
             }
@@ -187,12 +202,14 @@ namespace MusicComanderGUI
                     case Mode.Competitive:
                         MusicKits.settings.Competitivie.T = selectedIndex;
                         Comp.T = MusicKits.settings.Music_Paths[selectedIndex].path;
-                        CtSelectMusic(Comp.T);
                         break;
                     case Mode.Public:
                         MusicKits.settings.Public.T = selectedIndex;
                         Public.T = MusicKits.settings.Music_Paths[selectedIndex].path;
-                        CtSelectMusic(Public.T);
+                        break;
+                    case Mode.Wingmans:
+                        Wingmans.T = MusicKits.settings.Music_Paths[selectedIndex].path;
+                        MusicKits.settings.Wingmans.T = selectedIndex;
                         break;
                 }
             }
@@ -234,10 +251,6 @@ namespace MusicComanderGUI
             MusicKits.SaveSetting();
         }
 
-        private void ServerMenu_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         private void DoubleMode_CheckedChanged(object sender, EventArgs e)
         {
@@ -251,158 +264,6 @@ namespace MusicComanderGUI
             SettingsMenu.Visible = true;
         }
 
-        private void LoseRound_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Competitive_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void textBox17_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBox2_CheckedChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CtSelectMusic(string path)
-        {
-            Kit_Sound? LoadedKit = MusicKits.loadJson(path);
-            if (LoadedKit?.Musics[(int)MusicIvents.Bomb]?.volume != null)
-                CtBombVolume.Value = LoadedKit.Musics[(int)MusicIvents.Bomb].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.Mvp]?.volume != null)
-                CtMvpVolume.Value = LoadedKit.Musics[(int)MusicIvents.Mvp].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.WinRound]?.volume != null)
-                CtWinRoundVolume.Value = LoadedKit.Musics[(int)MusicIvents.WinRound].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.LoseRound]?.volume != null)
-                CtLoseRoundVolume.Value = LoadedKit.Musics[(int)MusicIvents.LoseRound].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.EndGame]?.volume != null)
-                CtEndGameVolume.Value = LoadedKit.Musics[(int)MusicIvents.EndGame].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.StartGame]?.volume != null)
-                CtStartGameVolume.Value = LoadedKit.Musics[(int)MusicIvents.StartGame].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.StartRound]?.volume != null)
-                CtStartRoundVolume.Value = LoadedKit.Musics[(int)MusicIvents.StartRound].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.StartAction]?.volume != null)
-                CtStartActionVolume.Value = LoadedKit.Musics[(int)MusicIvents.StartAction].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.KillSound]?.volume != null)
-                CtKillVolume.Value = LoadedKit.Musics[(int)MusicIvents.KillSound].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.DeathCam]?.volume != null)
-                CtDeathcamVolume.Value = LoadedKit.Musics[(int)MusicIvents.DeathCam].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.TenSecondBomb]?.volume != null)
-                CtTenSecondBombVolume.Value = LoadedKit.Musics[(int)MusicIvents.TenSecondBomb].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.TenSecondRound]?.volume != null)
-                CtTenSecondRoundVolume.Value = LoadedKit.Musics[(int)MusicIvents.TenSecondRound].volume;
-
-            CtBombVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.Bomb].volume.ToString();
-            CtMvpVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.Mvp].volume.ToString();
-            CtWinRoundVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.WinRound].volume.ToString();
-            CtLoseRoundVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.LoseRound].volume.ToString();
-            CtEndGameVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.EndGame].volume.ToString();
-            CtStartGameVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.StartGame].volume.ToString();
-            CtStartRoundVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.StartRound].volume.ToString();
-            CtStartActionVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.StartAction].volume.ToString();
-            CtKillVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.KillSound].volume.ToString();
-            CtDeathcamVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.DeathCam].volume.ToString();
-            CtTenSecondBombVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.TenSecondBomb].volume.ToString();
-            CtTenSecondRoundVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.TenSecondRound].volume.ToString();
-
-
-            CtBombVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.Bomb].IsEnable;
-            CtMvpVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.Mvp].IsEnable;
-            CtWinRoundVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.WinRound].IsEnable;
-            CtLoseRoundVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.LoseRound].IsEnable;
-            CtEndGameVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.EndGame].IsEnable;
-            CtStartGameVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.StartGame].IsEnable;
-            CtStartRoundVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.StartRound].IsEnable;
-            CtStartActionVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.StartAction].IsEnable;
-            CtKillVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.KillSound].IsEnable;
-            CtDeathcamVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.DeathCam].IsEnable;
-            CtTenSecondBombVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.TenSecondBomb].IsEnable;
-            CtTenSecondRoundVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.TenSecondRound].IsEnable;
-        }
-
-        private void TSelectMusic(string path)
-        {
-            Kit_Sound LoadedKit = MusicKits.loadJson(path);
-            if (LoadedKit == null)
-            {
-                return;
-            }
-            if (LoadedKit?.Musics[(int)MusicIvents.Bomb]?.volume != null)
-                TBombVolume.Value = LoadedKit.Musics[(int)MusicIvents.Bomb].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.Mvp]?.volume != null)
-                TMvpVolume.Value = LoadedKit.Musics[(int)MusicIvents.Mvp].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.WinRound]?.volume != null)
-                TWinRoundVolume.Value = LoadedKit.Musics[(int)MusicIvents.WinRound].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.LoseRound]?.volume != null)
-                TLoseRoundVolume.Value = LoadedKit.Musics[(int)MusicIvents.LoseRound].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.EndGame]?.volume != null)
-                TEndGameVolume.Value = LoadedKit.Musics[(int)MusicIvents.EndGame].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.StartGame]?.volume != null)
-                TStartGameVolume.Value = LoadedKit.Musics[(int)MusicIvents.StartGame].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.StartRound]?.volume != null)
-                TStartRoundVolume.Value = LoadedKit.Musics[(int)MusicIvents.StartRound].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.StartAction]?.volume != null)
-                TStartActionVolume.Value = LoadedKit.Musics[(int)MusicIvents.StartAction].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.KillSound]?.volume != null)
-                TKillVolume.Value = LoadedKit.Musics[(int)MusicIvents.KillSound].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.DeathCam]?.volume != null)
-                TDeathcamVolume.Value = LoadedKit.Musics[(int)MusicIvents.DeathCam].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.TenSecondBomb]?.volume != null)
-                TTenSecondBombVolume.Value = LoadedKit.Musics[(int)MusicIvents.TenSecondBomb].volume;
-            if (LoadedKit?.Musics[(int)MusicIvents.TenSecondRound]?.volume != null)
-                TTenSecondRoundVolume.Value = LoadedKit.Musics[(int)MusicIvents.TenSecondRound].volume;
-
-            if (LoadedKit?.Musics[(int)MusicIvents.Bomb]?.volume != null)
-                TBombVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.Bomb].volume.ToString();
-            if (LoadedKit?.Musics[(int)MusicIvents.Mvp]?.volume != null)
-                TMvpVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.Mvp].volume.ToString();
-            if (LoadedKit?.Musics[(int)MusicIvents.WinRound]?.volume != null)
-                TWinRoundVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.WinRound].volume.ToString();
-            if (LoadedKit?.Musics[(int)MusicIvents.LoseRound]?.volume != null)
-                TLoseRoundVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.LoseRound].volume.ToString();
-            if (LoadedKit?.Musics[(int)MusicIvents.EndGame]?.volume != null)
-                TEndGameVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.EndGame].volume.ToString();
-            if (LoadedKit?.Musics[(int)MusicIvents.StartGame]?.volume != null)
-                TStartGameVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.StartGame].volume.ToString();
-            if (LoadedKit?.Musics[(int)MusicIvents.StartRound]?.volume != null)
-                TStartRoundVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.StartRound].volume.ToString();
-            if (LoadedKit?.Musics[(int)MusicIvents.StartAction]?.volume != null)
-                TStartActionVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.StartAction].volume.ToString();
-            if (LoadedKit?.Musics[(int)MusicIvents.KillSound]?.volume != null)
-                TKillVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.KillSound].volume.ToString();
-            if (LoadedKit?.Musics[(int)MusicIvents.DeathCam]?.volume != null)
-                TDeathcamVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.DeathCam].volume.ToString();
-            if (LoadedKit?.Musics[(int)MusicIvents.TenSecondBomb]?.volume != null)
-                TTenSecondBombVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.TenSecondBomb].volume.ToString();
-            if (LoadedKit?.Musics[(int)MusicIvents.TenSecondRound]?.volume != null)
-                TTenSecondRoundVolumeText.Text = LoadedKit.Musics[(int)MusicIvents.TenSecondRound].volume.ToString();
-
-            TBombVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.Bomb].IsEnable;
-            TMvpVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.Mvp].IsEnable;
-            TWinRoundVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.WinRound].IsEnable;
-            TLoseRoundVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.LoseRound].IsEnable;
-            TEndGameVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.EndGame].IsEnable;
-            TStartGameVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.StartGame].IsEnable;
-            TStartRoundVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.StartRound].IsEnable;
-            TStartActionVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.StartAction].IsEnable;
-            TKillVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.KillSound].IsEnable;
-            TDeathcamVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.DeathCam].IsEnable;
-            TTenSecondBombVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.TenSecondBomb].IsEnable;
-            TTenSecondRoundVolumeEnable.Checked = LoadedKit.Musics[(int)MusicIvents.TenSecondRound].IsEnable;
-        }
-
         private void Mode_SelectedIndexChanged(object sender, EventArgs e)
         {
             int selectedIndex = Mode_select.SelectedIndex + 1;
@@ -410,37 +271,202 @@ namespace MusicComanderGUI
             {
                 case (int)Mode.Competitive:
                     mode = Mode.Competitive;
-                    Competitive.Visible = true;
-                    if (MusicKits.settings?.Music_Paths[0].path != null)
+                    if (MusicKits.settings?.Competitivie?.Ct != null && MusicKits.settings?.Competitivie?.Ct != -1)
                     {
-                        CtSelectMusic(MusicKits.settings?.Music_Paths[MusicKits.settings?.Competitivie?.Ct ?? 0].path);
-                        TSelectMusic(MusicKits.settings?.Music_Paths[MusicKits.settings?.Competitivie?.T ?? 0].path);
+                        int? index = MusicKits.settings?.Competitivie?.Ct;
+                        CtSide.SelectedIndex = index.Value;
+                        Comp?.Ct = MusicKits.settings?.Music_Paths[index.Value].path;
                     }
+                    if (MusicKits.settings?.Competitivie?.T != null && MusicKits.settings?.Competitivie?.T != -1)
+                    {
+                        int? index = MusicKits.settings?.Competitivie?.T;
+                        TSide.SelectedIndex = index.Value;
+                        Comp?.T = MusicKits.settings?.Music_Paths[index.Value].path;
+                    }
+                    DeathMatch.Visible = true;
                     break;
                 case (int)Mode.Public:
-                    Competitive.Visible = true;
                     mode = Mode.Public;
-                    if (MusicKits.settings?.Music_Paths[0].path != null)
+                    if (MusicKits.settings?.Public?.Ct != null && MusicKits.settings?.Public?.Ct != -1)
                     {
-                        CtSelectMusic(MusicKits.settings?.Music_Paths[MusicKits.settings?.Public?.Ct ?? 0].path);
-                        TSelectMusic(MusicKits.settings?.Music_Paths[MusicKits.settings?.Public?.T ?? 0].path);
+                        int? index = MusicKits.settings?.Public?.Ct;
+                        CtSide.SelectedIndex = index.Value;
+                        Public?.Ct = MusicKits.settings?.Music_Paths[index.Value].path;
                     }
-
+                    if (MusicKits.settings?.Public?.T != null && MusicKits.settings?.Public?.T != -1)
+                    {
+                        int? index = MusicKits.settings?.Public?.T;
+                        TSide.SelectedIndex = index.Value;
+                        Public?.T = MusicKits.settings?.Music_Paths[index.Value].path;
+                    }
+                    DeathMatch.Visible = true;
                     break;
                 case (int)Mode.Deathmatch:
-                    Competitive.Visible = false;
                     mode = Mode.Deathmatch;
-                    if (MusicKits.settings?.Music_Paths[0].path != null)
+                    if (MusicKits.settings?.Deathmatch != null && MusicKits.settings?.Deathmatch != -1)
                     {
-                        CtSelectMusic(MusicKits.settings?.Music_Paths[MusicKits.settings?.Deathmatch ?? 0].path);
+                        int? index = MusicKits.settings?.Competitivie?.Ct;
+                        CtSide.SelectedIndex = index.Value;
+                        Dm = MusicKits.settings?.Music_Paths[index.Value].path;
                     }
+                    DeathMatch.Visible = false;
+                    break;
+                case (int)Mode.Wingmans:
+                    mode = Mode.Deathmatch;
+                    if (MusicKits.settings?.Wingmans?.Ct != null && MusicKits.settings?.Wingmans?.Ct != -1)
+                    {
+                        int? index = MusicKits.settings?.Public?.Ct;
+                        CtSide.SelectedIndex = index.Value;
+                        Wingmans?.Ct = MusicKits.settings?.Music_Paths[index.Value].path;
+                    }
+                    if (MusicKits.settings?.Wingmans?.T != null && MusicKits.settings?.Wingmans?.T != -1)
+                    {
+                        int? index = MusicKits.settings?.Public?.T;
+                        TSide.SelectedIndex = index.Value;
+                        Wingmans?.T = MusicKits.settings?.Music_Paths[index.Value].path;
+                    }
+                    DeathMatch.Visible = true;
                     break;
             }
         }
 
-        private void CtStartGameVolume_Scroll(object sender, ScrollEventArgs e)
+        private void StartGameVolume_Scroll(object sender, ScrollEventArgs e)
         {
+            StartGameVolumeText.Text = StartGameVolume.Value.ToString();
+            MusicKits.settings.Volume[(int)MusicIvents.StartGame] = StartGameVolume.Value;
+            WavPlayer.changevolume(MusicIvents.StartGame, StartGameVolume.Value);
+        }
 
+        private void MenuVolume_Scroll(object sender, ScrollEventArgs e)
+        {
+            MenuVolumeText.Text = MenuVolume.Value.ToString();
+            MusicKits.settings.Volume[(int)MusicIvents.Menu] = MenuVolume.Value;
+            WavPlayer.changevolume(MusicIvents.Menu, MenuVolume.Value);
+        }
+
+        private void StartRoundVolume_Scroll(object sender, ScrollEventArgs e)
+        {
+            StartRoundVolumeText.Text = StartRoundVolume.Value.ToString();
+            MusicKits.settings.Volume[(int)MusicIvents.StartRound] = StartRoundVolume.Value;
+            WavPlayer.changevolume(MusicIvents.StartRound, StartRoundVolume.Value);
+        }
+
+        private void StartActionVolume_Scroll(object sender, ScrollEventArgs e)
+        {
+            StartActionVolumeText.Text = StartActionVolume.Value.ToString();
+            MusicKits.settings.Volume[(int)MusicIvents.StartAction] = StartActionVolume.Value;
+            WavPlayer.changevolume(MusicIvents.StartAction, StartActionVolume.Value);
+        }
+
+        private void WinRoundVolume_Scroll(object sender, ScrollEventArgs e)
+        {
+            WinRoundVolumeText.Text = WinRoundVolume.Value.ToString();
+            MusicKits.settings.Volume[(int)MusicIvents.WinRound] = WinRoundVolume.Value;
+            WavPlayer.changevolume(MusicIvents.WinRound, WinRoundVolume.Value);
+        }
+
+        private void LoseRoundVolume_Scroll(object sender, ScrollEventArgs e)
+        {
+            LoseRoundVolumeText.Text = LoseRoundVolume.Value.ToString();
+            MusicKits.settings.Volume[(int)MusicIvents.LoseRound] = LoseRoundVolume.Value;
+            WavPlayer.changevolume(MusicIvents.LoseRound, LoseRoundVolume.Value);
+        }
+
+        private void MvpVolume_Scroll(object sender, ScrollEventArgs e)
+        {
+            MvpVolumeText.Text = MvpVolume.Value.ToString();
+            MusicKits.settings.Volume[(int)MusicIvents.Mvp] = MvpVolume.Value;
+            WavPlayer.changevolume(MusicIvents.Mvp, MvpVolume.Value);
+        }
+
+        private void BombVolume_Scroll(object sender, ScrollEventArgs e)
+        {
+            BombVolumeText.Text = BombVolume.Value.ToString();
+            MusicKits.settings.Volume[(int)MusicIvents.Bomb] = BombVolume.Value;
+            WavPlayer.changevolume(MusicIvents.Bomb, BombVolume.Value);
+        }
+
+        private void TenSecondBombVolume_Scroll(object sender, ScrollEventArgs e)
+        {
+            TenSecondBombVolumeText.Text = TenSecondBombVolume.Value.ToString();
+            MusicKits.settings.Volume[(int)MusicIvents.TenSecondBomb] = TenSecondBombVolume.Value;
+            WavPlayer.changevolume(MusicIvents.TenSecondBomb, TenSecondBombVolume.Value);
+        }
+
+        private void TenSecondRoundVolume_Scroll(object sender, ScrollEventArgs e)
+        {
+            TenSecondRoundVolumeText.Text = TenSecondRoundVolume.Value.ToString();
+            MusicKits.settings.Volume[(int)MusicIvents.TenSecondRound] = TenSecondRoundVolume.Value;
+            WavPlayer.changevolume(MusicIvents.TenSecondRound, TenSecondRoundVolume.Value);
+        }
+
+        private void EndGameVolume_Scroll(object sender, ScrollEventArgs e)
+        {
+            EndGameVolumeText.Text = EndGameVolume.Value.ToString();
+            MusicKits.settings.Volume[(int)MusicIvents.EndGame] = EndGameVolume.Value;
+            WavPlayer.changevolume(MusicIvents.EndGame, EndGameVolume.Value);
+        }
+
+        private void KillVolume_Scroll(object sender, ScrollEventArgs e)
+        {
+            KillVolumeText.Text = KillVolume.Value.ToString();
+            MusicKits.settings.Volume[(int)MusicIvents.KillSound] = KillVolume.Value;
+            WavPlayer.changevolume(MusicIvents.KillSound, KillVolume.Value);
+        }
+
+        private void DeathcamVolume_Scroll(object sender, ScrollEventArgs e)
+        {
+            DeathcamVolumeText.Text = DeathcamVolume.Value.ToString();
+            MusicKits.settings.Volume[(int)MusicIvents.DeathCam] = DeathcamVolume.Value;
+            WavPlayer.changevolume(MusicIvents.DeathCam, DeathcamVolume.Value);
+        }
+
+        private void Load()
+        {
+            StartGameVolume.Value = MusicKits.settings.Volume[(int)MusicIvents.StartGame];
+            StartGameVolumeText.Text = MusicKits.settings.Volume[(int)MusicIvents.StartGame].ToString();
+
+            MenuVolume.Value = MusicKits.settings.Volume[(int)MusicIvents.Menu];
+            MenuVolumeText.Text = MusicKits.settings.Volume[(int)MusicIvents.Menu].ToString();
+
+            StartRoundVolume.Value = MusicKits.settings.Volume[(int)MusicIvents.StartRound];
+            StartRoundVolumeText.Text = MusicKits.settings.Volume[(int)MusicIvents.StartRound].ToString();
+
+            StartActionVolume.Value = MusicKits.settings.Volume[(int)MusicIvents.StartAction];
+            StartActionVolumeText.Text = MusicKits.settings.Volume[(int)MusicIvents.StartAction].ToString();
+
+            WinRoundVolume.Value = MusicKits.settings.Volume[(int)MusicIvents.WinRound];
+            WinRoundVolumeText.Text = MusicKits.settings.Volume[(int)MusicIvents.WinRound].ToString();
+
+            LoseRoundVolume.Value = MusicKits.settings.Volume[(int)MusicIvents.LoseRound];
+            LoseRoundVolumeText.Text = MusicKits.settings.Volume[(int)MusicIvents.LoseRound].ToString();
+
+            MvpVolume.Value = MusicKits.settings.Volume[(int)MusicIvents.Mvp];
+            MvpVolumeText.Text = MusicKits.settings.Volume[(int)MusicIvents.Mvp].ToString();
+
+            BombVolume.Value = MusicKits.settings.Volume[(int)MusicIvents.Bomb];
+            BombVolumeText.Text = MusicKits.settings.Volume[(int)MusicIvents.Bomb].ToString();
+
+            TenSecondBombVolume.Value = MusicKits.settings.Volume[(int)MusicIvents.TenSecondBomb];
+            TenSecondBombVolumeText.Text = MusicKits.settings.Volume[(int)MusicIvents.TenSecondBomb].ToString();
+
+            TenSecondRoundVolume.Value = MusicKits.settings.Volume[(int)MusicIvents.TenSecondRound];
+            TenSecondRoundVolumeText.Text = MusicKits.settings.Volume[(int)MusicIvents.TenSecondRound].ToString();
+
+            EndGameVolume.Value = MusicKits.settings.Volume[(int)MusicIvents.EndGame];
+            EndGameVolumeText.Text = MusicKits.settings.Volume[(int)MusicIvents.EndGame].ToString();
+
+            KillVolume.Value = MusicKits.settings.Volume[(int)MusicIvents.KillSound];
+            KillVolumeText.Text = MusicKits.settings.Volume[(int)MusicIvents.KillSound].ToString();
+
+            DeathcamVolume.Value = MusicKits.settings.Volume[(int)MusicIvents.DeathCam];
+            DeathcamVolumeText.Text = MusicKits.settings.Volume[(int)MusicIvents.DeathCam].ToString();
+        }
+
+        private void MainMusic_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int selectedIndex = MainMusic.SelectedIndex;
+            main = MusicKits.settings.Music_Paths[selectedIndex].path;
         }
     }
 }

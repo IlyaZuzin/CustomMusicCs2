@@ -13,10 +13,12 @@ namespace MusicComanderGUI
         public Teams? Competitivie { get; set; }
         [JsonPropertyName("Deathmatch")]
         public int? Deathmatch { get; set; }
+        [JsonPropertyName("Wingmans")]
+        public Teams? Wingmans { get; set; }
         [JsonPropertyName("Public")]
         public Teams? Public { get; set; }
         [JsonPropertyName("Volume")]
-        public int? Volume { get; set; }
+        public int[] Volume { get; set; } = new int[13];
         [JsonPropertyName("DoubleMode")]
         public bool DoubleMode = false;
     }
@@ -24,7 +26,6 @@ namespace MusicComanderGUI
     class MusicKits
     {
         public static Setting? settings;
-        private static Mode gamemode;
 
         public static void LoadSetting()
         {
@@ -43,6 +44,7 @@ namespace MusicComanderGUI
             if (settings.Music_Paths == null) settings.Music_Paths = new List<Music>();
             if (settings.Competitivie == null) settings.Competitivie = new Teams();
             if (settings.Public == null) settings.Public = new Teams();
+            if (settings.Wingmans == null) settings.Wingmans = new Teams();
         }
 
         public static Kit_Sound? loadJson(string path)
@@ -62,8 +64,10 @@ namespace MusicComanderGUI
             if (settings.Music_Paths == null) settings.Music_Paths = new List<Music>();
             if (settings.Competitivie == null) settings.Competitivie = new Teams();
             if (settings.Public == null) settings.Public = new Teams();
+            if (settings.Wingmans == null) settings.Wingmans = new Teams();
             var options = new JsonSerializerOptions { WriteIndented = true };
             File.WriteAllText("setting.json", JsonSerializer.Serialize(settings, options));
+            
         }
 
         public static string CreateMusicKit(string path, string name, Kit_Sound music)
@@ -92,19 +96,10 @@ namespace MusicComanderGUI
 
         private static void CopyFiles(string path, Kit_Sound music)
         {
-            music.Musics[(int)MusicIvents.Bomb].path = CopyFileByFileSave(music.Musics[(int)MusicIvents.Bomb].path, path, "bomb.wav");
-            music.Musics[(int)MusicIvents.WinRound].path = CopyFileByFileSave(music.Musics[(int)MusicIvents.WinRound].path, path, "WinRound.wav");
-            music.Musics[(int)MusicIvents.LoseRound].path = CopyFileByFileSave(music.Musics[(int)MusicIvents.LoseRound].path, path, "LoseRound.wav");
-            music.Musics[(int)MusicIvents.DeathCam].path = CopyFileByFileSave(music.Musics[(int)MusicIvents.DeathCam].path, path, "deathCam.wav");
-            music.Musics[(int)MusicIvents.StartAction].path = CopyFileByFileSave(music.Musics[(int)MusicIvents.StartAction].path, path, "StartAction.wav");
-            music.Musics[(int)MusicIvents.Menu].path = CopyFileByFileSave(music.Musics[(int)MusicIvents.Menu].path, path, "menu.wav");
-            music.Musics[(int)MusicIvents.TenSecondBomb].path = CopyFileByFileSave(music.Musics[(int)MusicIvents.TenSecondBomb].path, path, "TenSecondsBomb.wav");
-            music.Musics[(int)MusicIvents.Mvp].path = CopyFileByFileSave(music.Musics[(int)MusicIvents.Mvp].path, path, "MVP.wav");
-            music.Musics[(int)MusicIvents.StartRound].path = CopyFileByFileSave(music.Musics[(int)MusicIvents.StartRound].path, path, "StartRound.wav");
-            music.Musics[(int)MusicIvents.StartGame].path = CopyFileByFileSave(music.Musics[(int)MusicIvents.StartGame].path, path, "StartGame.wav");
-            music.Musics[(int)MusicIvents.KillSound].path = CopyFileByFileSave(music.Musics[(int)MusicIvents.KillSound].path, path, "KillSound.wav");
-            music.Musics[(int)MusicIvents.EndGame].path = CopyFileByFileSave(music.Musics[(int)MusicIvents.EndGame].path, path, "EndGame.wav");
-            music.Musics[(int)MusicIvents.TenSecondRound].path = CopyFileByFileSave(music.Musics[(int)MusicIvents.TenSecondRound].path, path, "TenSecondRound.wav");
+            for (int  i = 0; i < 13; i++)
+            {
+                music.music[i] = CopyFileByFileSave(music.music[i], path, Enum.GetName(typeof(MusicIvents), i) + ".wav");
+            }
             music.image = CopyFileByFileSave(music.image, path, "Image.png");
        }
 
@@ -129,7 +124,7 @@ namespace MusicComanderGUI
             }
 
         }
-    
+        
         public static void UpdateMusicKit(Kit_Sound update)
         { 
             CopyFiles(update.path, update);
@@ -149,7 +144,7 @@ namespace MusicComanderGUI
         [JsonPropertyName("path")]
         public string? path { get; set; }
 
-        public MusicSettings?[] Musics { get; set; } = new MusicSettings[13];
+        public string[]? music { get; set; } = new string[13];
     }
 
     public enum MusicIvents
@@ -174,13 +169,6 @@ namespace MusicComanderGUI
         public string? name { get; set; }
         public string? image { get; set; }
         public string? path { get; set; }
-    }
-    
-    class MusicSettings
-    {
-        public string? path { get; set; }
-        public int volume { get; set; } = 100;
-        public bool IsEnable { get; set; } = true;
     }
 
     public class Teams

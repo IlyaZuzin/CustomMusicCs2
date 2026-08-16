@@ -9,7 +9,7 @@ namespace MusicComanderGUI
         private static float volume = 1.0f;
         public static SoundPlayer[]? music;
 
-        public static async void SetupMusic(Kit_Sound load)
+        public static async void SetupMusic(Kit_Sound load, MusicIvents mode = MusicIvents.Menu) 
         { 
             AudioStop();
             
@@ -17,7 +17,7 @@ namespace MusicComanderGUI
 
             for (int i = 0; i < 13; i++) {
                 // Если путь к файлу не задан, просто пропускаем или пишем null
-                if (string.IsNullOrEmpty(load.Musics[i].path))
+                if (string.IsNullOrEmpty(load?.music[i]))
                 {
                     music[i] = null;
                     continue; // Переходим к следующему треку, а не выходим из цикла!
@@ -26,8 +26,9 @@ namespace MusicComanderGUI
                 try
                 {
                     WaveOutEvent player = new WaveOutEvent();
-                    AudioFileReader file = new AudioFileReader(load.Musics[i].path);
-                    file.Volume = load.Musics[i].volume / 100;
+                    AudioFileReader file = new AudioFileReader(load.music[i]);
+                    float vol = MusicKits.settings.Volume[i] / 100;
+                    file.Volume = vol;
                     // Настройка зацикливания для определенных треков
                     if (i ==  (int)MusicIvents.Menu || i == (int)MusicIvents.StartRound)
                     {
@@ -46,7 +47,7 @@ namespace MusicComanderGUI
                     };
 
                     music[i] = buf;
-                    Main.Instance?.SetConsoleLog($"[GSI]: Звук '{Enum.GetName(typeof(MusicIvents), i)}' успешно загружен.");
+                    Main.Instance?.SetConsoleLog($"[GSI]: Звук '{Enum.GetName(typeof(MusicIvents), i)}' успешно загружен. [{Enum.GetName(typeof(MusicIvents), (int)mode)}]");
                 }
                 catch (Exception ex)
                 {
@@ -95,7 +96,6 @@ namespace MusicComanderGUI
                 PlayMusic(song);
             else
                 StopMusic();
-            Main.Instance?.SetConsoleLog($"[GSI]: Звук '{song}' успешно запущен.");
             Ivents.LastMusic = song;
         }
 
@@ -122,6 +122,15 @@ namespace MusicComanderGUI
                 music[(int)Ivents.LastMusic].file.Position = 0;
                 music[(int)Ivents.LastMusic].file.Volume = volume;
                 music[(int)Ivents.LastMusic].player.Play();
+            }
+        }
+
+        public static void changevolume(MusicIvents id, float vol)
+        {
+            if(Server.is_Running == true && music[(int)id] != null)
+            {
+                vol /= 100;
+                music[(int)id].file.Volume = vol;
             }
         }
     }

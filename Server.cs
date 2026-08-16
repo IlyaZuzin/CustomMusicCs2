@@ -37,7 +37,7 @@ namespace MusicComanderGUI
                 // Запускаем полностью асин обработку
                 Task.Run(() => ReadJsonAsync(cts.Token));
                 Main.Instance?.SetConsoleLog($"Start server {Addr}");
-                Kit_Sound load = MusicKits.loadJson(Main.Comp.Ct);
+                Kit_Sound load = MusicKits.loadJson(Main.main);
                 WavPlayer.SetupMusic(load);
                 is_Running = true; 
             }

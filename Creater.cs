@@ -14,11 +14,7 @@ namespace MusicComanderGUI
         private Kit_Sound? kit = new Kit_Sound();   
         public Creater(Main _form)
         {
-            kit.Musics = new MusicSettings[13];
-            for (int i =0; i < 13; i++)
-            {
-                kit.Musics[i] = new MusicSettings();
-            }
+            kit.music = new string[13];
             InitializeComponent();
             //LoadJsonSetings();
             form = _form;
@@ -28,19 +24,19 @@ namespace MusicComanderGUI
         {
             kit.image = MusicKitImage.ImageLocation;
             kit.name = NameKit.Text;
-            kit.Musics[(int)MusicIvents.Menu].path = MainMenu_dir.Text;
-            kit.Musics[(int)MusicIvents.DeathCam].path = DeathCam_dir.Text;
-            kit.Musics[(int)MusicIvents.WinRound].path = WinRound_dir.Text;
-            kit.Musics[(int)MusicIvents.LoseRound].path = LoseRound_dir.Text;
-            kit.Musics[(int)MusicIvents.Bomb].path = Bomb_dir.Text;
-            kit.Musics[(int)MusicIvents.StartAction].path = StartAction_dir.Text;
-            kit.Musics[(int)MusicIvents.Mvp].path = MVPDir.Text;
-            kit.Musics[(int)MusicIvents.StartGame].path = StartGameDir.Text;
-            kit.Musics[(int)MusicIvents.StartRound].path = StartRoundDir.Text;
-            kit.Musics[(int)MusicIvents.TenSecondBomb].path = TenSecondDir.Text;
-            kit.Musics[(int)MusicIvents.KillSound].path = KillSoundDir.Text;
-            kit.Musics[(int)MusicIvents.TenSecondRound].path = TenSecondRoundDir.Text;
-            kit.Musics[(int)MusicIvents.EndGame].path = EndGameDir.Text;
+            kit.music[(int)MusicIvents.Menu] = MainMenu_dir.Text;
+            kit.music[(int)MusicIvents.DeathCam] = DeathCam_dir.Text;
+            kit.music[(int)MusicIvents.WinRound] = WinRound_dir.Text;
+            kit.music[(int)MusicIvents.LoseRound] = LoseRound_dir.Text;
+            kit.music[(int)MusicIvents.Bomb] = Bomb_dir.Text;
+            kit.music[(int)MusicIvents.StartAction] = StartAction_dir.Text;
+            kit.music[(int)MusicIvents.Mvp] = MVPDir.Text;
+            kit.music[(int)MusicIvents.StartGame] = StartGameDir.Text;
+            kit.music[(int)MusicIvents.StartRound] = StartRoundDir.Text;
+            kit.music[(int)MusicIvents.TenSecondBomb] = TenSecondDir.Text;
+            kit.music[(int)MusicIvents.KillSound] = KillSoundDir.Text;
+            kit.music[(int)MusicIvents.TenSecondRound] = TenSecondRoundDir.Text;
+            kit.music[(int)MusicIvents.EndGame] = EndGameDir.Text;
 
             MusicKits.SaveSetting();
         }
