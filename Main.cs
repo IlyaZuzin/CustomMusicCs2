@@ -41,7 +41,7 @@ namespace MusicComanderGUI
                             TSide.Items.Add(b.name);
                             CtSide.Items.Add(b.name);
                             MainMusic.Items.Add(b.name);
-                            
+
                             ListViewItem item = new ListViewItem(b.name, newImageIndex);
                             MusicNumbers.Items.Add(item);
                         }
@@ -142,6 +142,7 @@ namespace MusicComanderGUI
                     MusicNumbers.Items.Add(item);
                     TSide.Items.Add(name);
                     CtSide.Items.Add(name);
+                    MainMusic.Items.Add(name);
                 }
             }
             catch (Exception ex) { SetConsoleLog(ex.Message); }
@@ -467,6 +468,11 @@ namespace MusicComanderGUI
         {
             int selectedIndex = MainMusic.SelectedIndex;
             main = MusicKits.settings.Music_Paths[selectedIndex].path;
+        }
+
+        private void SettingsMenu_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

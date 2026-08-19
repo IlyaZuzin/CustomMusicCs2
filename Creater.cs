@@ -172,65 +172,6 @@ namespace MusicComanderGUI
             }
         }
 
-        private void MainMenuCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            Ivents.IsMenu = MainMenuCheck.Checked;
-        }
-
-        private void StartGameChecked_CheckedChanged(object sender, EventArgs e)
-        {
-            Ivents.IsStartGame = StartGameChecked.Checked;
-        }
-
-        private void StartRoundChecked_CheckedChanged(object sender, EventArgs e)
-        {
-            Ivents.IsBomb = BombCheck.Checked;
-        }
-
-        private void StartActionChecker_CheckedChanged(object sender, EventArgs e)
-        {
-            Ivents.IsStartAction = StartActionChecker.Checked;
-        }
-        private void WinRoundCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            Ivents.IsWinRound = WinRoundCheck.Checked;
-        }
-        private void LoseRoundCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            Ivents.IsLoseRound = LoseRoundCheck.Checked;
-        }
-        private void MVPChecked_CheckedChanged(object sender, EventArgs e)
-        {
-            Ivents.IsMVP = MVPChecked.Checked;
-        }
-        private void BombCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            Ivents.IsBomb = BombCheck.Checked;
-        }
-        private void TenSecondChecked_CheckedChanged(object sender, EventArgs e)
-        {
-            Ivents.IsTenSecond = TenSecondChecked.Checked;
-        }
-
-        private void TenSecondRoundChecked_CheckedChanged(object sender, EventArgs e)
-        {
-            Ivents.IsTenSecondRound = TenSecondChecked.Checked;
-        }
-
-        private void EndGameChecked_CheckedChanged(object sender, EventArgs e)
-        {
-            Ivents.IsEndGame = EndGameChecked.Checked;
-        }
-
-        private void KillSoundChecked_CheckedChanged(object sender, EventArgs e)
-        {
-            Ivents.IsKill = BombCheck.Checked;
-        }
-        private void DeathCamCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            Ivents.IsDeath = DeathCamCheck.Checked;
-        }
-
         private void Update_Click(object sender, EventArgs e)
         {
             MusicKits.UpdateMusicKit(kit);
@@ -245,7 +186,6 @@ namespace MusicComanderGUI
 
             int size = MusicKits.settings.Music_Paths.Count();
             string name = NameKit.Text;
-
             form.imageList1.Images.Add(Image.FromFile(ImageDir.Text));
             int newImageIndex = form.imageList1.Images.Count - 1;
             ListViewItem item = new ListViewItem(name, newImageIndex);
@@ -253,6 +193,7 @@ namespace MusicComanderGUI
             form.TSide.Items.Add(name);
             form.CtSide.Items.Add(name);
             form.MainMusic.Items.Add(name);
+            MusicKits.SaveSetting();
         }
 
         private void panel3_Paint(object sender, PaintEventArgs e)

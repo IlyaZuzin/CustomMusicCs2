@@ -1,7 +1,12 @@
-﻿using System.IO;
+﻿// ---------------------------------------------------------------------------------------
+// Файл MusicKits.cs содержит класс MusicKit, через который вызываем функции сохранения и
+// загрузки конфигураций наборов.
+// ---------------------------------------------------------------------------------------
+
+using NAudio.Gui;
+using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using static System.Windows.Forms.Design.AxImporter;
 
 namespace MusicComanderGUI
 {
@@ -34,13 +39,22 @@ namespace MusicComanderGUI
                 settings = JsonSerializer.Deserialize<Setting>(json);
             }
             catch (FileNotFoundException) { 
+                if (settings == null) settings = new Setting();
+                for(int i =0; i < 13; i++)
+                {
+                    settings?.Volume[i] = 100;
+                }
                 SaveSetting();
             }
             catch (System.Text.Json.JsonException){
+                if (settings == null) settings = new Setting();
+                for(int i = 0; i < 13; i++)
+                {
+                    settings?.Volume[i] = 100;
+                }
                 SaveSetting();
             }
 
-            if (settings == null) settings = new Setting();
             if (settings.Music_Paths == null) settings.Music_Paths = new List<Music>();
             if (settings.Competitivie == null) settings.Competitivie = new Teams();
             if (settings.Public == null) settings.Public = new Teams();

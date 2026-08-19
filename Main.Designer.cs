@@ -422,6 +422,7 @@
             SettingsMenu.Name = "SettingsMenu";
             SettingsMenu.Size = new Size(1057, 747);
             SettingsMenu.TabIndex = 57;
+            SettingsMenu.Paint += SettingsMenu_Paint;
             // 
             // MenuVolumeText
             // 

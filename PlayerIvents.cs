@@ -1,4 +1,8 @@
-﻿using System.Text.Json.Serialization;
+﻿// ----------------------------------------------------------------------------------------------
+// Данный файл определяет события, которые происходят во время игры и запускает необходимое аудио
+// ----------------------------------------------------------------------------------------------
+
+using System.Text.Json.Serialization;
 using static PlayerStats;
 namespace MusicComanderGUI
 {
@@ -16,26 +20,14 @@ namespace MusicComanderGUI
     {
         public static MusicIvents? LastMusic;
         private static int Round_Timer = 115;
-        public static bool IsMenu = true;
         private static int? Mvp = 0;
-        private static bool GameEnd = false;
         public static string? Team = "Ct";
-        public static bool IsBomb = true;
-        public static bool IsStartGame = true;
-        public static bool IsEndGame = true;
-        public static bool IsStartAction = true;
-        public static bool IsStartRound = true;
-        public static bool IsMVP = true;
-        public static bool IsWinRound = true;
-        public static bool IsTenSecondRound = true;
-        public static bool IsLoseRound = true;
-        public static bool IsTenSecond = true;
-        public static bool IsDeath = true;
-        public static bool isDead = true;
-        public static bool IsKill = true;
         private static bool StartRound = false;
         private static int? kills_r = 0;
         private static bool? IsCompetitive;
+        private static bool IsKill;
+        private static bool GameEnd;
+        private static bool IsDeath = true;
         public static PlayerStats? player = null;
         private static PlayerStats? currect_player = null;
         private static Mode gamemode = Mode.Menu;
@@ -50,7 +42,7 @@ namespace MusicComanderGUI
             if (gamemode == Mode.Menu)
             {
                 StartRound = false;
-                WavPlayer.IfEnable(MusicIvents.Menu, IsMenu);
+                WavPlayer.IfEnable(MusicIvents.Menu, ModeMusic.Stop);
             }
             else if (gamemode == Mode.Competitive)
             {
@@ -98,25 +90,15 @@ namespace MusicComanderGUI
                     kills_r = player?.player?.state?.round_kills;
                     if (IsKill)
                     {
-                        if (WavPlayer.music[(int)MusicIvents.KillSound] != null)
-                        { 
-                            WavPlayer.music[(int)MusicIvents.KillSound].file?.Position = 0;
-                            WavPlayer.music[(int)MusicIvents.KillSound].player?.Play();
-                            WavPlayer.music[(int)MusicIvents.KillSound].player?.Volume = MusicKits.settings.Volume[(int)MusicIvents.KillSound];
-                        }
+                        WavPlayer.IfEnable(MusicIvents.DeathCam, ModeMusic.Play);
                     }
                 }
-                if (player?.player?.state?.health == 0 && player?.player?.steamid == player?.client?.steamid && !isDead)
+                if (player?.player?.state?.health == 0 && player?.player?.steamid == player?.client?.steamid && !IsDeath)
                 {
-                    isDead = true;
+                    IsDeath = true;
                     if (IsDeath)
                     {
-                        if (WavPlayer.music[(int)MusicIvents.DeathCam] != null)
-                        {
-                            WavPlayer.music[(int)MusicIvents.DeathCam].file?.Position = 0;
-                            WavPlayer.music[(int)MusicIvents.DeathCam].player?.Play();
-                            WavPlayer.music[(int)MusicIvents.DeathCam].player?.Volume = MusicKits.settings.Volume[(int)MusicIvents.DeathCam];
-                        }
+                        WavPlayer.IfEnable(MusicIvents.DeathCam, ModeMusic.Play);
                     }
                 }
             }
@@ -130,7 +112,7 @@ namespace MusicComanderGUI
                 Main.Instance?.SetConsoleLog($"Проверка бомбы");
                 if (player?.round?.bomb == "planted" && LastMusic != MusicIvents.Bomb && LastMusic != MusicIvents.TenSecondBomb)
                 {
-                    WavPlayer.IfEnable(MusicIvents.Bomb, IsBomb);
+                    WavPlayer.IfEnable(MusicIvents.Bomb, ModeMusic.Stop);
                     Main.Instance?.SetConsoleLog($"Начался отсчет бомбы");
                     for (int i = 0; i <= 28; i++)
                     {
@@ -140,7 +122,7 @@ namespace MusicComanderGUI
                     }
                     if (cts.IsCancellationRequested) return;
                     if (currect_player?.round?.bomb == "planted" && LastMusic == MusicIvents.Bomb)
-                        WavPlayer.IfEnable(MusicIvents.TenSecondBomb, IsTenSecond);
+                        WavPlayer.IfEnable(MusicIvents.TenSecondBomb, ModeMusic.IfPlayingStop);
                 }
             }
             catch { }
@@ -180,12 +162,12 @@ namespace MusicComanderGUI
                 if (player?.player?.team == player?.round?.win_team && player?.round != null && player?.player?.MVP?.mvp != null)
                 {
                     if (player?.player?.MVP?.mvp != Mvp && player?.client?.steamid == player?.player?.steamid)
-                        WavPlayer.IfEnable(MusicIvents.Mvp, IsWinRound);
+                        WavPlayer.IfEnable(MusicIvents.Mvp, ModeMusic.Stop);
                     else
-                        WavPlayer.IfEnable(MusicIvents.WinRound, IsWinRound);
+                        WavPlayer.IfEnable(MusicIvents.WinRound, ModeMusic.Stop);
                 }
                 else if (player?.player?.team != player?.round?.win_team && player?.round?.win_team != null && player?.player?.team != null)
-                    WavPlayer.IfEnable(MusicIvents.LoseRound, IsLoseRound);
+                    WavPlayer.IfEnable(MusicIvents.LoseRound, ModeMusic.Stop);
             }
             catch { }
         }
@@ -198,7 +180,7 @@ namespace MusicComanderGUI
                     {
                         GameEnd = false;
                         StartRound = true;
-                        WavPlayer.IfEnable(MusicIvents.StartGame, IsStartGame);
+                        WavPlayer.IfEnable(MusicIvents.StartGame, ModeMusic.Stop);
                         Main.Instance?.SetConsoleLog($"Начался отсчет начала игры");
 
                         for (int i = 0; i < 7; i++){
@@ -210,28 +192,28 @@ namespace MusicComanderGUI
                                 return;
                             }
                         }
-                        WavPlayer.IfEnable(MusicIvents.StartRound, IsStartRound);
+                        WavPlayer.IfEnable(MusicIvents.StartRound, ModeMusic.Stop);
                         StartRound = false;
                     }
 
                     else if (player?.map?.phase == "warmup") { WavPlayer.StopMusic();}
 
                     else if (player?.map?.phase == "gameover"){
-                        WavPlayer.IfEnable(MusicIvents.EndGame, IsEndGame);
+                        WavPlayer.IfEnable(MusicIvents.EndGame, ModeMusic.IfPlayingStop);
                         GameEnd = true;
                     }
 
                     else if (player?.round?.phase == "freezetime")
                         {
-                            WavPlayer.IfEnable(MusicIvents.StartRound, IsStartRound);
-                            isDead = false;
+                            WavPlayer.IfEnable(MusicIvents.StartRound, ModeMusic.IfPlayingStop);
+                            IsDeath = false;
                         }
                 
                     else if (player?.round?.phase == "live" && LastMusic == MusicIvents.StartRound )
                         {
                             Mvp = player?.player?.MVP?.mvp;
 
-                            WavPlayer.IfEnable(MusicIvents.StartAction, IsStartAction);
+                            WavPlayer.IfEnable(MusicIvents.StartAction, ModeMusic.Stop);
                             kills_r = 0;
                             Main.Instance?.SetConsoleLog($"Начался отсчет начала раунла");
 
@@ -242,7 +224,7 @@ namespace MusicComanderGUI
                                 if (cts.IsCancellationRequested || LastMusic != MusicIvents.StartAction)
                                     return;
                             }
-                            WavPlayer.IfEnable(MusicIvents.TenSecondBomb, IsTenSecondRound);
+                            WavPlayer.IfEnable(MusicIvents.TenSecondBomb, ModeMusic.Stop);
 
                         }
                 }

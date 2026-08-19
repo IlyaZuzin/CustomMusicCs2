@@ -74,19 +74,6 @@
             textBox15 = new TextBox();
             MainMusic = new TextBox();
             TenSecondRoundDir = new TextBox();
-            TenSecondRoundChecked = new CheckBox();
-            StartActionChecker = new CheckBox();
-            WinRoundCheck = new CheckBox();
-            MainMenuCheck = new CheckBox();
-            LoseRoundCheck = new CheckBox();
-            StartGameChecked = new CheckBox();
-            BombCheck = new CheckBox();
-            StartRoundChecked = new CheckBox();
-            EndGameChecked = new CheckBox();
-            KillSoundChecked = new CheckBox();
-            TenSecondChecked = new CheckBox();
-            MVPChecked = new CheckBox();
-            DeathCamCheck = new CheckBox();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)MusicKitImage).BeginInit();
             SuspendLayout();
@@ -112,28 +99,19 @@
             panel3.Controls.Add(StartGameDir);
             panel3.Controls.Add(Update);
             panel3.Controls.Add(textBox10);
-            panel3.Controls.Add(StartGameChecked);
             panel3.Controls.Add(MusicKitImage);
             panel3.Controls.Add(MVPDir);
             panel3.Controls.Add(textBox9);
-            panel3.Controls.Add(MVPChecked);
             panel3.Controls.Add(TenSecondDir);
             panel3.Controls.Add(textBox11);
-            panel3.Controls.Add(TenSecondChecked);
             panel3.Controls.Add(KillSoundDir);
             panel3.Controls.Add(textBox12);
-            panel3.Controls.Add(KillSoundChecked);
             panel3.Controls.Add(EndGameDir);
             panel3.Controls.Add(textBox13);
-            panel3.Controls.Add(EndGameChecked);
             panel3.Controls.Add(textBox8);
             panel3.Controls.Add(ImageDir);
-            panel3.Controls.Add(StartRoundChecked);
             panel3.Controls.Add(MainMenu_dir);
             panel3.Controls.Add(StartRoundDir);
-            panel3.Controls.Add(BombCheck);
-            panel3.Controls.Add(DeathCamCheck);
-            panel3.Controls.Add(LoseRoundCheck);
             panel3.Controls.Add(LoseRound);
             panel3.Controls.Add(StartAction_dir);
             panel3.Controls.Add(DeathCam);
@@ -141,16 +119,12 @@
             panel3.Controls.Add(Bomb_dir);
             panel3.Controls.Add(Bomb);
             panel3.Controls.Add(WinRound);
-            panel3.Controls.Add(MainMenuCheck);
             panel3.Controls.Add(DeathCam_dir);
             panel3.Controls.Add(LoseRound_dir);
-            panel3.Controls.Add(WinRoundCheck);
             panel3.Controls.Add(StartAction);
-            panel3.Controls.Add(StartActionChecker);
             panel3.Controls.Add(textBox15);
             panel3.Controls.Add(MainMusic);
             panel3.Controls.Add(TenSecondRoundDir);
-            panel3.Controls.Add(TenSecondRoundChecked);
             panel3.Location = new Point(1, 0);
             panel3.Name = "panel3";
             panel3.Size = new Size(1143, 714);
@@ -624,180 +598,6 @@
             TenSecondRoundDir.Size = new Size(431, 23);
             TenSecondRoundDir.TabIndex = 59;
             // 
-            // TenSecondRoundChecked
-            // 
-            TenSecondRoundChecked.AutoSize = true;
-            TenSecondRoundChecked.Checked = true;
-            TenSecondRoundChecked.CheckState = CheckState.Checked;
-            TenSecondRoundChecked.Location = new Point(738, 293);
-            TenSecondRoundChecked.Name = "TenSecondRoundChecked";
-            TenSecondRoundChecked.Size = new Size(15, 14);
-            TenSecondRoundChecked.TabIndex = 61;
-            TenSecondRoundChecked.UseVisualStyleBackColor = true;
-            TenSecondRoundChecked.CheckedChanged += TenSecondRoundChecked_CheckedChanged;
-            // 
-            // StartActionChecker
-            // 
-            StartActionChecker.AutoSize = true;
-            StartActionChecker.BackColor = Color.White;
-            StartActionChecker.Checked = true;
-            StartActionChecker.CheckState = CheckState.Checked;
-            StartActionChecker.ForeColor = Color.Black;
-            StartActionChecker.Location = new Point(738, 118);
-            StartActionChecker.Name = "StartActionChecker";
-            StartActionChecker.Size = new Size(15, 14);
-            StartActionChecker.TabIndex = 31;
-            StartActionChecker.UseVisualStyleBackColor = false;
-            StartActionChecker.CheckedChanged += StartActionChecker_CheckedChanged;
-            // 
-            // WinRoundCheck
-            // 
-            WinRoundCheck.AutoSize = true;
-            WinRoundCheck.BackColor = Color.White;
-            WinRoundCheck.Checked = true;
-            WinRoundCheck.CheckState = CheckState.Checked;
-            WinRoundCheck.ForeColor = Color.Black;
-            WinRoundCheck.Location = new Point(738, 147);
-            WinRoundCheck.Name = "WinRoundCheck";
-            WinRoundCheck.Size = new Size(15, 14);
-            WinRoundCheck.TabIndex = 28;
-            WinRoundCheck.UseVisualStyleBackColor = false;
-            WinRoundCheck.CheckedChanged += WinRoundCheck_CheckedChanged;
-            // 
-            // MainMenuCheck
-            // 
-            MainMenuCheck.AutoSize = true;
-            MainMenuCheck.BackColor = Color.White;
-            MainMenuCheck.Checked = true;
-            MainMenuCheck.CheckState = CheckState.Checked;
-            MainMenuCheck.ForeColor = Color.Black;
-            MainMenuCheck.Location = new Point(738, 31);
-            MainMenuCheck.Name = "MainMenuCheck";
-            MainMenuCheck.Size = new Size(15, 14);
-            MainMenuCheck.TabIndex = 26;
-            MainMenuCheck.UseVisualStyleBackColor = false;
-            MainMenuCheck.CheckedChanged += MainMenuCheck_CheckedChanged;
-            // 
-            // LoseRoundCheck
-            // 
-            LoseRoundCheck.AutoSize = true;
-            LoseRoundCheck.BackColor = Color.White;
-            LoseRoundCheck.Checked = true;
-            LoseRoundCheck.CheckState = CheckState.Checked;
-            LoseRoundCheck.ForeColor = Color.Black;
-            LoseRoundCheck.Location = new Point(738, 177);
-            LoseRoundCheck.Name = "LoseRoundCheck";
-            LoseRoundCheck.Size = new Size(15, 14);
-            LoseRoundCheck.TabIndex = 29;
-            LoseRoundCheck.UseVisualStyleBackColor = false;
-            LoseRoundCheck.CheckedChanged += LoseRoundCheck_CheckedChanged;
-            // 
-            // StartGameChecked
-            // 
-            StartGameChecked.AutoSize = true;
-            StartGameChecked.Checked = true;
-            StartGameChecked.CheckState = CheckState.Checked;
-            StartGameChecked.Location = new Point(738, 60);
-            StartGameChecked.Name = "StartGameChecked";
-            StartGameChecked.Size = new Size(15, 14);
-            StartGameChecked.TabIndex = 39;
-            StartGameChecked.UseVisualStyleBackColor = true;
-            StartGameChecked.CheckedChanged += StartGameChecked_CheckedChanged;
-            // 
-            // BombCheck
-            // 
-            BombCheck.AutoSize = true;
-            BombCheck.BackColor = Color.White;
-            BombCheck.Checked = true;
-            BombCheck.CheckState = CheckState.Checked;
-            BombCheck.ForeColor = Color.Black;
-            BombCheck.Location = new Point(738, 234);
-            BombCheck.Name = "BombCheck";
-            BombCheck.Size = new Size(15, 14);
-            BombCheck.TabIndex = 30;
-            BombCheck.UseVisualStyleBackColor = false;
-            BombCheck.CheckedChanged += BombCheck_CheckedChanged;
-            // 
-            // StartRoundChecked
-            // 
-            StartRoundChecked.AutoSize = true;
-            StartRoundChecked.BackColor = Color.White;
-            StartRoundChecked.Checked = true;
-            StartRoundChecked.CheckState = CheckState.Checked;
-            StartRoundChecked.ForeColor = Color.Black;
-            StartRoundChecked.Location = new Point(738, 89);
-            StartRoundChecked.Name = "StartRoundChecked";
-            StartRoundChecked.Size = new Size(15, 14);
-            StartRoundChecked.TabIndex = 35;
-            StartRoundChecked.UseVisualStyleBackColor = false;
-            StartRoundChecked.CheckedChanged += StartRoundChecked_CheckedChanged;
-            // 
-            // EndGameChecked
-            // 
-            EndGameChecked.AutoSize = true;
-            EndGameChecked.Checked = true;
-            EndGameChecked.CheckState = CheckState.Checked;
-            EndGameChecked.Location = new Point(738, 321);
-            EndGameChecked.Name = "EndGameChecked";
-            EndGameChecked.Size = new Size(15, 14);
-            EndGameChecked.TabIndex = 57;
-            EndGameChecked.UseVisualStyleBackColor = true;
-            EndGameChecked.CheckedChanged += EndGameChecked_CheckedChanged;
-            // 
-            // KillSoundChecked
-            // 
-            KillSoundChecked.AutoSize = true;
-            KillSoundChecked.BackColor = Color.White;
-            KillSoundChecked.Checked = true;
-            KillSoundChecked.CheckState = CheckState.Checked;
-            KillSoundChecked.ForeColor = SystemColors.ActiveCaptionText;
-            KillSoundChecked.Location = new Point(738, 350);
-            KillSoundChecked.Name = "KillSoundChecked";
-            KillSoundChecked.Size = new Size(15, 14);
-            KillSoundChecked.TabIndex = 53;
-            KillSoundChecked.UseVisualStyleBackColor = false;
-            KillSoundChecked.CheckedChanged += KillSoundChecked_CheckedChanged;
-            // 
-            // TenSecondChecked
-            // 
-            TenSecondChecked.AutoSize = true;
-            TenSecondChecked.BackColor = Color.White;
-            TenSecondChecked.Checked = true;
-            TenSecondChecked.CheckState = CheckState.Checked;
-            TenSecondChecked.ForeColor = Color.Black;
-            TenSecondChecked.Location = new Point(738, 264);
-            TenSecondChecked.Name = "TenSecondChecked";
-            TenSecondChecked.Size = new Size(15, 14);
-            TenSecondChecked.TabIndex = 49;
-            TenSecondChecked.UseVisualStyleBackColor = false;
-            TenSecondChecked.CheckedChanged += TenSecondChecked_CheckedChanged;
-            // 
-            // MVPChecked
-            // 
-            MVPChecked.AutoSize = true;
-            MVPChecked.Checked = true;
-            MVPChecked.CheckState = CheckState.Checked;
-            MVPChecked.Location = new Point(738, 206);
-            MVPChecked.Name = "MVPChecked";
-            MVPChecked.Size = new Size(15, 14);
-            MVPChecked.TabIndex = 45;
-            MVPChecked.UseVisualStyleBackColor = true;
-            MVPChecked.CheckedChanged += MVPChecked_CheckedChanged;
-            // 
-            // DeathCamCheck
-            // 
-            DeathCamCheck.AutoSize = true;
-            DeathCamCheck.BackColor = SystemColors.WindowText;
-            DeathCamCheck.Checked = true;
-            DeathCamCheck.CheckState = CheckState.Checked;
-            DeathCamCheck.ForeColor = Color.Azure;
-            DeathCamCheck.Location = new Point(738, 379);
-            DeathCamCheck.Name = "DeathCamCheck";
-            DeathCamCheck.Size = new Size(15, 14);
-            DeathCamCheck.TabIndex = 27;
-            DeathCamCheck.UseVisualStyleBackColor = false;
-            DeathCamCheck.CheckedChanged += DeathCamCheck_CheckedChanged;
-            // 
             // Creater
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -862,18 +662,5 @@
         private Button EndGameSelect;
         private Button TenSecondRoundSelect;
         private Button TenSecondSelect;
-        public CheckBox StartGameChecked;
-        public CheckBox MVPChecked;
-        public CheckBox TenSecondChecked;
-        public CheckBox KillSoundChecked;
-        public CheckBox EndGameChecked;
-        public CheckBox StartRoundChecked;
-        public CheckBox BombCheck;
-        public CheckBox DeathCamCheck;
-        public CheckBox LoseRoundCheck;
-        public CheckBox MainMenuCheck;
-        public CheckBox WinRoundCheck;
-        public CheckBox StartActionChecker;
-        public CheckBox TenSecondRoundChecked;
     }
 }

@@ -1,7 +1,9 @@
-﻿using NAudio.Wave;
-using System.ComponentModel.Design.Serialization;
-using static PlayerStats;
-using static System.Windows.Forms.AxHost;
+﻿// -------------------------------------------------------------------------------
+// Данные файл представляет собой класс, через который мы будем выгружать в память
+// аудиофайлы типа *.wav (для большей быстроспособности) и запускать их
+// -------------------------------------------------------------------------------
+
+using NAudio.Wave;
 namespace MusicComanderGUI
 {
     static class WavPlayer
@@ -29,7 +31,6 @@ namespace MusicComanderGUI
                     AudioFileReader file = new AudioFileReader(load.music[i]);
                     float vol = MusicKits.settings.Volume[i] / 100.0f;
                     file.Volume = vol;
-                    // Настройка зацикливания для определенных треков
                     if (i ==  (int)MusicIvents.Menu || i == (int)MusicIvents.StartRound)
                     {
                         LoopStream loop = new LoopStream(file);
@@ -60,9 +61,7 @@ namespace MusicComanderGUI
 
         public static void PlayMusic(MusicIvents state)
         {
-            if (Ivents.LastMusic == state) return;
             Main.Instance?.SetConsoleLog($"[GSI]: Звук '{music[(int)state].file?.FileName}' успешно запущен.");
-            StopMusic();
             if (music[(int)state] != null)
             {
                 music[(int)state].file.Position = 0;
@@ -90,13 +89,30 @@ namespace MusicComanderGUI
                     music[(int)mode]?.file?.Volume = i;
         }
 
-        public static void IfEnable(MusicIvents song, bool Check)
+        public static void IfEnable(MusicIvents song, ModeMusic mode)
         {
-            if (Check)
+            if (Ivents.LastMusic == song) return;
+            // Если следущая музыка отсутсвует, то не выключаем аудиофайл
+            if (mode == ModeMusic.IfPlayingStop)
+            {
+                if (music[(int)song] != null && music[(int)song].file?.Volume != 0)
+                {
+                    StopMusic();
+                    PlayMusic(song);
+                }
+                Ivents.LastMusic = song;
+            }
+            // На свой страх и риск: таким образом мы тереям контроль над музыкой
+            else if(mode == ModeMusic.Play)
+            {
                 PlayMusic(song);
-            else
+            }
+            else if(mode == ModeMusic.Stop)
+            {
                 StopMusic();
-            Ivents.LastMusic = song;
+                PlayMusic(song);
+                Ivents.LastMusic = song;
+            }
         }
 
         public static void AudioStop()
@@ -116,7 +132,6 @@ namespace MusicComanderGUI
             Kit_Sound load = MusicKits.loadJson(path);
             AudioStop();
             SetupMusic(load);
-            await Task.Delay(500);
             if (music[(int)Ivents.LastMusic] != null)
             {
                 music[(int)Ivents.LastMusic].file.Position = 0;
@@ -134,6 +149,17 @@ namespace MusicComanderGUI
             }
         }
     }
+    // -------------------------------------------------------------------------
+    // Данное перечисление отвечает за выбор режима при вызове функции IfEnable.
+    // Он позволяет унивирсальнее работать с ивентами 
+    // Add: В планах к нему прикрепить кастомные события от пользователя
+    // -------------------------------------------------------------------------
+    enum ModeMusic
+    {
+        IfPlayingStop,
+        Stop,
+        Play
+    }
 
     class SoundPlayer
     {
@@ -141,6 +167,10 @@ namespace MusicComanderGUI
         public WaveOutEvent? player { get; set; }
     }
 
+
+    // -------------------------------------------------
+    // Этот класс позволяет создавать зацикленные звуки.
+    // -------------------------------------------------
     class LoopStream : WaveStream
     {
         WaveStream sourceStream;
