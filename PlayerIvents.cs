@@ -77,7 +77,7 @@ namespace MusicComanderGUI
                 Task.Run(() => PlayerIvents(cts));
                 Task.Run(() => CheckTeam(cts));
             }
-            Main.Instance?.SetConsoleLog($"Last Player state: {Enum.GetName(typeof(MusicIvents), (int)LastMusic)} \t Mode: {Enum.GetName(typeof(Mode), gamemode)} {Environment.NewLine}Map mode: {player?.map?.mode}");
+            //Main.Instance?.SetConsoleLog($"Last Player state: {Enum.GetName(typeof(MusicIvents), (int)LastMusic)} \t Mode: {Enum.GetName(typeof(Mode), gamemode)} {Environment.NewLine}Map mode: {player?.map?.mode}");
         }
 
         private static async Task PlayerIvents(CancellationToken cts)
@@ -109,11 +109,10 @@ namespace MusicComanderGUI
         {
             try
             {
-                Main.Instance?.SetConsoleLog($"Проверка бомбы");
                 if (player?.round?.bomb == "planted" && LastMusic != MusicIvents.Bomb && LastMusic != MusicIvents.TenSecondBomb)
                 {
                     WavPlayer.IfEnable(MusicIvents.Bomb, ModeMusic.Stop);
-                    Main.Instance?.SetConsoleLog($"Начался отсчет бомбы");
+                 
                     for (int i = 0; i <= 28; i++)
                     {
                         if (cts.IsCancellationRequested || !(currect_player?.round?.bomb == "planted" && LastMusic == MusicIvents.Bomb)) return;
@@ -139,7 +138,6 @@ namespace MusicComanderGUI
                         if (teams.T != null)
                         {
                             await Task.Run(() => WavPlayer.ReloadMusicKit(cts, teams.T), cts);
-                            Main.Instance?.SetConsoleLog($"Включение музыки за Т");
                         }
                     }
                     else
@@ -147,7 +145,6 @@ namespace MusicComanderGUI
                         if (teams.Ct != null)
                         {
                             await Task.Run(() => WavPlayer.ReloadMusicKit(cts, teams.Ct), cts);
-                            Main.Instance?.SetConsoleLog($"Включение музыки за КТ");
                         }
                     }
                 }
@@ -176,12 +173,15 @@ namespace MusicComanderGUI
         {
             try { 
                 if (!StartRound) { 
-                    if (gamemode == Mode.Competitive && player?.map?.round == 0 && LastMusic == MusicIvents.Menu && player?.map?.phase == "live")
+                    if (player?.map?.phase == "gameover"){
+                        WavPlayer.IfEnable(MusicIvents.EndGame, ModeMusic.IfPlayingStop);
+                        GameEnd = true;
+                    }
+                    else if (gamemode == Mode.Competitive && player?.map?.round == 0 && LastMusic == MusicIvents.Menu && player?.map?.phase == "live")
                     {
                         GameEnd = false;
                         StartRound = true;
                         WavPlayer.IfEnable(MusicIvents.StartGame, ModeMusic.Stop);
-                        Main.Instance?.SetConsoleLog($"Начался отсчет начала игры");
 
                         for (int i = 0; i < 7; i++){
                             Main.Instance?.SetConsoleLog($"{i}");
@@ -198,10 +198,6 @@ namespace MusicComanderGUI
 
                     else if (player?.map?.phase == "warmup") { WavPlayer.StopMusic();}
 
-                    else if (player?.map?.phase == "gameover"){
-                        WavPlayer.IfEnable(MusicIvents.EndGame, ModeMusic.IfPlayingStop);
-                        GameEnd = true;
-                    }
 
                     else if (player?.round?.phase == "freezetime")
                         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
@@ -11,7 +12,7 @@ namespace MusicComanderGUI
     public partial class Creater : Form
     {
         private Main form;
-        private Kit_Sound? kit = new Kit_Sound();   
+        private Kit_Sound? kit = new Kit_Sound();
         public Creater(Main _form)
         {
             kit.music = new string[13];
@@ -174,31 +175,73 @@ namespace MusicComanderGUI
 
         private void Update_Click(object sender, EventArgs e)
         {
-            MusicKits.UpdateMusicKit(kit);
+            //MusicKits.UpdateMusicKit(kit);
         }
 
         private void CreateKit_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog direct = new FolderBrowserDialog();
-            LoadJsonSetings();
-            if (direct.ShowDialog() == DialogResult.OK)
-                MusicKits.CreateMusicKit(direct.SelectedPath, NameKit.Text, kit);
-
-            int size = MusicKits.settings.Music_Paths.Count();
-            string name = NameKit.Text;
-            form.imageList1.Images.Add(Image.FromFile(ImageDir.Text));
-            int newImageIndex = form.imageList1.Images.Count - 1;
-            ListViewItem item = new ListViewItem(name, newImageIndex);
-            form.MusicNumbers.Items.Add(item);
-            form.TSide.Items.Add(name);
-            form.CtSide.Items.Add(name);
-            form.MainMusic.Items.Add(name);
-            MusicKits.SaveSetting();
+            try
+            {
+                FolderBrowserDialog direct = new FolderBrowserDialog();
+                LoadJsonSetings();
+                if (direct.ShowDialog() == DialogResult.OK)
+                    MusicKits.CreateMusicKit(direct.SelectedPath, NameKit.Text, kit);
+                else
+                {
+                    MessageBox.Show(
+                        "Ошибка при создании окна",
+                        "Неизвестаная ошибка",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                        );
+                }
+                if (NameKit.Text == null || !Path.Exists(ImageDir.Text))
+                {
+                    MessageBox.Show(
+                        "Отсутсвует название набора или \nнекорректный путь до изображения",
+                        "Недостаток аргументов",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                        );
+                    return;
+                }
+                int size = MusicKits.settings.Music_Paths.Count();
+                string name = NameKit.Text;
+                form.imageList1.Images.Add(Image.FromFile(ImageDir.Text));
+                int newImageIndex = form.imageList1.Images.Count - 1;
+                ListViewItem item = new ListViewItem(name, newImageIndex);
+                form.MusicNumbers.Items.Add(item);
+                form.TSide.Items.Add(name);
+                form.CtSide.Items.Add(name);
+                form.MainMusic.Items.Add(name);
+                MusicKits.SaveSetting();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Неизвестаная ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                    );
+            }
         }
 
         private void panel3_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void NameKit_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(NameKit.Text))
+            {
+                TextErr.SetError(NameKit, "Вставьте название набора");
+            }
+            else
+            {
+                TextErr.SetError(NameKit, string.Empty);
+            }
         }
     }
 }

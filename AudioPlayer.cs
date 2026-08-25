@@ -61,7 +61,7 @@ namespace MusicComanderGUI
 
         public static void PlayMusic(MusicIvents state)
         {
-            Main.Instance?.SetConsoleLog($"[GSI]: Звук '{music[(int)state].file?.FileName}' успешно запущен.");
+            //Main.Instance?.SetConsoleLog($"[GSI]: Звук '{music[(int)state].file?.FileName}' успешно запущен.");
             if (music[(int)state] != null)
             {
                 music[(int)state].file.Position = 0;

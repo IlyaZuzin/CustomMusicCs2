@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             panel3 = new Panel();
             DeathCamSelect = new Button();
             KillSoundSelect = new Button();
@@ -74,8 +75,12 @@
             textBox15 = new TextBox();
             MainMusic = new TextBox();
             TenSecondRoundDir = new TextBox();
+            TextErr = new ErrorProvider(components);
+            ImageErr = new ErrorProvider(components);
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)MusicKitImage).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)TextErr).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ImageErr).BeginInit();
             SuspendLayout();
             // 
             // panel3
@@ -308,6 +313,7 @@
             NameKit.Size = new Size(330, 23);
             NameKit.TabIndex = 39;
             NameKit.Text = "Название набора музыки";
+            NameKit.TextChanged += NameKit_TextChanged;
             // 
             // SelectImage
             // 
@@ -598,6 +604,14 @@
             TenSecondRoundDir.Size = new Size(431, 23);
             TenSecondRoundDir.TabIndex = 59;
             // 
+            // TextErr
+            // 
+            TextErr.ContainerControl = this;
+            // 
+            // ImageErr
+            // 
+            ImageErr.ContainerControl = this;
+            // 
             // Creater
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -611,6 +625,8 @@
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)MusicKitImage).EndInit();
+            ((System.ComponentModel.ISupportInitialize)TextErr).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ImageErr).EndInit();
             ResumeLayout(false);
         }
 
@@ -662,5 +678,7 @@
         private Button EndGameSelect;
         private Button TenSecondRoundSelect;
         private Button TenSecondSelect;
+        private ErrorProvider TextErr;
+        private ErrorProvider ImageErr;
     }
 }

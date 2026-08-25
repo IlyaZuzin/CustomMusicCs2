@@ -7,7 +7,7 @@ using NAudio.Gui;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
+using System.Diagnostics;
 namespace MusicComanderGUI
 {
     class Setting
@@ -31,11 +31,12 @@ namespace MusicComanderGUI
     class MusicKits
     {
         public static Setting? settings;
-
+        private static string? OutPath;
         public static void LoadSetting()
         {
+            OutPath = Directory.GetCurrentDirectory() + "\\setting.json";
             try {
-                string json = File.ReadAllText("setting.json");
+                string json = File.ReadAllText(OutPath);
                 settings = JsonSerializer.Deserialize<Setting>(json);
             }
             catch (FileNotFoundException) { 
@@ -65,6 +66,7 @@ namespace MusicComanderGUI
         {
             try
             {
+                Directory.SetCurrentDirectory(path);
                 path += "\\profile.json";
                 string json = File.ReadAllText(path);
                 return JsonSerializer.Deserialize<Kit_Sound>(json);
@@ -80,7 +82,7 @@ namespace MusicComanderGUI
             if (settings.Public == null) settings.Public = new Teams();
             if (settings.Wingmans == null) settings.Wingmans = new Teams();
             var options = new JsonSerializerOptions { WriteIndented = true };
-            File.WriteAllText("setting.json", JsonSerializer.Serialize(settings, options));
+            File.WriteAllText(OutPath, JsonSerializer.Serialize(settings, options));
             
         }
 
@@ -128,7 +130,7 @@ namespace MusicComanderGUI
                         return StartPath;
                     
                     File.Copy(StartPath, Path_To_Copy + FileName, true);
-                    return Path_To_Copy + FileName;
+                    return FileName;
                 }
                 catch(Exception ex)
                 {
@@ -137,13 +139,6 @@ namespace MusicComanderGUI
                 }
             }
 
-        }
-        
-        public static void UpdateMusicKit(Kit_Sound update)
-        { 
-            CopyFiles(update.path, update);
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            File.WriteAllText($"{update.path}\\profile.json", JsonSerializer.Serialize(update, options));
         }
     }
 
@@ -154,9 +149,6 @@ namespace MusicComanderGUI
 
         [JsonPropertyName("image")]
         public string? image { get; set; }
-
-        [JsonPropertyName("path")]
-        public string? path { get; set; }
 
         public string[]? music { get; set; } = new string[13];
     }

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.IO;
 
 namespace MusicComanderGUI
@@ -19,41 +20,58 @@ namespace MusicComanderGUI
             MusicNumbers.SelectedIndexChanged += MusicNumbers_SelectedIndexChanged;
             Load();
             int newImageIndex = 0;
+            SetConsoleLog("[Settings] Loading settings");
             if (MusicKits.settings?.Music_Paths != null)
             {
-                for (int i = 0; i < MusicKits.settings.Music_Paths.Count - 1; i++)
+                for (int i = 0; i < MusicKits.settings.Music_Paths.Count; i++)
                 {
                     var b = MusicKits.settings.Music_Paths[i];
-
-                    if (Path.Exists(b.path + "\\profile.json"))
+                    string path = Path.Combine(b.path, "profile.json");
+                    string image;
+                    if (b.image != null)
                     {
-                        try
-                        {
-                            if (Path.Exists(b.image))
-                            {
-                                imageList1.Images.Add(Image.FromFile(b.image));
-                                newImageIndex = imageList1.Images.Count - 1;
-                            }
-                            else
-                            {
-                                newImageIndex++;
-                            }
-                            TSide.Items.Add(b.name);
-                            CtSide.Items.Add(b.name);
-                            MainMusic.Items.Add(b.name);
-
-                            ListViewItem item = new ListViewItem(b.name, newImageIndex);
-                            MusicNumbers.Items.Add(item);
-                        }
-                        catch { }
+                        image = Path.Combine(b.path, b.image);
                     }
                     else
                     {
-                        i--;
+                        SetConsoleLog($"[Settings] Not found image {b?.name}");
                         MusicKits.settings.Music_Paths.RemoveAt(i);
+                        if (i != 0)
+                            i--;
+                        continue;
+                    }
+                    if (Path.Exists(path) &&
+                        Path.Exists(image) &&
+                        b.name != null)
+                    {
+                        try
+                        {
+                            imageList1.Images.Add(Image.FromFile(image));
+                            newImageIndex = imageList1.Images.Count - 1;
+                            TSide.Items.Add(b.name);
+                            CtSide.Items.Add(b.name);
+                            MainMusic.Items.Add(b.name);
+                            ListViewItem item = new ListViewItem(b.name, newImageIndex);
+                            MusicNumbers.Items.Add(item);
+                            SetConsoleLog($"[Settings] {b?.name} loaded");
+                        }
+                        catch { 
+                            SetConsoleLog($"[Settings] Error while load music kit {b?.name}");
+                            MusicKits.settings.Music_Paths.RemoveAt(i);
+                            if(i != 0)
+                                i--;
+                        }
+                    }
+                    else
+                    {
+                        SetConsoleLog($"[Settings] Not found \"profile.json\" {b?.name}");
+                        MusicKits.settings.Music_Paths.RemoveAt(i);
+                        if(i != 0)
+                            i--;
                     }
                 }
             }
+            SetConsoleLog($"[Settings] Load {newImageIndex} MusicKits");
             if (MusicKits.settings?.Competitivie?.Ct != null && MusicKits.settings?.Competitivie?.Ct != -1)
             {
                 int? index = MusicKits.settings?.Competitivie?.Ct;
@@ -96,7 +114,6 @@ namespace MusicComanderGUI
                 return;
             }
             textBox5.AppendText(Log + Environment.NewLine);
-
         }
 
         private void StartServer_Click(object sender, EventArgs e)
@@ -260,7 +277,7 @@ namespace MusicComanderGUI
 
         private void Settings_Click(object sender, EventArgs e)
         {
-            MusicKitMenu.Visible = true;
+            MusicKitMenu.Visible = false;
             ServerMenu.Visible = false;
             SettingsMenu.Visible = true;
         }
@@ -473,6 +490,14 @@ namespace MusicComanderGUI
         private void SettingsMenu_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void Python_Click(object sender, EventArgs e)
+        {
+            var start = new ProcessStartInfo();
+            start.FileName = "python";
+            start.Arguments =  AppContext.BaseDirectory + "Python/ValveMusicKit.py";
+            using var process = Process.Start(start);
         }
     }
 }

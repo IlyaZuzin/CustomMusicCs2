@@ -47,6 +47,7 @@
             pictureBox1 = new PictureBox();
             textBox3 = new TextBox();
             MusicKitMenu = new Panel();
+            Python = new Button();
             OpenMusicKitForm = new Button();
             imageList2 = new ImageList(components);
             Server = new Button();
@@ -303,6 +304,7 @@
             // 
             // MusicKitMenu
             // 
+            MusicKitMenu.Controls.Add(Python);
             MusicKitMenu.Controls.Add(OpenMusicKitForm);
             MusicKitMenu.Controls.Add(MusicNumbers);
             MusicKitMenu.Controls.Add(LoadJson);
@@ -311,6 +313,21 @@
             MusicKitMenu.Size = new Size(1051, 746);
             MusicKitMenu.TabIndex = 0;
             // 
+            // Python
+            // 
+            Python.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            Python.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            Python.FlatStyle = FlatStyle.Flat;
+            Python.ForeColor = SystemColors.Control;
+            Python.ImageAlign = ContentAlignment.BottomCenter;
+            Python.Location = new Point(741, 643);
+            Python.Name = "Python";
+            Python.Size = new Size(146, 79);
+            Python.TabIndex = 3;
+            Python.Text = "Создать набор на основе файлов от Valve (Python)";
+            Python.UseVisualStyleBackColor = true;
+            Python.Click += Python_Click;
+            // 
             // OpenMusicKitForm
             // 
             OpenMusicKitForm.FlatAppearance.MouseDownBackColor = Color.Transparent;
@@ -318,7 +335,7 @@
             OpenMusicKitForm.FlatStyle = FlatStyle.Flat;
             OpenMusicKitForm.ForeColor = SystemColors.Control;
             OpenMusicKitForm.ImageAlign = ContentAlignment.BottomCenter;
-            OpenMusicKitForm.Location = new Point(706, 643);
+            OpenMusicKitForm.Location = new Point(580, 643);
             OpenMusicKitForm.Name = "OpenMusicKitForm";
             OpenMusicKitForm.Size = new Size(146, 79);
             OpenMusicKitForm.TabIndex = 2;
@@ -833,8 +850,8 @@
             Controls.Add(Musickits);
             Controls.Add(Settings);
             Controls.Add(ServerMenu);
-            Controls.Add(SettingsMenu);
             Controls.Add(MusicKitMenu);
+            Controls.Add(SettingsMenu);
             Controls.Add(splitter1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
@@ -918,5 +935,6 @@
         private HScrollBar MenuVolume;
         private TextBox textBox16;
         public ComboBox MainMusic;
+        private Button Python;
     }
 }
