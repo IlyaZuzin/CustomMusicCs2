@@ -2,70 +2,42 @@
 // Данные файл представляет собой класс, через который мы будем выгружать в память
 // аудиофайлы типа *.wav (для большей быстроспособности) и запускать их
 // -------------------------------------------------------------------------------
-
+using CustomMusic;
 using NAudio.Wave;
+using System.Windows.Ink;
 namespace MusicComanderGUI
 {
     static class WavPlayer
     {
-        private static float volume = 1.0f;
         public static SoundPlayer[]? music;
-
-        public static void SetupMusic(Kit_Sound load, MusicIvents mode = MusicIvents.Menu) 
+        private static Random rnd = new Random();
+        private static Kit_Sound loaded = new Kit_Sound();
+        public static void SetupMusic(Kit_Sound? load) 
         { 
             AudioStop();
-            
+            if (load == null) return;
+            loaded = load;
             music = new SoundPlayer[13];
-
-            for (int i = 0; i < 13; i++) {
-                // Если путь к файлу не задан, просто пропускаем или пишем null
-                if (string.IsNullOrEmpty(load?.music[i]))
-                {
-                    music[i] = null;
-                    continue; // Переходим к следующему треку, а не выходим из цикла!
-                }
-
-                try
-                {
-                    WaveOutEvent player = new WaveOutEvent();
-                    AudioFileReader file = new AudioFileReader(load.music[i]);
-                    float vol = MusicKits.settings.Volume[i] / 100.0f;
-                    file.Volume = vol;
-                    if (i ==  (int)MusicIvents.Menu || i == (int)MusicIvents.StartRound)
-                    {
-                        LoopStream loop = new LoopStream(file);
-                        player.Init(loop);
-                    }
-                    else
-                    {
-                        player.Init(file);
-                    }
-
-                    SoundPlayer buf = new SoundPlayer
-                    {
-                        file = file,
-                        player = player
-                    };
-
-                    music[i] = buf;
-                    Main.Instance?.SetConsoleLog($"[Volume] для {Enum.GetName(typeof(MusicIvents), i)} = {vol}");
-                    Main.Instance?.SetConsoleLog($"[GSI]: Звук '{Enum.GetName(typeof(MusicIvents), i)}' успешно загружен. [{Enum.GetName(typeof(MusicIvents), (int)mode)}]");
-                }
-                catch (Exception ex)
-                {
-                    Main.Instance?.SetConsoleLog($"[Ошибка загрузки {Enum.GetName(typeof(MusicIvents), i)}]: {ex.Message}");
-                    music[i] = null;
-                }
-            }
+            ChangeMusicRandom();
         }
 
         public static void PlayMusic(MusicIvents state)
         {
-            //Main.Instance?.SetConsoleLog($"[GSI]: Звук '{music[(int)state].file?.FileName}' успешно запущен.");
-            if (music[(int)state] != null)
+            try
             {
-                music[(int)state].file.Position = 0;
-                music[(int)state].player.Play();
+                if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog("Sucsesful play music: " + state.ToString());
+
+                if (music[(int)state] != null)
+                {
+                    music[(int)state].file.Position = 0;
+                    music[(int)state].player.Play();
+                }
+
+                if (Ivents.LastMusic != MusicIvents.StartAction && Ivents.LastMusic != MusicIvents.StartAction)
+                    RandomMusic(Ivents.LastMusic);
+            }
+            catch (Exception ex) { 
+                if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog("Something went wrong: " + state.ToString() + "ERROR: " + ex.Message);
             }
         }
 
@@ -77,22 +49,26 @@ namespace MusicComanderGUI
                 {
                     music[(int)Ivents.LastMusic].player?.Stop();
                     music[(int)Ivents.LastMusic].file?.Position = 0;
+                    if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog($"Last music {Ivents.LastMusic.ToString()} stopped");
                 }
-            }catch(Exception ex) {
-                Main.Instance?.SetConsoleLog($"{ex.Message}");
+            }
+            catch(Exception ex) {
+                if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog($"{ex.Message}");
             }
         }
 
-        public static void SetVolume(MusicIvents mode, float i)
+        public static void SetVolume(MusicIvents mode, float volume)
         {
-                if (music[(int)mode] != null)
-                    music[(int)mode]?.file?.Volume = i;
+            if (music[(int)mode] != null)
+                music[(int)mode]?.file?.Volume = volume;
+            if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog($"Set volume {mode.ToString()} = {volume.ToString()}");
         }
 
         public static void IfEnable(MusicIvents song, ModeMusic mode)
         {
+            if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog($"Try enable {song.ToString()} Mode: {mode.ToString()}");
             if (Ivents.LastMusic == song) return;
-            // Если следущая музыка отсутсвует, то не выключаем аудиофайл
+            // Если текущая музыка отсутсвует, то не выключаем предыдущий аудиофайл. Очень не стабильно!
             if (mode == ModeMusic.IfPlayingStop)
             {
                 if (music[(int)song] != null && music[(int)song].file?.Volume != 0)
@@ -138,6 +114,9 @@ namespace MusicComanderGUI
                 music[(int)Ivents.LastMusic].file.Volume = MusicKits.settings.Volume[(int)Ivents.LastMusic] / 100.0f;
                 music[(int)Ivents.LastMusic].player.Play();
             }
+            if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog("Reload MusicKit " + path);
+            Main.Instance?.CurrectMK.Text = load.name;
+            Main.PlayingPath = path;
         }
 
         public static void changevolume(MusicIvents id, float vol)
@@ -148,92 +127,181 @@ namespace MusicComanderGUI
                 music[(int)id].file.Volume = vol;
             }
         }
-    }
-    // -------------------------------------------------------------------------
-    // Данное перечисление отвечает за выбор режима при вызове функции IfEnable.
-    // Он позволяет унивирсальнее работать с ивентами 
-    // Add: В планах к нему прикрепить кастомные события от пользователя
-    // -------------------------------------------------------------------------
-    enum ModeMusic
-    {
-        IfPlayingStop,
-        Stop,
-        Play
-    }
 
-    class SoundPlayer
-    {
-        public AudioFileReader? file { get; set; }
-        public WaveOutEvent? player { get; set; }
-    }
-
-
-    // -------------------------------------------------
-    // Этот класс позволяет создавать зацикленные звуки.
-    // -------------------------------------------------
-    class LoopStream : WaveStream
-    {
-        WaveStream sourceStream;
-
-
-        public LoopStream(WaveStream sourceStream)
+        private static void ChangeMusicRandom()
         {
-            this.sourceStream = sourceStream;
-            this.EnableLooping = true;
-        }
-
-        /// <summary>
-        /// Use this to turn looping on or off
-        /// </summary>
-        public bool EnableLooping { get; set; }
-
-        /// <summary>
-        /// Return source stream's wave format
-        /// </summary>
-        public override WaveFormat WaveFormat
-        {
-            get { return sourceStream.WaveFormat; }
-        }
-
-        /// <summary>
-        /// LoopStream simply returns
-        /// </summary>
-        public override long Length
-        {
-            get { return sourceStream.Length; }
-        }
-
-        /// <summary>
-        /// LoopStream simply passes on positioning to source stream
-        /// </summary>
-        public override long Position
-        {
-            get { return sourceStream.Position; }
-            set { sourceStream.Position = value; }
-        }
-
-        public override int Read(byte[] buffer, int offset, int count)
-        {
-            int totalBytesRead = 0;
-
-            while (totalBytesRead < count)
+            for (int i = 0; i < 13; i++)
             {
-                int bytesRead = sourceStream.Read(buffer, offset + totalBytesRead, count - totalBytesRead);
-                if (bytesRead == 0)
-                {
-                    if (sourceStream.Position == 0 || !EnableLooping)
+                try { 
+                    int random_music = rnd.Next(loaded.music[i].Count - 1);
+                    if (string.IsNullOrEmpty(loaded.music[i][random_music].path) && music[i] != null)
                     {
-                        // something wrong with the source stream
-                        break;
+                        music[i] = null;
+                        continue;
                     }
-                    // loop
-                    sourceStream.Position = 0;
+                    music[i] = LoadMusic(i,random_music);
                 }
-                totalBytesRead += bytesRead;
+                catch (Exception ex)
+                {
+                    if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog($"[Ошибка загрузки {Enum.GetName(typeof(MusicIvents), i)}]: {ex.Message}");
+                    music[i] = null;
+                }
             }
-            return totalBytesRead;
+        }
+
+        private static SoundPlayer LoadMusic(int ivents_id, int load_music)
+        {
+            SoundPlayer rand = new SoundPlayer();
+            try
+            {
+                if (music[ivents_id] != null)
+                {
+                    music[ivents_id].file.Dispose();
+                    music[ivents_id].player.Dispose();
+                }
+                WaveOutEvent player = new WaveOutEvent();
+                AudioFileReader file = new AudioFileReader(loaded.music[ivents_id][load_music].path);
+                float vol;
+                if (loaded.music[ivents_id][load_music].volume != null)
+                    vol = loaded.music[ivents_id][load_music].volume / 100.0f;
+                else
+                    vol = 1.0f;
+                file.Volume = vol;
+                if (ivents_id == (int)MusicIvents.Menu || ivents_id == (int)MusicIvents.StartRound)
+                {
+                    LoopStream loop = new LoopStream(file);
+                    player.Init(loop);
+                }
+                else
+                {
+                    player.Init(file);
+                }
+
+                SoundPlayer buf = new SoundPlayer
+                {
+                    file = file,
+                    player = player
+                };
+
+                rand = buf;
+                if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog($"Random select: {load_music.ToString()}, path: {loaded.music[ivents_id][load_music].path}");
+                if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog($"Volume for {Enum.GetName(typeof(MusicIvents), ivents_id)} = {vol}");
+                if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog($"Music'{Enum.GetName(typeof(MusicIvents), ivents_id)}' sucsessful load. [{Enum.GetName(typeof(MusicIvents), ivents_id)}] ");
+                }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return rand;
+        }
+
+        public static void RandomMusic(MusicIvents? id)
+        {
+            if (id == null) return;
+            int size = loaded.music[(int)id].Count;
+            if (size <= 1) { 
+                music[(int)id] = LoadMusic((int)id, size);
+                return;
+            }
+            int rand = rnd.Next(size);
+            music[(int)id] = LoadMusic((int)id, rand);
+        }
+
+        public static void Randomizate(int first, int second)
+        {
+            int rand = rnd.Next(loaded.music[first].Count);
+            music[first] = LoadMusic(first, rand);
+            int? next = loaded.music[(int)first][rand].next_music;
+            if (next != null)
+            {
+                if (next != null)
+                    music[second] = LoadMusic(second, next.Value);
+            }
         }
     }
+}
+
+// -------------------------------------------------------------------------
+// Данное перечисление отвечает за выбор режима при вызове функции IfEnable.
+// Он позволяет унивирсальнее работать с ивентами 
+// Add: В планах к нему прикрепить кастомные события от пользователя
+// -------------------------------------------------------------------------
+enum ModeMusic
+{
+    IfPlayingStop,
+    Stop,
+    Play
+}
+
+class SoundPlayer
+{
+    public AudioFileReader? file { get; set; }
+    public WaveOutEvent? player { get; set; }
+}
 
 
+// -------------------------------------------------
+// Этот класс позволяет создавать зацикленные звуки.
+// -------------------------------------------------
+class LoopStream : WaveStream
+{
+    WaveStream sourceStream;
+
+    public LoopStream(WaveStream sourceStream)
+    {
+        this.sourceStream = sourceStream;
+        this.EnableLooping = true;
+    }
+
+    /// <summary>
+    /// Use this to turn looping on or off
+    /// </summary>
+    public bool EnableLooping { get; set; }
+
+    /// <summary>
+    /// Return source stream's wave format
+    /// </summary>
+    public override WaveFormat WaveFormat
+    {
+        get { return sourceStream.WaveFormat; }
+    }
+
+    /// <summary>
+    /// LoopStream simply returns
+    /// </summary>
+    public override long Length
+    {
+        get { return sourceStream.Length; }
+    }
+
+    /// <summary>
+    /// LoopStream simply passes on positioning to source stream
+    /// </summary>
+    public override long Position
+    {
+        get { return sourceStream.Position; }
+        set { sourceStream.Position = value; }
+    }
+
+    public override int Read(byte[] buffer, int offset, int count)
+    {
+        int totalBytesRead = 0;
+
+        while (totalBytesRead < count)
+        {
+            int bytesRead = sourceStream.Read(buffer, offset + totalBytesRead, count - totalBytesRead);
+            if (bytesRead == 0)
+            {
+                if (sourceStream.Position == 0 || !EnableLooping)
+                {
+                    // something wrong with the source stream
+                    break;
+                }
+                // loop
+                sourceStream.Position = 0;
+            }
+            totalBytesRead += bytesRead;
+        }
+        return totalBytesRead;
+    }
 }

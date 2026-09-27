@@ -30,169 +30,91 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            StartServer = new Button();
-            textBox5 = new TextBox();
             splitter1 = new Splitter();
-            textBox2 = new TextBox();
-            textBox1 = new TextBox();
-            LoadJson = new Button();
-            MusicNumbers = new ListView();
             imageList1 = new ImageList(components);
-            ServerMenu = new Panel();
-            DoubleMode = new CheckBox();
-            MainMusic = new ComboBox();
-            SaveSettings = new Button();
-            Cs2Directory = new Button();
-            textBox8 = new TextBox();
-            pictureBox1 = new PictureBox();
-            textBox3 = new TextBox();
-            MusicKitMenu = new Panel();
+            imageList2 = new ImageList(components);
+            Menu = new Panel();
+            Console = new Button();
+            Server = new Button();
+            KeepMusic = new PictureBox();
+            SoloMod = new Panel();
+            SoloList = new ListView();
+            SoloModMk = new Button();
+            SoloImage = new PictureBox();
+            SoloSelectMk = new Button();
+            textBox2 = new TextBox();
+            SoloMK = new TextBox();
+            TWorkStation = new Panel();
+            TList = new ListView();
+            TModMK = new Button();
+            TSelectMK = new Button();
+            TNameMK = new TextBox();
+            textBox32 = new TextBox();
+            TImageMK = new PictureBox();
+            textBox30 = new TextBox();
+            CTWorkStation = new Panel();
+            CtList = new ListView();
+            CTModMK = new Button();
+            CTSelectMK = new Button();
+            CTNameMK = new TextBox();
+            textBox31 = new TextBox();
+            CTImageMK = new PictureBox();
+            Select = new TextBox();
+            textBox28 = new TextBox();
+            textBox27 = new TextBox();
+            OpenFolder = new Button();
+            CurrectMK = new TextBox();
+            textBox17 = new TextBox();
+            ProfileText = new TextBox();
+            textBox6 = new TextBox();
+            Profiles = new ComboBox();
+            Library = new Panel();
             Python = new Button();
             OpenMusicKitForm = new Button();
-            imageList2 = new ImageList(components);
-            Server = new Button();
-            Musickits = new Button();
-            Settings = new Button();
-            SettingsMenu = new Panel();
-            MenuVolumeText = new TextBox();
-            MenuVolume = new HScrollBar();
-            textBox16 = new TextBox();
-            Mode_select = new ComboBox();
-            DeathcamVolume = new HScrollBar();
-            DeathcamVolumeText = new TextBox();
-            KillVolumeText = new TextBox();
-            EndGameVolume = new HScrollBar();
-            KillVolume = new HScrollBar();
-            TenSecondRoundVolume = new HScrollBar();
-            EndGameVolumeText = new TextBox();
-            TenSecondRoundVolumeText = new TextBox();
-            TenSecondBombVolume = new HScrollBar();
-            TenSecondBombVolumeText = new TextBox();
-            BombVolumeText = new TextBox();
-            BombVolume = new HScrollBar();
-            MvpVolumeText = new TextBox();
-            MvpVolume = new HScrollBar();
-            LoseRoundVolumeText = new TextBox();
-            StartGameVolumeText = new TextBox();
-            LoseRoundVolume = new HScrollBar();
-            StartGameVolume = new HScrollBar();
-            WinRoundVolumeText = new TextBox();
-            WinRoundVolume = new HScrollBar();
-            StartActionVolumeText = new TextBox();
-            StartActionVolume = new HScrollBar();
-            StartRoundVolume = new HScrollBar();
-            StartRoundVolumeText = new TextBox();
-            textBox10 = new TextBox();
-            textBox9 = new TextBox();
-            Bomb = new TextBox();
-            WinRound = new TextBox();
-            textBox11 = new TextBox();
-            StartAction = new TextBox();
-            textBox15 = new TextBox();
-            textBox13 = new TextBox();
-            textBox4 = new TextBox();
-            DeathCam = new TextBox();
-            LoseRound = new TextBox();
-            textBox12 = new TextBox();
-            CtSide = new ComboBox();
-            DeathMatch = new Panel();
-            TSide = new ComboBox();
-            ServerMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            MusicKitMenu.SuspendLayout();
-            SettingsMenu.SuspendLayout();
-            DeathMatch.SuspendLayout();
+            MusicNumbers = new ListView();
+            LoadJson = new Button();
+            textBox19 = new TextBox();
+            textBox20 = new TextBox();
+            textBox21 = new TextBox();
+            textBox22 = new TextBox();
+            textBox23 = new TextBox();
+            textBox24 = new TextBox();
+            textBox25 = new TextBox();
+            textBox26 = new TextBox();
+            imageList3 = new ImageList(components);
+            pictureBox4 = new PictureBox();
+            pictureBox5 = new PictureBox();
+            HomePage = new Button();
+            LibraryPage = new Button();
+            WonRound = new TextBox();
+            LostRound = new TextBox();
+            Death = new TextBox();
+            Kill = new TextBox();
+            Kill_Hs = new TextBox();
+            KD = new TextBox();
+            MVP = new TextBox();
+            bindingSource1 = new BindingSource(components);
+            Menu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)KeepMusic).BeginInit();
+            SoloMod.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)SoloImage).BeginInit();
+            TWorkStation.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)TImageMK).BeginInit();
+            CTWorkStation.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)CTImageMK).BeginInit();
+            Library.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             SuspendLayout();
-            // 
-            // StartServer
-            // 
-            StartServer.BackColor = Color.Transparent;
-            StartServer.BackgroundImageLayout = ImageLayout.None;
-            StartServer.FlatAppearance.BorderSize = 0;
-            StartServer.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            StartServer.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            StartServer.FlatStyle = FlatStyle.Flat;
-            StartServer.Font = new Font("Segoe UI", 9F);
-            StartServer.ForeColor = Color.White;
-            StartServer.Image = (Image)resources.GetObject("StartServer.Image");
-            StartServer.Location = new Point(597, 18);
-            StartServer.Name = "StartServer";
-            StartServer.Size = new Size(115, 25);
-            StartServer.TabIndex = 3;
-            StartServer.Text = "Start";
-            StartServer.UseVisualStyleBackColor = false;
-            StartServer.Click += StartServer_Click;
-            // 
-            // textBox5
-            // 
-            textBox5.BackColor = SystemColors.WindowText;
-            textBox5.Font = new Font("Segoe UI", 10F);
-            textBox5.ForeColor = SystemColors.Window;
-            textBox5.Location = new Point(12, 12);
-            textBox5.Multiline = true;
-            textBox5.Name = "textBox5";
-            textBox5.ReadOnly = true;
-            textBox5.ScrollBars = ScrollBars.Vertical;
-            textBox5.Size = new Size(350, 309);
-            textBox5.TabIndex = 5;
             // 
             // splitter1
             // 
             splitter1.Location = new Point(0, 0);
             splitter1.Name = "splitter1";
-            splitter1.Size = new Size(3, 746);
+            splitter1.Size = new Size(3, 765);
             splitter1.TabIndex = 33;
             splitter1.TabStop = false;
-            // 
-            // textBox2
-            // 
-            textBox2.BackColor = SystemColors.WindowText;
-            textBox2.ForeColor = SystemColors.Window;
-            textBox2.Location = new Point(580, 47);
-            textBox2.Name = "textBox2";
-            textBox2.ReadOnly = true;
-            textBox2.Size = new Size(100, 23);
-            textBox2.TabIndex = 47;
-            textBox2.Text = "T";
-            // 
-            // textBox1
-            // 
-            textBox1.BackColor = SystemColors.WindowText;
-            textBox1.ForeColor = SystemColors.Window;
-            textBox1.Location = new Point(22, 49);
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
-            textBox1.Size = new Size(100, 23);
-            textBox1.TabIndex = 45;
-            textBox1.Text = "Ct";
-            // 
-            // LoadJson
-            // 
-            LoadJson.BackColor = Color.Transparent;
-            LoadJson.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            LoadJson.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            LoadJson.FlatStyle = FlatStyle.Flat;
-            LoadJson.ForeColor = SystemColors.Control;
-            LoadJson.Location = new Point(903, 643);
-            LoadJson.Name = "LoadJson";
-            LoadJson.Size = new Size(135, 79);
-            LoadJson.TabIndex = 1;
-            LoadJson.Text = "Загрузить набор музыки";
-            LoadJson.UseVisualStyleBackColor = false;
-            LoadJson.Click += LoadJson_Click;
-            // 
-            // MusicNumbers
-            // 
-            MusicNumbers.BackColor = Color.Black;
-            MusicNumbers.ForeColor = SystemColors.Window;
-            MusicNumbers.LargeImageList = imageList1;
-            MusicNumbers.Location = new Point(9, 12);
-            MusicNumbers.MultiSelect = false;
-            MusicNumbers.Name = "MusicNumbers";
-            MusicNumbers.Size = new Size(888, 606);
-            MusicNumbers.TabIndex = 0;
-            MusicNumbers.UseCompatibleStateImageBehavior = false;
-            MusicNumbers.SelectedIndexChanged += MusicNumbers_SelectedIndexChanged;
             // 
             // imageList1
             // 
@@ -200,148 +122,6 @@
             imageList1.ImageStream = (ImageListStreamer)resources.GetObject("imageList1.ImageStream");
             imageList1.TransparentColor = Color.Transparent;
             imageList1.Images.SetKeyName(0, "Коллаж-1.3.jpg");
-            // 
-            // ServerMenu
-            // 
-            ServerMenu.Controls.Add(DoubleMode);
-            ServerMenu.Controls.Add(MainMusic);
-            ServerMenu.Controls.Add(SaveSettings);
-            ServerMenu.Controls.Add(Cs2Directory);
-            ServerMenu.Controls.Add(textBox8);
-            ServerMenu.Controls.Add(pictureBox1);
-            ServerMenu.Controls.Add(textBox3);
-            ServerMenu.Controls.Add(textBox5);
-            ServerMenu.Controls.Add(StartServer);
-            ServerMenu.Location = new Point(0, 0);
-            ServerMenu.Name = "ServerMenu";
-            ServerMenu.Size = new Size(1054, 785);
-            ServerMenu.TabIndex = 48;
-            // 
-            // DoubleMode
-            // 
-            DoubleMode.AutoSize = true;
-            DoubleMode.ForeColor = SystemColors.ControlLightLight;
-            DoubleMode.Location = new Point(382, 157);
-            DoubleMode.Name = "DoubleMode";
-            DoubleMode.Size = new Size(331, 49);
-            DoubleMode.TabIndex = 56;
-            DoubleMode.Text = "Включение наборов музыки за каждую команду (Beta).\r\nВ ином случае основной набор выберите ниже\r\n\r\n";
-            DoubleMode.UseVisualStyleBackColor = true;
-            DoubleMode.CheckedChanged += DoubleMode_CheckedChanged;
-            // 
-            // MainMusic
-            // 
-            MainMusic.BackColor = SystemColors.WindowText;
-            MainMusic.ForeColor = SystemColors.Window;
-            MainMusic.FormattingEnabled = true;
-            MainMusic.Location = new Point(382, 210);
-            MainMusic.Name = "MainMusic";
-            MainMusic.Size = new Size(300, 23);
-            MainMusic.TabIndex = 196;
-            MainMusic.Text = "Выбрать";
-            MainMusic.SelectedIndexChanged += MainMusic_SelectedIndexChanged;
-            // 
-            // SaveSettings
-            // 
-            SaveSettings.BackColor = SystemColors.ActiveCaptionText;
-            SaveSettings.FlatStyle = FlatStyle.Flat;
-            SaveSettings.ForeColor = SystemColors.ControlLightLight;
-            SaveSettings.Location = new Point(858, 691);
-            SaveSettings.Name = "SaveSettings";
-            SaveSettings.Size = new Size(164, 31);
-            SaveSettings.TabIndex = 55;
-            SaveSettings.Text = "Сохранить настройки";
-            SaveSettings.UseVisualStyleBackColor = false;
-            SaveSettings.Click += SaveSettings_Click;
-            // 
-            // Cs2Directory
-            // 
-            Cs2Directory.FlatStyle = FlatStyle.Flat;
-            Cs2Directory.ForeColor = SystemColors.Control;
-            Cs2Directory.Location = new Point(595, 65);
-            Cs2Directory.Name = "Cs2Directory";
-            Cs2Directory.Size = new Size(97, 23);
-            Cs2Directory.TabIndex = 54;
-            Cs2Directory.Text = "Выбрать";
-            Cs2Directory.UseVisualStyleBackColor = true;
-            Cs2Directory.Click += Cs2Directory_Click;
-            // 
-            // textBox8
-            // 
-            textBox8.BackColor = SystemColors.InactiveCaptionText;
-            textBox8.ForeColor = SystemColors.Window;
-            textBox8.HideSelection = false;
-            textBox8.Location = new Point(381, 65);
-            textBox8.Multiline = true;
-            textBox8.Name = "textBox8";
-            textBox8.ReadOnly = true;
-            textBox8.Size = new Size(193, 70);
-            textBox8.TabIndex = 53;
-            textBox8.Text = "Важно! Если вы пользуетесь программой первый раз. Выберите папку \"Game\" в директории кс 2  ";
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(554, 21);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(22, 22);
-            pictureBox1.TabIndex = 50;
-            pictureBox1.TabStop = false;
-            // 
-            // textBox3
-            // 
-            textBox3.BackColor = SystemColors.WindowText;
-            textBox3.BorderStyle = BorderStyle.None;
-            textBox3.Font = new Font("Sitka Text", 14.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox3.ForeColor = SystemColors.Window;
-            textBox3.HideSelection = false;
-            textBox3.Location = new Point(383, 13);
-            textBox3.Name = "textBox3";
-            textBox3.ReadOnly = true;
-            textBox3.Size = new Size(182, 24);
-            textBox3.TabIndex = 49;
-            textBox3.Text = "Статус сервера";
-            // 
-            // MusicKitMenu
-            // 
-            MusicKitMenu.Controls.Add(Python);
-            MusicKitMenu.Controls.Add(OpenMusicKitForm);
-            MusicKitMenu.Controls.Add(MusicNumbers);
-            MusicKitMenu.Controls.Add(LoadJson);
-            MusicKitMenu.Location = new Point(0, 0);
-            MusicKitMenu.Name = "MusicKitMenu";
-            MusicKitMenu.Size = new Size(1051, 746);
-            MusicKitMenu.TabIndex = 0;
-            // 
-            // Python
-            // 
-            Python.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            Python.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            Python.FlatStyle = FlatStyle.Flat;
-            Python.ForeColor = SystemColors.Control;
-            Python.ImageAlign = ContentAlignment.BottomCenter;
-            Python.Location = new Point(741, 643);
-            Python.Name = "Python";
-            Python.Size = new Size(146, 79);
-            Python.TabIndex = 3;
-            Python.Text = "Создать набор на основе файлов от Valve (Python)";
-            Python.UseVisualStyleBackColor = true;
-            Python.Click += Python_Click;
-            // 
-            // OpenMusicKitForm
-            // 
-            OpenMusicKitForm.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            OpenMusicKitForm.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            OpenMusicKitForm.FlatStyle = FlatStyle.Flat;
-            OpenMusicKitForm.ForeColor = SystemColors.Control;
-            OpenMusicKitForm.ImageAlign = ContentAlignment.BottomCenter;
-            OpenMusicKitForm.Location = new Point(580, 643);
-            OpenMusicKitForm.Name = "OpenMusicKitForm";
-            OpenMusicKitForm.Size = new Size(146, 79);
-            OpenMusicKitForm.TabIndex = 2;
-            OpenMusicKitForm.Text = "Создание/Мод. набора музыки";
-            OpenMusicKitForm.UseVisualStyleBackColor = true;
-            OpenMusicKitForm.Click += OpenMusicKitForm_Click;
             // 
             // imageList2
             // 
@@ -351,590 +131,725 @@
             imageList2.Images.SetKeyName(0, "StatusOn.png");
             imageList2.Images.SetKeyName(1, "StatusOff.png");
             // 
+            // Menu
+            // 
+            Menu.Controls.Add(Console);
+            Menu.Controls.Add(Server);
+            Menu.Controls.Add(KeepMusic);
+            Menu.Controls.Add(SoloMod);
+            Menu.Controls.Add(TWorkStation);
+            Menu.Controls.Add(CTWorkStation);
+            Menu.Controls.Add(textBox28);
+            Menu.Controls.Add(textBox27);
+            Menu.Controls.Add(OpenFolder);
+            Menu.Controls.Add(CurrectMK);
+            Menu.Controls.Add(textBox17);
+            Menu.Location = new Point(0, 0);
+            Menu.Name = "Menu";
+            Menu.Size = new Size(1200, 800);
+            Menu.TabIndex = 34;
+            Menu.Paint += Menu_Paint;
+            // 
+            // Console
+            // 
+            Console.Location = new Point(9, 699);
+            Console.Name = "Console";
+            Console.Size = new Size(194, 23);
+            Console.TabIndex = 51;
+            Console.Text = "OpenConsole";
+            Console.UseVisualStyleBackColor = true;
+            Console.Click += button1_Click_1;
+            // 
             // Server
             // 
-            Server.BackColor = Color.Black;
-            Server.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            Server.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            Server.FlatStyle = FlatStyle.Flat;
-            Server.Image = (Image)resources.GetObject("Server.Image");
-            Server.Location = new Point(903, 8);
+            Server.Location = new Point(133, 19);
             Server.Name = "Server";
-            Server.Size = new Size(135, 135);
-            Server.TabIndex = 51;
-            Server.UseVisualStyleBackColor = false;
-            Server.Click += Server_Click;
-            // 
-            // Musickits
-            // 
-            Musickits.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            Musickits.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            Musickits.FlatStyle = FlatStyle.Flat;
-            Musickits.Image = (Image)resources.GetObject("Musickits.Image");
-            Musickits.Location = new Point(903, 153);
-            Musickits.Name = "Musickits";
-            Musickits.Size = new Size(135, 135);
-            Musickits.TabIndex = 51;
-            Musickits.UseVisualStyleBackColor = true;
-            Musickits.Click += Musickits_Click;
-            // 
-            // Settings
-            // 
-            Settings.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            Settings.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            Settings.FlatStyle = FlatStyle.Flat;
-            Settings.Image = (Image)resources.GetObject("Settings.Image");
-            Settings.Location = new Point(903, 294);
-            Settings.Name = "Settings";
-            Settings.Size = new Size(135, 135);
-            Settings.TabIndex = 52;
-            Settings.UseVisualStyleBackColor = true;
-            Settings.Click += Settings_Click;
-            // 
-            // SettingsMenu
-            // 
-            SettingsMenu.Controls.Add(MenuVolumeText);
-            SettingsMenu.Controls.Add(MenuVolume);
-            SettingsMenu.Controls.Add(textBox16);
-            SettingsMenu.Controls.Add(Mode_select);
-            SettingsMenu.Controls.Add(DeathcamVolume);
-            SettingsMenu.Controls.Add(DeathcamVolumeText);
-            SettingsMenu.Controls.Add(KillVolumeText);
-            SettingsMenu.Controls.Add(EndGameVolume);
-            SettingsMenu.Controls.Add(KillVolume);
-            SettingsMenu.Controls.Add(TenSecondRoundVolume);
-            SettingsMenu.Controls.Add(EndGameVolumeText);
-            SettingsMenu.Controls.Add(TenSecondRoundVolumeText);
-            SettingsMenu.Controls.Add(TenSecondBombVolume);
-            SettingsMenu.Controls.Add(TenSecondBombVolumeText);
-            SettingsMenu.Controls.Add(BombVolumeText);
-            SettingsMenu.Controls.Add(BombVolume);
-            SettingsMenu.Controls.Add(MvpVolumeText);
-            SettingsMenu.Controls.Add(MvpVolume);
-            SettingsMenu.Controls.Add(LoseRoundVolumeText);
-            SettingsMenu.Controls.Add(StartGameVolumeText);
-            SettingsMenu.Controls.Add(LoseRoundVolume);
-            SettingsMenu.Controls.Add(StartGameVolume);
-            SettingsMenu.Controls.Add(WinRoundVolumeText);
-            SettingsMenu.Controls.Add(WinRoundVolume);
-            SettingsMenu.Controls.Add(StartActionVolumeText);
-            SettingsMenu.Controls.Add(StartActionVolume);
-            SettingsMenu.Controls.Add(StartRoundVolume);
-            SettingsMenu.Controls.Add(StartRoundVolumeText);
-            SettingsMenu.Controls.Add(textBox10);
-            SettingsMenu.Controls.Add(textBox9);
-            SettingsMenu.Controls.Add(Bomb);
-            SettingsMenu.Controls.Add(WinRound);
-            SettingsMenu.Controls.Add(textBox11);
-            SettingsMenu.Controls.Add(StartAction);
-            SettingsMenu.Controls.Add(textBox15);
-            SettingsMenu.Controls.Add(textBox13);
-            SettingsMenu.Controls.Add(textBox4);
-            SettingsMenu.Controls.Add(DeathCam);
-            SettingsMenu.Controls.Add(LoseRound);
-            SettingsMenu.Controls.Add(textBox12);
-            SettingsMenu.Controls.Add(CtSide);
-            SettingsMenu.Controls.Add(DeathMatch);
-            SettingsMenu.Location = new Point(0, 0);
-            SettingsMenu.Name = "SettingsMenu";
-            SettingsMenu.Size = new Size(1057, 747);
-            SettingsMenu.TabIndex = 57;
-            SettingsMenu.Paint += SettingsMenu_Paint;
-            // 
-            // MenuVolumeText
-            // 
-            MenuVolumeText.Location = new Point(529, 121);
-            MenuVolumeText.Name = "MenuVolumeText";
-            MenuVolumeText.Size = new Size(45, 23);
-            MenuVolumeText.TabIndex = 195;
-            // 
-            // MenuVolume
-            // 
-            MenuVolume.LargeChange = 1;
-            MenuVolume.Location = new Point(125, 121);
-            MenuVolume.Name = "MenuVolume";
-            MenuVolume.Size = new Size(401, 23);
-            MenuVolume.TabIndex = 194;
-            MenuVolume.Value = 100;
-            MenuVolume.Scroll += MenuVolume_Scroll;
-            // 
-            // textBox16
-            // 
-            textBox16.BackColor = SystemColors.ActiveCaptionText;
-            textBox16.ForeColor = Color.White;
-            textBox16.Location = new Point(22, 121);
-            textBox16.Name = "textBox16";
-            textBox16.Size = new Size(98, 23);
-            textBox16.TabIndex = 193;
-            textBox16.Text = "Menu";
-            // 
-            // Mode_select
-            // 
-            Mode_select.BackColor = Color.Black;
-            Mode_select.ForeColor = SystemColors.Window;
-            Mode_select.FormattingEnabled = true;
-            Mode_select.Items.AddRange(new object[] { "Соревновательный / Премьер", "Обычный", "Бой насмерть", "Напарники" });
-            Mode_select.Location = new Point(22, 20);
-            Mode_select.Name = "Mode_select";
-            Mode_select.Size = new Size(300, 23);
-            Mode_select.TabIndex = 0;
-            Mode_select.Text = "Режим";
-            Mode_select.SelectedIndexChanged += Mode_SelectedIndexChanged;
-            // 
-            // DeathcamVolume
-            // 
-            DeathcamVolume.LargeChange = 1;
-            DeathcamVolume.Location = new Point(125, 469);
-            DeathcamVolume.Name = "DeathcamVolume";
-            DeathcamVolume.Size = new Size(401, 23);
-            DeathcamVolume.TabIndex = 190;
-            DeathcamVolume.Value = 100;
-            DeathcamVolume.Scroll += DeathcamVolume_Scroll;
-            // 
-            // DeathcamVolumeText
-            // 
-            DeathcamVolumeText.Location = new Point(529, 469);
-            DeathcamVolumeText.Name = "DeathcamVolumeText";
-            DeathcamVolumeText.Size = new Size(45, 23);
-            DeathcamVolumeText.TabIndex = 191;
-            // 
-            // KillVolumeText
-            // 
-            KillVolumeText.Location = new Point(529, 440);
-            KillVolumeText.Name = "KillVolumeText";
-            KillVolumeText.Size = new Size(45, 23);
-            KillVolumeText.TabIndex = 188;
-            // 
-            // EndGameVolume
-            // 
-            EndGameVolume.LargeChange = 1;
-            EndGameVolume.Location = new Point(125, 411);
-            EndGameVolume.Name = "EndGameVolume";
-            EndGameVolume.Size = new Size(401, 23);
-            EndGameVolume.TabIndex = 184;
-            EndGameVolume.Value = 100;
-            EndGameVolume.Scroll += EndGameVolume_Scroll;
-            // 
-            // KillVolume
-            // 
-            KillVolume.LargeChange = 1;
-            KillVolume.Location = new Point(125, 440);
-            KillVolume.Name = "KillVolume";
-            KillVolume.Size = new Size(401, 23);
-            KillVolume.TabIndex = 187;
-            KillVolume.Value = 100;
-            KillVolume.Scroll += KillVolume_Scroll;
-            // 
-            // TenSecondRoundVolume
-            // 
-            TenSecondRoundVolume.LargeChange = 1;
-            TenSecondRoundVolume.Location = new Point(125, 382);
-            TenSecondRoundVolume.Name = "TenSecondRoundVolume";
-            TenSecondRoundVolume.Size = new Size(401, 23);
-            TenSecondRoundVolume.TabIndex = 181;
-            TenSecondRoundVolume.Value = 100;
-            TenSecondRoundVolume.Scroll += TenSecondRoundVolume_Scroll;
-            // 
-            // EndGameVolumeText
-            // 
-            EndGameVolumeText.Location = new Point(529, 411);
-            EndGameVolumeText.Name = "EndGameVolumeText";
-            EndGameVolumeText.Size = new Size(45, 23);
-            EndGameVolumeText.TabIndex = 185;
-            // 
-            // TenSecondRoundVolumeText
-            // 
-            TenSecondRoundVolumeText.Location = new Point(529, 382);
-            TenSecondRoundVolumeText.Name = "TenSecondRoundVolumeText";
-            TenSecondRoundVolumeText.Size = new Size(45, 23);
-            TenSecondRoundVolumeText.TabIndex = 182;
-            // 
-            // TenSecondBombVolume
-            // 
-            TenSecondBombVolume.LargeChange = 1;
-            TenSecondBombVolume.Location = new Point(125, 353);
-            TenSecondBombVolume.Name = "TenSecondBombVolume";
-            TenSecondBombVolume.Size = new Size(401, 23);
-            TenSecondBombVolume.TabIndex = 178;
-            TenSecondBombVolume.Value = 100;
-            TenSecondBombVolume.Scroll += TenSecondBombVolume_Scroll;
-            // 
-            // TenSecondBombVolumeText
-            // 
-            TenSecondBombVolumeText.Location = new Point(529, 353);
-            TenSecondBombVolumeText.Name = "TenSecondBombVolumeText";
-            TenSecondBombVolumeText.Size = new Size(45, 23);
-            TenSecondBombVolumeText.TabIndex = 179;
-            // 
-            // BombVolumeText
-            // 
-            BombVolumeText.Location = new Point(529, 324);
-            BombVolumeText.Name = "BombVolumeText";
-            BombVolumeText.Size = new Size(45, 23);
-            BombVolumeText.TabIndex = 176;
-            // 
-            // BombVolume
-            // 
-            BombVolume.LargeChange = 1;
-            BombVolume.Location = new Point(125, 324);
-            BombVolume.Name = "BombVolume";
-            BombVolume.Size = new Size(401, 23);
-            BombVolume.TabIndex = 175;
-            BombVolume.Value = 100;
-            BombVolume.Scroll += BombVolume_Scroll;
-            // 
-            // MvpVolumeText
-            // 
-            MvpVolumeText.Location = new Point(529, 295);
-            MvpVolumeText.Name = "MvpVolumeText";
-            MvpVolumeText.Size = new Size(45, 23);
-            MvpVolumeText.TabIndex = 173;
-            // 
-            // MvpVolume
-            // 
-            MvpVolume.LargeChange = 1;
-            MvpVolume.Location = new Point(125, 295);
-            MvpVolume.Name = "MvpVolume";
-            MvpVolume.Size = new Size(401, 23);
-            MvpVolume.TabIndex = 172;
-            MvpVolume.Value = 100;
-            MvpVolume.Scroll += MvpVolume_Scroll;
-            // 
-            // LoseRoundVolumeText
-            // 
-            LoseRoundVolumeText.Location = new Point(529, 266);
-            LoseRoundVolumeText.Name = "LoseRoundVolumeText";
-            LoseRoundVolumeText.Size = new Size(45, 23);
-            LoseRoundVolumeText.TabIndex = 170;
-            // 
-            // StartGameVolumeText
-            // 
-            StartGameVolumeText.Location = new Point(529, 150);
-            StartGameVolumeText.Name = "StartGameVolumeText";
-            StartGameVolumeText.Size = new Size(45, 23);
-            StartGameVolumeText.TabIndex = 110;
-            // 
-            // LoseRoundVolume
-            // 
-            LoseRoundVolume.LargeChange = 1;
-            LoseRoundVolume.Location = new Point(125, 266);
-            LoseRoundVolume.Name = "LoseRoundVolume";
-            LoseRoundVolume.Size = new Size(401, 23);
-            LoseRoundVolume.TabIndex = 169;
-            LoseRoundVolume.Value = 100;
-            LoseRoundVolume.Scroll += LoseRoundVolume_Scroll;
-            // 
-            // StartGameVolume
-            // 
-            StartGameVolume.LargeChange = 1;
-            StartGameVolume.Location = new Point(125, 150);
-            StartGameVolume.Name = "StartGameVolume";
-            StartGameVolume.Size = new Size(401, 23);
-            StartGameVolume.TabIndex = 109;
-            StartGameVolume.Value = 100;
-            StartGameVolume.Scroll += StartGameVolume_Scroll;
-            // 
-            // WinRoundVolumeText
-            // 
-            WinRoundVolumeText.Location = new Point(529, 237);
-            WinRoundVolumeText.Name = "WinRoundVolumeText";
-            WinRoundVolumeText.Size = new Size(45, 23);
-            WinRoundVolumeText.TabIndex = 131;
-            // 
-            // WinRoundVolume
-            // 
-            WinRoundVolume.LargeChange = 1;
-            WinRoundVolume.Location = new Point(125, 237);
-            WinRoundVolume.Name = "WinRoundVolume";
-            WinRoundVolume.Size = new Size(401, 23);
-            WinRoundVolume.TabIndex = 130;
-            WinRoundVolume.Value = 100;
-            WinRoundVolume.Scroll += WinRoundVolume_Scroll;
-            // 
-            // StartActionVolumeText
-            // 
-            StartActionVolumeText.Location = new Point(529, 208);
-            StartActionVolumeText.Name = "StartActionVolumeText";
-            StartActionVolumeText.Size = new Size(45, 23);
-            StartActionVolumeText.TabIndex = 124;
-            // 
-            // StartActionVolume
-            // 
-            StartActionVolume.LargeChange = 1;
-            StartActionVolume.Location = new Point(125, 208);
-            StartActionVolume.Name = "StartActionVolume";
-            StartActionVolume.Size = new Size(401, 23);
-            StartActionVolume.TabIndex = 123;
-            StartActionVolume.Value = 100;
-            StartActionVolume.Scroll += StartActionVolume_Scroll;
-            // 
-            // StartRoundVolume
-            // 
-            StartRoundVolume.LargeChange = 1;
-            StartRoundVolume.Location = new Point(125, 179);
-            StartRoundVolume.Name = "StartRoundVolume";
-            StartRoundVolume.Size = new Size(401, 23);
-            StartRoundVolume.TabIndex = 116;
-            StartRoundVolume.Value = 100;
-            StartRoundVolume.Scroll += StartRoundVolume_Scroll;
-            // 
-            // StartRoundVolumeText
-            // 
-            StartRoundVolumeText.Location = new Point(529, 179);
-            StartRoundVolumeText.Name = "StartRoundVolumeText";
-            StartRoundVolumeText.Size = new Size(45, 23);
-            StartRoundVolumeText.TabIndex = 117;
-            // 
-            // textBox10
-            // 
-            textBox10.BackColor = SystemColors.ActiveCaptionText;
-            textBox10.ForeColor = Color.White;
-            textBox10.Location = new Point(22, 150);
-            textBox10.Name = "textBox10";
-            textBox10.Size = new Size(98, 23);
-            textBox10.TabIndex = 98;
-            textBox10.Text = "StartGame";
-            // 
-            // textBox9
-            // 
-            textBox9.BackColor = SystemColors.ActiveCaptionText;
-            textBox9.ForeColor = Color.White;
-            textBox9.Location = new Point(22, 295);
-            textBox9.Name = "textBox9";
-            textBox9.Size = new Size(97, 23);
-            textBox9.TabIndex = 100;
-            textBox9.Text = "MVP";
-            // 
-            // Bomb
-            // 
-            Bomb.BackColor = SystemColors.ActiveCaptionText;
-            Bomb.ForeColor = Color.White;
-            Bomb.Location = new Point(22, 324);
-            Bomb.Name = "Bomb";
-            Bomb.Size = new Size(97, 23);
-            Bomb.TabIndex = 92;
-            Bomb.Text = "Bomb";
-            // 
-            // WinRound
-            // 
-            WinRound.BackColor = SystemColors.ActiveCaptionText;
-            WinRound.ForeColor = Color.White;
-            WinRound.Location = new Point(21, 237);
-            WinRound.Name = "WinRound";
-            WinRound.Size = new Size(98, 23);
-            WinRound.TabIndex = 86;
-            WinRound.Text = "WinRound";
-            // 
-            // textBox11
-            // 
-            textBox11.BackColor = SystemColors.ActiveCaptionText;
-            textBox11.ForeColor = Color.White;
-            textBox11.Location = new Point(21, 353);
-            textBox11.Name = "textBox11";
-            textBox11.Size = new Size(98, 23);
-            textBox11.TabIndex = 102;
-            textBox11.Text = "TenSecond";
-            // 
-            // StartAction
-            // 
-            StartAction.BackColor = SystemColors.ActiveCaptionText;
-            StartAction.ForeColor = Color.White;
-            StartAction.Location = new Point(22, 208);
-            StartAction.Name = "StartAction";
-            StartAction.Size = new Size(97, 23);
-            StartAction.TabIndex = 94;
-            StartAction.Text = "StartAction";
-            // 
-            // textBox15
-            // 
-            textBox15.BackColor = SystemColors.ActiveCaptionText;
-            textBox15.ForeColor = Color.White;
-            textBox15.Location = new Point(21, 382);
-            textBox15.Name = "textBox15";
-            textBox15.Size = new Size(98, 23);
-            textBox15.TabIndex = 108;
-            textBox15.Text = "TenSecondRound";
-            // 
-            // textBox13
-            // 
-            textBox13.BackColor = SystemColors.ActiveCaptionText;
-            textBox13.ForeColor = Color.White;
-            textBox13.Location = new Point(22, 411);
-            textBox13.Name = "textBox13";
-            textBox13.Size = new Size(97, 23);
-            textBox13.TabIndex = 106;
-            textBox13.Text = "EndGame";
-            // 
-            // textBox4
-            // 
-            textBox4.BackColor = SystemColors.ActiveCaptionText;
-            textBox4.ForeColor = Color.White;
-            textBox4.Location = new Point(21, 179);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(98, 23);
-            textBox4.TabIndex = 96;
-            textBox4.Text = "StartRound";
-            // 
-            // DeathCam
-            // 
-            DeathCam.BackColor = SystemColors.ActiveCaptionText;
-            DeathCam.ForeColor = Color.White;
-            DeathCam.Location = new Point(21, 469);
-            DeathCam.Name = "DeathCam";
-            DeathCam.Size = new Size(98, 23);
-            DeathCam.TabIndex = 88;
-            DeathCam.Text = "DeathCam";
-            // 
-            // LoseRound
-            // 
-            LoseRound.BackColor = SystemColors.ActiveCaptionText;
-            LoseRound.ForeColor = Color.White;
-            LoseRound.Location = new Point(21, 266);
-            LoseRound.Name = "LoseRound";
-            LoseRound.Size = new Size(98, 23);
-            LoseRound.TabIndex = 90;
-            LoseRound.Text = "LoseRound";
-            // 
-            // textBox12
-            // 
-            textBox12.BackColor = SystemColors.ActiveCaptionText;
-            textBox12.ForeColor = Color.White;
-            textBox12.Location = new Point(21, 440);
-            textBox12.Name = "textBox12";
-            textBox12.Size = new Size(98, 23);
-            textBox12.TabIndex = 104;
-            textBox12.Text = "KillSound";
-            // 
-            // CtSide
-            // 
-            CtSide.BackColor = SystemColors.WindowText;
-            CtSide.ForeColor = SystemColors.Window;
-            CtSide.FormattingEnabled = true;
-            CtSide.Location = new Point(22, 76);
-            CtSide.Name = "CtSide";
-            CtSide.Size = new Size(300, 23);
-            CtSide.TabIndex = 44;
-            CtSide.Text = "Выбрать";
-            CtSide.SelectedIndexChanged += CtSide_SelectedIndexChanged;
-            // 
-            // DeathMatch
-            // 
-            DeathMatch.Controls.Add(textBox1);
-            DeathMatch.Controls.Add(textBox2);
-            DeathMatch.Controls.Add(TSide);
-            DeathMatch.Location = new Point(0, 0);
-            DeathMatch.Name = "DeathMatch";
-            DeathMatch.Size = new Size(1048, 115);
-            DeathMatch.TabIndex = 192;
-            // 
-            // TSide
-            // 
-            TSide.BackColor = SystemColors.WindowText;
-            TSide.ForeColor = SystemColors.Window;
-            TSide.FormattingEnabled = true;
-            TSide.Location = new Point(580, 76);
-            TSide.Name = "TSide";
-            TSide.RightToLeft = RightToLeft.No;
-            TSide.Size = new Size(317, 23);
-            TSide.TabIndex = 46;
-            TSide.Text = "Выбрать";
-            TSide.SelectedIndexChanged += TSide_SelectedIndexChanged;
+            Server.Size = new Size(201, 23);
+            Server.TabIndex = 50;
+            Server.Text = "StartServer";
+            Server.UseVisualStyleBackColor = true;
+            Server.Click += button1_Click;
+            // 
+            // KeepMusic
+            // 
+            KeepMusic.Image = (Image)resources.GetObject("KeepMusic.Image");
+            KeepMusic.Location = new Point(958, 76);
+            KeepMusic.Name = "KeepMusic";
+            KeepMusic.Size = new Size(23, 23);
+            KeepMusic.SizeMode = PictureBoxSizeMode.StretchImage;
+            KeepMusic.TabIndex = 0;
+            KeepMusic.TabStop = false;
+            KeepMusic.Click += KeepMusic_Click;
+            // 
+            // SoloMod
+            // 
+            SoloMod.Controls.Add(SoloList);
+            SoloMod.Controls.Add(SoloModMk);
+            SoloMod.Controls.Add(SoloImage);
+            SoloMod.Controls.Add(SoloSelectMk);
+            SoloMod.Controls.Add(textBox2);
+            SoloMod.Controls.Add(SoloMK);
+            SoloMod.Location = new Point(218, 105);
+            SoloMod.Name = "SoloMod";
+            SoloMod.Size = new Size(461, 582);
+            SoloMod.TabIndex = 52;
+            SoloMod.Visible = false;
+            // 
+            // SoloList
+            // 
+            SoloList.AllowDrop = true;
+            SoloList.BackColor = Color.Black;
+            SoloList.ForeColor = Color.Transparent;
+            SoloList.LargeImageList = imageList1;
+            SoloList.Location = new Point(17, 96);
+            SoloList.MultiSelect = false;
+            SoloList.Name = "SoloList";
+            SoloList.Size = new Size(428, 431);
+            SoloList.TabIndex = 62;
+            SoloList.UseCompatibleStateImageBehavior = false;
+            SoloList.Visible = false;
+            // 
+            // SoloModMk
+            // 
+            SoloModMk.Location = new Point(285, 541);
+            SoloModMk.Name = "SoloModMk";
+            SoloModMk.Size = new Size(160, 23);
+            SoloModMk.TabIndex = 64;
+            SoloModMk.Text = "Изменить набор";
+            SoloModMk.UseVisualStyleBackColor = true;
+            SoloModMk.Click += SoloModMk_Click;
+            // 
+            // SoloImage
+            // 
+            SoloImage.ErrorImage = (Image)resources.GetObject("SoloImage.ErrorImage");
+            SoloImage.Location = new Point(16, 96);
+            SoloImage.Name = "SoloImage";
+            SoloImage.Size = new Size(429, 429);
+            SoloImage.SizeMode = PictureBoxSizeMode.StretchImage;
+            SoloImage.TabIndex = 59;
+            SoloImage.TabStop = false;
+            // 
+            // SoloSelectMk
+            // 
+            SoloSelectMk.Location = new Point(16, 541);
+            SoloSelectMk.Name = "SoloSelectMk";
+            SoloSelectMk.Size = new Size(160, 23);
+            SoloSelectMk.TabIndex = 63;
+            SoloSelectMk.Text = "Сменить набор";
+            SoloSelectMk.UseVisualStyleBackColor = true;
+            SoloSelectMk.Click += SoloSelectMk_Click;
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(16, 57);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(90, 23);
+            textBox2.TabIndex = 60;
+            textBox2.Text = "Набор музыки";
+            // 
+            // SoloMK
+            // 
+            SoloMK.Location = new Point(116, 57);
+            SoloMK.Name = "SoloMK";
+            SoloMK.Size = new Size(329, 23);
+            SoloMK.TabIndex = 61;
+            // 
+            // TWorkStation
+            // 
+            TWorkStation.BackColor = Color.Transparent;
+            TWorkStation.BackgroundImage = (Image)resources.GetObject("TWorkStation.BackgroundImage");
+            TWorkStation.Controls.Add(TList);
+            TWorkStation.Controls.Add(TModMK);
+            TWorkStation.Controls.Add(TSelectMK);
+            TWorkStation.Controls.Add(TNameMK);
+            TWorkStation.Controls.Add(textBox32);
+            TWorkStation.Controls.Add(TImageMK);
+            TWorkStation.Controls.Add(textBox30);
+            TWorkStation.Location = new Point(676, 105);
+            TWorkStation.Name = "TWorkStation";
+            TWorkStation.Size = new Size(464, 582);
+            TWorkStation.TabIndex = 39;
+            // 
+            // TList
+            // 
+            TList.AllowDrop = true;
+            TList.BackColor = Color.Black;
+            TList.ForeColor = Color.Transparent;
+            TList.LargeImageList = imageList1;
+            TList.Location = new Point(19, 96);
+            TList.MultiSelect = false;
+            TList.Name = "TList";
+            TList.Size = new Size(428, 431);
+            TList.TabIndex = 56;
+            TList.UseCompatibleStateImageBehavior = false;
+            TList.Visible = false;
+            TList.SelectedIndexChanged += TList_SelectedIndexChanged;
+            // 
+            // TModMK
+            // 
+            TModMK.Location = new Point(287, 541);
+            TModMK.Name = "TModMK";
+            TModMK.Size = new Size(160, 23);
+            TModMK.TabIndex = 57;
+            TModMK.Text = "Изменить набор";
+            TModMK.UseVisualStyleBackColor = true;
+            TModMK.Click += TModMK_Click;
+            // 
+            // TSelectMK
+            // 
+            TSelectMK.Location = new Point(18, 541);
+            TSelectMK.Name = "TSelectMK";
+            TSelectMK.Size = new Size(160, 23);
+            TSelectMK.TabIndex = 56;
+            TSelectMK.Text = "Сменить набор";
+            TSelectMK.UseVisualStyleBackColor = true;
+            TSelectMK.Click += TSelectMK_Click;
+            // 
+            // TNameMK
+            // 
+            TNameMK.Location = new Point(118, 57);
+            TNameMK.Name = "TNameMK";
+            TNameMK.Size = new Size(329, 23);
+            TNameMK.TabIndex = 54;
+            // 
+            // textBox32
+            // 
+            textBox32.Location = new Point(18, 57);
+            textBox32.Name = "textBox32";
+            textBox32.Size = new Size(90, 23);
+            textBox32.TabIndex = 53;
+            textBox32.Text = "Набор музыки";
+            // 
+            // TImageMK
+            // 
+            TImageMK.ErrorImage = (Image)resources.GetObject("TImageMK.ErrorImage");
+            TImageMK.Location = new Point(18, 96);
+            TImageMK.Name = "TImageMK";
+            TImageMK.Size = new Size(429, 429);
+            TImageMK.SizeMode = PictureBoxSizeMode.StretchImage;
+            TImageMK.TabIndex = 52;
+            TImageMK.TabStop = false;
+            // 
+            // textBox30
+            // 
+            textBox30.Location = new Point(18, 21);
+            textBox30.Name = "textBox30";
+            textBox30.Size = new Size(90, 23);
+            textBox30.TabIndex = 1;
+            textBox30.Text = "Т сторона";
+            // 
+            // CTWorkStation
+            // 
+            CTWorkStation.BackColor = Color.Transparent;
+            CTWorkStation.BackgroundImage = (Image)resources.GetObject("CTWorkStation.BackgroundImage");
+            CTWorkStation.Controls.Add(CtList);
+            CTWorkStation.Controls.Add(CTModMK);
+            CTWorkStation.Controls.Add(CTSelectMK);
+            CTWorkStation.Controls.Add(CTNameMK);
+            CTWorkStation.Controls.Add(textBox31);
+            CTWorkStation.Controls.Add(CTImageMK);
+            CTWorkStation.Controls.Add(Select);
+            CTWorkStation.Location = new Point(215, 105);
+            CTWorkStation.Name = "CTWorkStation";
+            CTWorkStation.Size = new Size(464, 582);
+            CTWorkStation.TabIndex = 38;
+            // 
+            // CtList
+            // 
+            CtList.AllowDrop = true;
+            CtList.BackColor = Color.Black;
+            CtList.ForeColor = Color.Transparent;
+            CtList.LargeImageList = imageList1;
+            CtList.Location = new Point(16, 96);
+            CtList.MultiSelect = false;
+            CtList.Name = "CtList";
+            CtList.Size = new Size(428, 431);
+            CtList.TabIndex = 4;
+            CtList.UseCompatibleStateImageBehavior = false;
+            CtList.Visible = false;
+            // 
+            // CTModMK
+            // 
+            CTModMK.Location = new Point(284, 541);
+            CTModMK.Name = "CTModMK";
+            CTModMK.Size = new Size(160, 23);
+            CTModMK.TabIndex = 55;
+            CTModMK.Text = "Изменить набор";
+            CTModMK.UseVisualStyleBackColor = true;
+            CTModMK.Click += CTModMK_Click;
+            // 
+            // CTSelectMK
+            // 
+            CTSelectMK.Location = new Point(15, 541);
+            CTSelectMK.Name = "CTSelectMK";
+            CTSelectMK.Size = new Size(160, 23);
+            CTSelectMK.TabIndex = 54;
+            CTSelectMK.Text = "Сменить набор";
+            CTSelectMK.UseVisualStyleBackColor = true;
+            CTSelectMK.Click += CTSelectMK_Click;
+            // 
+            // CTNameMK
+            // 
+            CTNameMK.Location = new Point(115, 57);
+            CTNameMK.Name = "CTNameMK";
+            CTNameMK.Size = new Size(329, 23);
+            CTNameMK.TabIndex = 53;
+            // 
+            // textBox31
+            // 
+            textBox31.Location = new Point(15, 57);
+            textBox31.Name = "textBox31";
+            textBox31.Size = new Size(90, 23);
+            textBox31.TabIndex = 52;
+            textBox31.Text = "Набор музыки";
+            // 
+            // CTImageMK
+            // 
+            CTImageMK.ErrorImage = (Image)resources.GetObject("CTImageMK.ErrorImage");
+            CTImageMK.Location = new Point(15, 96);
+            CTImageMK.Name = "CTImageMK";
+            CTImageMK.Size = new Size(429, 429);
+            CTImageMK.SizeMode = PictureBoxSizeMode.StretchImage;
+            CTImageMK.TabIndex = 51;
+            CTImageMK.TabStop = false;
+            // 
+            // Select
+            // 
+            Select.Location = new Point(15, 21);
+            Select.Name = "Select";
+            Select.Size = new Size(90, 23);
+            Select.TabIndex = 0;
+            Select.Text = "КТ сторона";
+            // 
+            // textBox28
+            // 
+            textBox28.Location = new Point(987, 76);
+            textBox28.Name = "textBox28";
+            textBox28.Size = new Size(153, 23);
+            textBox28.TabIndex = 49;
+            textBox28.Text = "Связать наборы музыки";
+            // 
+            // textBox27
+            // 
+            textBox27.Location = new Point(230, 76);
+            textBox27.Name = "textBox27";
+            textBox27.Size = new Size(160, 23);
+            textBox27.TabIndex = 0;
+            textBox27.Text = "Конфигуратор наборов";
+            // 
+            // OpenFolder
+            // 
+            OpenFolder.Location = new Point(778, 701);
+            OpenFolder.Name = "OpenFolder";
+            OpenFolder.Size = new Size(161, 23);
+            OpenFolder.TabIndex = 40;
+            OpenFolder.Text = "Открыть папку набора ";
+            OpenFolder.UseVisualStyleBackColor = true;
+            OpenFolder.Click += OpenFolder_Click;
+            // 
+            // CurrectMK
+            // 
+            CurrectMK.Location = new Point(327, 701);
+            CurrectMK.Name = "CurrectMK";
+            CurrectMK.Size = new Size(433, 23);
+            CurrectMK.TabIndex = 39;
+            // 
+            // textBox17
+            // 
+            textBox17.Location = new Point(212, 700);
+            textBox17.Multiline = true;
+            textBox17.Name = "textBox17";
+            textBox17.ReadOnly = true;
+            textBox17.Size = new Size(96, 24);
+            textBox17.TabIndex = 38;
+            textBox17.Text = "Сейчас играет";
+            textBox17.TextChanged += textBox17_TextChanged;
+            // 
+            // ProfileText
+            // 
+            ProfileText.Font = new Font("Segoe UI", 10F);
+            ProfileText.Location = new Point(521, 17);
+            ProfileText.Multiline = true;
+            ProfileText.Name = "ProfileText";
+            ProfileText.Size = new Size(96, 25);
+            ProfileText.TabIndex = 0;
+            ProfileText.Text = "Профиль";
+            // 
+            // textBox6
+            // 
+            textBox6.Font = new Font("Segoe UI", 10F);
+            textBox6.Location = new Point(68, 17);
+            textBox6.Multiline = true;
+            textBox6.Name = "textBox6";
+            textBox6.Size = new Size(41, 25);
+            textBox6.TabIndex = 1;
+            textBox6.Text = "[GSI] status";
+            textBox6.TextChanged += textBox6_TextChanged;
+            // 
+            // Profiles
+            // 
+            Profiles.FlatStyle = FlatStyle.Flat;
+            Profiles.Font = new Font("Segoe UI", 10F);
+            Profiles.FormattingEnabled = true;
+            Profiles.Location = new Point(647, 17);
+            Profiles.Name = "Profiles";
+            Profiles.Size = new Size(493, 25);
+            Profiles.TabIndex = 2;
+            // 
+            // Library
+            // 
+            Library.Controls.Add(Python);
+            Library.Controls.Add(OpenMusicKitForm);
+            Library.Controls.Add(MusicNumbers);
+            Library.Controls.Add(LoadJson);
+            Library.Location = new Point(0, 0);
+            Library.Name = "Library";
+            Library.Size = new Size(1185, 765);
+            Library.TabIndex = 37;
+            // 
+            // Python
+            // 
+            Python.BackColor = Color.Transparent;
+            Python.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            Python.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            Python.FlatStyle = FlatStyle.Flat;
+            Python.ForeColor = SystemColors.Control;
+            Python.ImageAlign = ContentAlignment.BottomCenter;
+            Python.Location = new Point(1026, 657);
+            Python.Name = "Python";
+            Python.Size = new Size(146, 79);
+            Python.TabIndex = 3;
+            Python.Text = "Создать набор на основе файлов от Valve (Python)";
+            Python.UseVisualStyleBackColor = false;
+            Python.Click += Python_Click;
+            // 
+            // OpenMusicKitForm
+            // 
+            OpenMusicKitForm.BackColor = Color.Transparent;
+            OpenMusicKitForm.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            OpenMusicKitForm.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            OpenMusicKitForm.FlatStyle = FlatStyle.Flat;
+            OpenMusicKitForm.ForeColor = SystemColors.Control;
+            OpenMusicKitForm.ImageAlign = ContentAlignment.BottomCenter;
+            OpenMusicKitForm.Location = new Point(860, 657);
+            OpenMusicKitForm.Name = "OpenMusicKitForm";
+            OpenMusicKitForm.Size = new Size(146, 79);
+            OpenMusicKitForm.TabIndex = 2;
+            OpenMusicKitForm.Text = "Создание/Мод. набора музыки";
+            OpenMusicKitForm.UseVisualStyleBackColor = false;
+            OpenMusicKitForm.Click += OpenMusicKitForm_Click;
+            // 
+            // MusicNumbers
+            // 
+            MusicNumbers.AllowDrop = true;
+            MusicNumbers.BackColor = Color.Black;
+            MusicNumbers.ForeColor = Color.Transparent;
+            MusicNumbers.LargeImageList = imageList1;
+            MusicNumbers.Location = new Point(212, 48);
+            MusicNumbers.MultiSelect = false;
+            MusicNumbers.Name = "MusicNumbers";
+            MusicNumbers.Size = new Size(960, 603);
+            MusicNumbers.TabIndex = 0;
+            MusicNumbers.UseCompatibleStateImageBehavior = false;
+            MusicNumbers.SelectedIndexChanged += MusicNumbers_SelectedIndexChanged;
+            // 
+            // LoadJson
+            // 
+            LoadJson.BackColor = Color.Transparent;
+            LoadJson.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            LoadJson.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            LoadJson.FlatStyle = FlatStyle.Flat;
+            LoadJson.ForeColor = SystemColors.Control;
+            LoadJson.Location = new Point(694, 657);
+            LoadJson.Name = "LoadJson";
+            LoadJson.Size = new Size(146, 79);
+            LoadJson.TabIndex = 1;
+            LoadJson.Text = "Загрузить набор музыки";
+            LoadJson.UseVisualStyleBackColor = false;
+            LoadJson.Click += LoadJson_Click;
+            // 
+            // textBox19
+            // 
+            textBox19.Location = new Point(13, 209);
+            textBox19.Name = "textBox19";
+            textBox19.Size = new Size(193, 23);
+            textBox19.TabIndex = 41;
+            textBox19.Text = "Статистика за сеанс";
+            // 
+            // textBox20
+            // 
+            textBox20.Location = new Point(13, 238);
+            textBox20.Name = "textBox20";
+            textBox20.Size = new Size(115, 23);
+            textBox20.TabIndex = 42;
+            textBox20.Text = "Выйграно раундов";
+            // 
+            // textBox21
+            // 
+            textBox21.Location = new Point(13, 267);
+            textBox21.Name = "textBox21";
+            textBox21.Size = new Size(115, 23);
+            textBox21.TabIndex = 43;
+            textBox21.Text = "Проиграно раундов";
+            // 
+            // textBox22
+            // 
+            textBox22.Location = new Point(13, 296);
+            textBox22.Name = "textBox22";
+            textBox22.Size = new Size(115, 23);
+            textBox22.TabIndex = 44;
+            textBox22.Text = "Смертей";
+            // 
+            // textBox23
+            // 
+            textBox23.Location = new Point(13, 325);
+            textBox23.Name = "textBox23";
+            textBox23.Size = new Size(115, 23);
+            textBox23.TabIndex = 45;
+            textBox23.Text = "Убийств";
+            // 
+            // textBox24
+            // 
+            textBox24.Location = new Point(13, 354);
+            textBox24.Name = "textBox24";
+            textBox24.Size = new Size(115, 23);
+            textBox24.TabIndex = 46;
+            textBox24.Text = "Убийств в голову";
+            // 
+            // textBox25
+            // 
+            textBox25.Location = new Point(13, 383);
+            textBox25.Name = "textBox25";
+            textBox25.Size = new Size(115, 23);
+            textBox25.TabIndex = 47;
+            textBox25.Text = "Средний к/д";
+            // 
+            // textBox26
+            // 
+            textBox26.Location = new Point(13, 412);
+            textBox26.Name = "textBox26";
+            textBox26.Size = new Size(115, 23);
+            textBox26.TabIndex = 48;
+            textBox26.Text = "MVP";
+            // 
+            // imageList3
+            // 
+            imageList3.ColorDepth = ColorDepth.Depth32Bit;
+            imageList3.ImageSize = new Size(16, 16);
+            imageList3.TransparentColor = Color.Transparent;
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
+            pictureBox4.InitialImage = (Image)resources.GetObject("pictureBox4.InitialImage");
+            pictureBox4.Location = new Point(13, 76);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(39, 39);
+            pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox4.TabIndex = 50;
+            pictureBox4.TabStop = false;
+            pictureBox4.Click += pictureBox4_Click;
+            // 
+            // pictureBox5
+            // 
+            pictureBox5.Image = (Image)resources.GetObject("pictureBox5.Image");
+            pictureBox5.Location = new Point(13, 139);
+            pictureBox5.Name = "pictureBox5";
+            pictureBox5.Size = new Size(39, 39);
+            pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox5.TabIndex = 51;
+            pictureBox5.TabStop = false;
+            // 
+            // HomePage
+            // 
+            HomePage.Font = new Font("Segoe UI", 15F);
+            HomePage.Location = new Point(68, 76);
+            HomePage.Name = "HomePage";
+            HomePage.Size = new Size(129, 39);
+            HomePage.TabIndex = 52;
+            HomePage.Text = "Главная ";
+            HomePage.UseVisualStyleBackColor = true;
+            HomePage.Click += HomePage_Click;
+            // 
+            // LibraryPage
+            // 
+            LibraryPage.Font = new Font("Segoe UI", 15F);
+            LibraryPage.Location = new Point(68, 139);
+            LibraryPage.Name = "LibraryPage";
+            LibraryPage.Size = new Size(129, 39);
+            LibraryPage.TabIndex = 54;
+            LibraryPage.Text = "Библиотека";
+            LibraryPage.UseVisualStyleBackColor = true;
+            LibraryPage.Click += LibraryPage_Click;
+            // 
+            // WonRound
+            // 
+            WonRound.Location = new Point(134, 238);
+            WonRound.Name = "WonRound";
+            WonRound.Size = new Size(72, 23);
+            WonRound.TabIndex = 50;
+            // 
+            // LostRound
+            // 
+            LostRound.Location = new Point(134, 267);
+            LostRound.Name = "LostRound";
+            LostRound.Size = new Size(72, 23);
+            LostRound.TabIndex = 51;
+            // 
+            // Death
+            // 
+            Death.Location = new Point(134, 296);
+            Death.Name = "Death";
+            Death.Size = new Size(72, 23);
+            Death.TabIndex = 52;
+            // 
+            // Kill
+            // 
+            Kill.Location = new Point(133, 325);
+            Kill.Name = "Kill";
+            Kill.Size = new Size(73, 23);
+            Kill.TabIndex = 53;
+            // 
+            // Kill_Hs
+            // 
+            Kill_Hs.Location = new Point(133, 354);
+            Kill_Hs.Name = "Kill_Hs";
+            Kill_Hs.Size = new Size(73, 23);
+            Kill_Hs.TabIndex = 54;
+            // 
+            // KD
+            // 
+            KD.Location = new Point(133, 383);
+            KD.Name = "KD";
+            KD.Size = new Size(73, 23);
+            KD.TabIndex = 55;
+            // 
+            // MVP
+            // 
+            MVP.Location = new Point(133, 412);
+            MVP.Name = "MVP";
+            MVP.Size = new Size(73, 23);
+            MVP.TabIndex = 56;
             // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaptionText;
-            ClientSize = new Size(1050, 746);
-            Controls.Add(Server);
-            Controls.Add(Musickits);
-            Controls.Add(Settings);
-            Controls.Add(ServerMenu);
-            Controls.Add(MusicKitMenu);
-            Controls.Add(SettingsMenu);
+            ClientSize = new Size(1184, 765);
+            Controls.Add(ProfileText);
+            Controls.Add(textBox6);
+            Controls.Add(textBox19);
+            Controls.Add(textBox25);
+            Controls.Add(textBox26);
+            Controls.Add(textBox24);
+            Controls.Add(textBox23);
+            Controls.Add(textBox22);
+            Controls.Add(textBox21);
+            Controls.Add(textBox20);
+            Controls.Add(HomePage);
+            Controls.Add(LibraryPage);
+            Controls.Add(Profiles);
+            Controls.Add(pictureBox4);
+            Controls.Add(pictureBox5);
+            Controls.Add(MVP);
+            Controls.Add(KD);
+            Controls.Add(Kill_Hs);
+            Controls.Add(Death);
+            Controls.Add(Kill);
+            Controls.Add(LostRound);
+            Controls.Add(WonRound);
+            Controls.Add(Menu);
+            Controls.Add(Library);
             Controls.Add(splitter1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "Main";
             Text = "Form1";
-            ServerMenu.ResumeLayout(false);
-            ServerMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            MusicKitMenu.ResumeLayout(false);
-            SettingsMenu.ResumeLayout(false);
-            SettingsMenu.PerformLayout();
-            DeathMatch.ResumeLayout(false);
-            DeathMatch.PerformLayout();
+            Menu.ResumeLayout(false);
+            Menu.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)KeepMusic).EndInit();
+            SoloMod.ResumeLayout(false);
+            SoloMod.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)SoloImage).EndInit();
+            TWorkStation.ResumeLayout(false);
+            TWorkStation.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)TImageMK).EndInit();
+            CTWorkStation.ResumeLayout(false);
+            CTWorkStation.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)CTImageMK).EndInit();
+            Library.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
-        private Button StartServer;
-        private TextBox textBox5;
         private Splitter splitter1;
-        private Button LoadJson;
-        private TextBox textBox2;
-        private TextBox textBox1;
-        private Panel ServerMenu;
-        private Panel MusicKitMenu;
-        private TextBox textBox3;
-        private PictureBox pictureBox1;
         private ImageList imageList2;
-        private Button Server;
-        private Button Musickits;
-        private Button OpenMusicKitForm;
         public ImageList imageList1;
+        private Panel Menu;
+        private TextBox ProfileText;
+        private ComboBox Profiles;
+        private TextBox textBox6;
+        private TextBox textBox17;
+        private TextBox textBox19;
+        private Button OpenFolder;
+        private TextBox textBox28;
+        private TextBox textBox27;
+        private TextBox textBox26;
+        private TextBox textBox25;
+        private TextBox textBox24;
+        private TextBox textBox23;
+        private TextBox textBox22;
+        private TextBox textBox21;
+        private TextBox textBox20;
+        private Panel TWorkStation;
+        private Panel CTWorkStation;
+        private PictureBox KeepMusic;
+        private PictureBox pictureBox5;
+        private Button TModMK;
+        private PictureBox pictureBox4;
+        private Button TSelectMK;
+        private TextBox TNameMK;
+        private TextBox textBox32;
+        private PictureBox TImageMK;
+        private TextBox textBox30;
+        private Button CTModMK;
+        private Button CTSelectMK;
+        private TextBox CTNameMK;
+        private TextBox textBox31;
+        private PictureBox CTImageMK;
+        private TextBox Select;
+        private ImageList imageList3;
+        private Button HomePage;
+        private Button LibraryPage;
+        private Button LoadJson;
         public ListView MusicNumbers;
-        private Button Cs2Directory;
-        private TextBox textBox8;
-        private Button SaveSettings;
-        private CheckBox DoubleMode;
-        private Button Settings;
-        private Panel SettingsMenu;
-        private ComboBox Mode_select;
-        public ComboBox TSide;
-        public ComboBox CtSide;
-        private TextBox textBox10;
-        private TextBox textBox9;
-        private TextBox textBox15;
-        private TextBox textBox11;
-        private TextBox StartAction;
-        private TextBox textBox12;
-        private TextBox WinRound;
-        private TextBox textBox13;
-        private TextBox Bomb;
-        private TextBox textBox4;
-        private TextBox LoseRound;
-        private TextBox DeathCam;
-        private TextBox StartGameVolumeText;
-        private TextBox StartRoundVolumeText;
-        private TextBox StartActionVolumeText;
-        private TextBox DeathcamVolumeText;
-        private TextBox KillVolumeText;
-        private TextBox EndGameVolumeText;
-        private TextBox TenSecondRoundVolumeText;
-        private TextBox TenSecondBombVolumeText;
-        private TextBox BombVolumeText;
-        private TextBox MvpVolumeText;
-        private TextBox LoseRoundVolumeText;
-        private TextBox WinRoundVolumeText;
-        private HScrollBar DeathcamVolume;
-        private HScrollBar EndGameVolume;
-        private HScrollBar KillVolume;
-        private HScrollBar TenSecondRoundVolume;
-        private HScrollBar TenSecondBombVolume;
-        private HScrollBar BombVolume;
-        private HScrollBar MvpVolume;
-        private HScrollBar LoseRoundVolume;
-        private HScrollBar StartGameVolume;
-        private HScrollBar WinRoundVolume;
-        private HScrollBar StartActionVolume;
-        private HScrollBar StartRoundVolume;
-        private Panel DeathMatch;
-        private TextBox MenuVolumeText;
-        private HScrollBar MenuVolume;
-        private TextBox textBox16;
-        public ComboBox MainMusic;
+        private Button OpenMusicKitForm;
         private Button Python;
+        private Panel Library;
+        private BindingSource bindingSource1;
+        private Button Server;
+        public TextBox WonRound;
+        public TextBox LostRound;
+        public TextBox Death;
+        public TextBox Kill;
+        public TextBox Kill_Hs;
+        public TextBox KD;
+        public TextBox MVP;
+        public ListView TList;
+        public ListView CtList;
+        private Button Console;
+        public TextBox CurrectMK;
+        private Panel SoloMod;
+        public ListView SoloList;
+        private Button SoloModMk;
+        private PictureBox SoloImage;
+        private Button SoloSelectMk;
+        private TextBox textBox2;
+        private TextBox SoloMK;
     }
 }

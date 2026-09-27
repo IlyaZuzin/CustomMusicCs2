@@ -3,25 +3,15 @@
 // загрузки конфигураций наборов.
 // ---------------------------------------------------------------------------------------
 
-using NAudio.Gui;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Diagnostics;
 namespace MusicComanderGUI
 {
     class Setting
     {
         [JsonPropertyName("Music_Paths")]
         public List<Music> Music_Paths { get; set; } = new List<Music>();
-        [JsonPropertyName("Competitive")]
-        public Teams? Competitivie { get; set; }
-        [JsonPropertyName("Deathmatch")]
-        public int? Deathmatch { get; set; }
-        [JsonPropertyName("Wingmans")]
-        public Teams? Wingmans { get; set; }
-        [JsonPropertyName("Public")]
-        public Teams? Public { get; set; }
         [JsonPropertyName("Volume")]
         public int[] Volume { get; set; } = new int[13];
         [JsonPropertyName("DoubleMode")]
@@ -56,10 +46,7 @@ namespace MusicComanderGUI
                 SaveSetting();
             }
 
-            if (settings.Music_Paths == null) settings.Music_Paths = new List<Music>();
-            if (settings.Competitivie == null) settings.Competitivie = new Teams();
-            if (settings.Public == null) settings.Public = new Teams();
-            if (settings.Wingmans == null) settings.Wingmans = new Teams();
+            if (settings?.Music_Paths == null) settings?.Music_Paths = new List<Music>();
         }
 
         public static Kit_Sound? loadJson(string path)
@@ -78,12 +65,8 @@ namespace MusicComanderGUI
         {
             if (settings == null) settings = new Setting();
             if (settings.Music_Paths == null) settings.Music_Paths = new List<Music>();
-            if (settings.Competitivie == null) settings.Competitivie = new Teams();
-            if (settings.Public == null) settings.Public = new Teams();
-            if (settings.Wingmans == null) settings.Wingmans = new Teams();
             var options = new JsonSerializerOptions { WriteIndented = true };
             File.WriteAllText(OutPath, JsonSerializer.Serialize(settings, options));
-            
         }
 
         public static string CreateMusicKit(string path, string name, Kit_Sound music)
@@ -106,18 +89,23 @@ namespace MusicComanderGUI
             buf.image = load?.image;
             buf.name = load?.name;
             buf.path = path;
-            settings.Music_Paths.Add(buf);
+            settings?.Music_Paths.Add(buf);
             return load;
         }
 
-        private static void CopyFiles(string path, Kit_Sound music)
+        public static void CopyFiles(string path, Kit_Sound music)
         {
-            for (int  i = 0; i < 13; i++)
+            for (int ivents = 0; ivents < 13; ivents++)
             {
-                music.music[i] = CopyFileByFileSave(music.music[i], path, Enum.GetName(typeof(MusicIvents), i) + ".wav");
+                for (int count = 0; count < music?.music?[ivents].Count; count++)
+                {
+                    string FileName = Enum.GetName(typeof(MusicIvents), ivents) + " "  + count.ToString() + ".wav";
+                    string? FilePath = music?.music[ivents][count].path;
+                    music?.music[ivents][count].path = CopyFileByFileSave(FilePath, path, FileName);
+                }
             }
-            music.image = CopyFileByFileSave(music.image, path, "Image.png");
-       }
+            music?.image = CopyFileByFileSave(music?.image, path, "Image.png");
+        }
 
         public static string? CopyFileByFileSave(string? StartPath, string Path_To_Copy, string FileName)
         {
@@ -142,7 +130,7 @@ namespace MusicComanderGUI
         }
     }
 
-    class Kit_Sound
+    public class Kit_Sound
     {
         [JsonPropertyName("name")]
         public string? name { get; set; }
@@ -150,42 +138,6 @@ namespace MusicComanderGUI
         [JsonPropertyName("image")]
         public string? image { get; set; }
 
-        public string[]? music { get; set; } = new string[13];
-    }
-
-    public enum MusicIvents
-    {
-        Menu,
-        WinRound,
-        LoseRound,
-        Bomb,
-        TenSecondBomb,
-        Mvp,
-        DeathCam,
-        StartGame,
-        StartRound,
-        StartAction,
-        KillSound,
-        EndGame,
-        TenSecondRound,
-    }
-
-    class Music
-    {
-        public string? name { get; set; }
-        public string? image { get; set; }
-        public string? path { get; set; }
-    }
-
-    public class Teams
-    {
-        public int? T { get; set; }
-        public int? Ct {  get; set; }
-    }
-
-    public class TeamPath
-    {
-        public string? T { get; set; }
-        public string? Ct { get; set; }
+        public List<AudioFiles>[]? music { get; set; } = new List<AudioFiles>[13];
     }
 }

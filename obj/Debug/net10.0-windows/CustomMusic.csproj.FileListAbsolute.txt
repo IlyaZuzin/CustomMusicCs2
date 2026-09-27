@@ -25,3 +25,6 @@ C:\Users\илья\source\repos\MusicComanderGUI\MusicComanderGUI\obj\Debug\net10
 C:\Users\илья\source\repos\MusicComanderGUI\MusicComanderGUI\obj\Debug\net10.0-windows\CustomMusic.pdb
 C:\Users\илья\source\repos\MusicComanderGUI\MusicComanderGUI\obj\Debug\net10.0-windows\CustomMusic.genruntimeconfig.cache
 C:\Users\илья\source\repos\MusicComanderGUI\MusicComanderGUI\obj\Debug\net10.0-windows\ref\CustomMusic.dll
+C:\Users\илья\source\repos\MusicComanderGUI\MusicComanderGUI\obj\Debug\net10.0-windows\CustomMusic.ChangeMusicVolume.resources
+C:\Users\илья\source\repos\MusicComanderGUI\MusicComanderGUI\obj\Debug\net10.0-windows\CustomMusic.IventMusicConf.resources
+C:\Users\илья\source\repos\MusicComanderGUI\MusicComanderGUI\obj\Debug\net10.0-windows\CustomMusic.ConsoleLog.resources

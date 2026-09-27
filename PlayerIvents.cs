@@ -1,21 +1,11 @@
 ﻿// ----------------------------------------------------------------------------------------------
 // Данный файл определяет события, которые происходят во время игры и запускает необходимое аудио
 // ----------------------------------------------------------------------------------------------
-
 using System.Text.Json.Serialization;
-using static PlayerStats;
+using System.Windows.Automation;
+
 namespace MusicComanderGUI
 {
-    public enum Mode
-    { 
-        Menu,
-        Competitive,
-        Public,
-        Deathmatch,
-        Wingmans,
-        Null
-    }
-
     static class Ivents 
     {
         public static MusicIvents? LastMusic;
@@ -32,6 +22,13 @@ namespace MusicComanderGUI
         private static PlayerStats? currect_player = null;
         private static Mode gamemode = Mode.Menu;
         private static TeamPath? teams;
+
+        private static uint WonRound = 0;
+        private static uint LoseRound = 0;
+        private static uint Kills = 0;
+        private static uint Deaths = 0;
+        private static uint MVP = 0;
+
         public static async Task Tick(PlayerStats NewData, CancellationToken cts)
         {
             player = NewData;
@@ -44,39 +41,21 @@ namespace MusicComanderGUI
                 StartRound = false;
                 WavPlayer.IfEnable(MusicIvents.Menu, ModeMusic.Stop);
             }
+
             else if (gamemode == Mode.Competitive)
-            {
                 Round_Timer = 115;
-                Task.Run(() => PlayerIvents(cts));
-                Task.Run(() => Bomb(cts));
-                Task.Run(() => WinLose(cts));
-                Task.Run(() => Competitive(cts));
-                Task.Run(() => CheckTeam(cts));
-            }
+     
             else if (gamemode == Mode.Wingmans)
-            {
                 Round_Timer = 90;
-                Task.Run(() => PlayerIvents(cts));
-                Task.Run(() => Bomb(cts));
-                Task.Run(() => WinLose(cts));
-                Task.Run(() => Competitive(cts));
-                Task.Run(() => CheckTeam(cts));
-            }
+      
             else if (gamemode == Mode.Public)
-            {
                 Round_Timer = 135;
-                Task.Run(() => Competitive(cts));
-                Task.Run(() => Bomb(cts));
-                Task.Run(() => WinLose(cts));
-                Task.Run(() => Competitive(cts));
-                Task.Run(() => CheckTeam(cts));
-            }
-            else if (gamemode == Mode.Deathmatch)
-            {
-                Round_Timer = 600;
-                Task.Run(() => PlayerIvents(cts));
-                Task.Run(() => CheckTeam(cts));
-            }
+
+            Task.Run(() => PlayerIvents(cts));
+            Task.Run(() => Bomb(cts));
+            Task.Run(() => WinLose(cts));
+            Task.Run(() => Competitive(cts));
+            Task.Run(() => CheckTeam(cts));
             //Main.Instance?.SetConsoleLog($"Last Player state: {Enum.GetName(typeof(MusicIvents), (int)LastMusic)} \t Mode: {Enum.GetName(typeof(Mode), gamemode)} {Environment.NewLine}Map mode: {player?.map?.mode}");
         }
 
@@ -91,6 +70,9 @@ namespace MusicComanderGUI
                     if (IsKill)
                     {
                         WavPlayer.IfEnable(MusicIvents.DeathCam, ModeMusic.Play);
+                        Kills++;
+                        Main.Instance.Kill.Text = Kills.ToString();
+                        Main.Instance.KD.Text = (Kills / Deaths).ToString();
                     }
                 }
                 if (player?.player?.state?.health == 0 && player?.player?.steamid == player?.client?.steamid && !IsDeath)
@@ -99,6 +81,9 @@ namespace MusicComanderGUI
                     if (IsDeath)
                     {
                         WavPlayer.IfEnable(MusicIvents.DeathCam, ModeMusic.Play);
+                        Deaths++;
+                        Main.Instance.Death.Text = Deaths.ToString();
+                        Main.Instance.KD.Text = (Kills / Deaths).ToString();
                     }
                 }
             }
@@ -135,14 +120,14 @@ namespace MusicComanderGUI
                 {
                     if (player?.player?.team == "T")
                     {
-                        if (teams.T != null)
+                        if (teams?.T != null)
                         {
                             await Task.Run(() => WavPlayer.ReloadMusicKit(cts, teams.T), cts);
                         }
                     }
                     else
                     {
-                        if (teams.Ct != null)
+                        if (teams?.Ct != null)
                         {
                             await Task.Run(() => WavPlayer.ReloadMusicKit(cts, teams.Ct), cts);
                         }
@@ -156,15 +141,34 @@ namespace MusicComanderGUI
         private static async Task WinLose(CancellationToken cts)
         {
             try{
-                if (player?.player?.team == player?.round?.win_team && player?.round != null && player?.player?.MVP?.mvp != null)
+                if(LastMusic != MusicIvents.EndGame)
                 {
-                    if (player?.player?.MVP?.mvp != Mvp && player?.client?.steamid == player?.player?.steamid)
-                        WavPlayer.IfEnable(MusicIvents.Mvp, ModeMusic.Stop);
-                    else
-                        WavPlayer.IfEnable(MusicIvents.WinRound, ModeMusic.Stop);
+                    if (player?.round != null && player?.round?.win_team != null)
+                    {
+                        if (player?.player?.team == player?.round?.win_team)
+                        {
+                            if (player?.player?.MVP?.mvp != null && player?.player?.MVP?.mvp != Mvp && player?.client?.steamid == player?.player?.steamid)
+                            {
+                                WavPlayer.IfEnable(MusicIvents.Mvp, ModeMusic.Stop);
+                                MVP++;
+                                Main.Instance.MVP.Text = MVP.ToString();
+                            }
+                            else
+                            {
+                                WavPlayer.IfEnable(MusicIvents.WinRound, ModeMusic.Stop);
+                                WonRound++;
+                                Main.Instance.WonRound.Text = WonRound.ToString();
+                            }
+                        }
+                        else if (player?.player?.team != player?.round?.win_team)
+                        {
+                            WavPlayer.IfEnable(MusicIvents.LoseRound, ModeMusic.Stop);
+                            LoseRound++;
+                            Main.Instance.LostRound.Text = LoseRound.ToString();
+                        }
+                        WavPlayer.Randomizate((int)MusicIvents.StartRound, (int)MusicIvents.StartAction);
+                    }
                 }
-                else if (player?.player?.team != player?.round?.win_team && player?.round?.win_team != null && player?.player?.team != null)
-                    WavPlayer.IfEnable(MusicIvents.LoseRound, ModeMusic.Stop);
             }
             catch { }
         }
@@ -173,11 +177,7 @@ namespace MusicComanderGUI
         {
             try { 
                 if (!StartRound) { 
-                    if (player?.map?.phase == "gameover"){
-                        WavPlayer.IfEnable(MusicIvents.EndGame, ModeMusic.IfPlayingStop);
-                        GameEnd = true;
-                    }
-                    else if (gamemode == Mode.Competitive && player?.map?.round == 0 && LastMusic == MusicIvents.Menu && player?.map?.phase == "live")
+                    if (player?.map?.round == 0 && LastMusic == MusicIvents.Menu && player?.map?.phase == "live")
                     {
                         GameEnd = false;
                         StartRound = true;
@@ -196,33 +196,37 @@ namespace MusicComanderGUI
                         StartRound = false;
                     }
 
-                    else if (player?.map?.phase == "warmup") { WavPlayer.StopMusic();}
-
+                    else if (player?.map?.phase == "gameover"){
+                        WavPlayer.IfEnable(MusicIvents.EndGame, ModeMusic.IfPlayingStop);
+                    }
+                    else if (player?.map?.phase == "warmup") { 
+                        WavPlayer.StopMusic();
+                    }
 
                     else if (player?.round?.phase == "freezetime")
-                        {
-                            WavPlayer.IfEnable(MusicIvents.StartRound, ModeMusic.IfPlayingStop);
-                            IsDeath = false;
-                        }
+                    {
+                        WavPlayer.IfEnable(MusicIvents.StartRound, ModeMusic.Stop);
+                        IsDeath = false;
+                    }
                 
                     else if (player?.round?.phase == "live" && LastMusic == MusicIvents.StartRound )
+                    {
+                        Mvp = player?.player?.MVP?.mvp;
+
+                        WavPlayer.IfEnable(MusicIvents.StartAction, ModeMusic.Stop);
+                        kills_r = 0;
+                        Main.Instance?.SetConsoleLog($"Начался отсчет начала раунла");
+
+                        for (int i = 0; i < Round_Timer - 10; i++)
                         {
-                            Mvp = player?.player?.MVP?.mvp;
-
-                            WavPlayer.IfEnable(MusicIvents.StartAction, ModeMusic.Stop);
-                            kills_r = 0;
-                            Main.Instance?.SetConsoleLog($"Начался отсчет начала раунла");
-
-                            for (int i = 0; i < Round_Timer - 10; i++)
-                            {
-                                Main.Instance?.SetConsoleLog($"{i}");
-                                await Task.Delay(1000);
-                                if (cts.IsCancellationRequested || LastMusic != MusicIvents.StartAction)
-                                    return;
-                            }
-                            WavPlayer.IfEnable(MusicIvents.TenSecondBomb, ModeMusic.Stop);
-
+                            Main.Instance?.SetConsoleLog($"{i}");
+                            await Task.Delay(1000);
+                            if (cts.IsCancellationRequested || LastMusic != MusicIvents.StartAction)
+                                return;
                         }
+                        WavPlayer.IfEnable(MusicIvents.TenSecondBomb, ModeMusic.Stop);
+
+                    }
                 }
             }
             catch { StartRound = false; }
@@ -232,26 +236,28 @@ namespace MusicComanderGUI
         {
             if (cts.IsCancellationRequested) return;
             if (player?.round == null && player?.player?.activity == "menu")
-                gamemode = Mode.Menu;
+            {   
+                teams = Main.teamPath;
+                gamemode = Mode.Menu; 
+            }
             else if (player?.map?.mode == "competitive")
             {
-                teams = Main.Comp;
+                teams = Main.teamPath;
                 gamemode = Mode.Competitive;
             }
             else if (player?.map?.mode == "scrimcomp2v2")
             {
-                teams = Main.Wingmans;
+                teams = Main.teamPath;
                 gamemode = Mode.Wingmans;
             }
             else if (player?.map?.mode == "casual")
             {
-                teams = Main.Public;
+                teams = Main.teamPath;
                 gamemode = Mode.Public;
             }
             else if (player?.map?.mode == "deathmatch")
             {
-                teams.Ct = Main.Dm;
-                teams.T = Main.Dm;
+                teams = Main.teamPath;
                 gamemode = Mode.Deathmatch;
             }
         }
@@ -262,102 +268,5 @@ namespace MusicComanderGUI
             LastMusic = null;
         }
 
-    }
-}
-
-// Блядь, а нельзя попроще было сделать. Сука ;<
-class PlayerStats
-{
-    [JsonPropertyName("provider")]
-    public Provider? client { get; set; }
-
-    [JsonPropertyName("round")]
-    public Round? round { get; set; }
-
-    [JsonPropertyName("player")]
-    public Player? player { get; set; }
-
-    [JsonPropertyName("map")]
-    public Map? map { get; set; }
-    public class Provider
-    {
-        [JsonPropertyName("steamid")]
-        public long steamid { get; set; }
-
-        [JsonPropertyName("timestamp")]
-        public long time { get; set; }
-    }
-
-    public class Map
-    {
-        public string? mode { get; set; }
-        public string? name { get; set; }
-        public string? phase { get; set; }
-        public int round { get; set; }
-
-        [JsonPropertyName("team_ct")]
-        public Team? team_ct { get; set; }
-
-        [JsonPropertyName("team_t")]
-        public Team? team_t { get; set; }
-    }
-    public class Team
-    {
-        public int score { get; set; }
-        public int round_losses { get; set; }
-        public int timeouts_remaining { get; set; }
-        public int matches_won_series { get; set; }
-    }
-    public class Round_Map { }
-    public class Round
-    {
-        [JsonPropertyName("phase")]
-        public string? phase { get; set; }
-        [JsonPropertyName("win_team")]
-        public string? win_team { get; set; }
-        [JsonPropertyName("bomb")]
-        public string? bomb { get; set; }
-    }
-
-    public class Stats
-    {
-        [JsonPropertyName("mvps")]
-        public int mvp { get; set; }
-    }
-    public class Player
-    {
-        public long steamid { get; set; }
-        public string? name { get; set; }
-        public int slot { get; set; }
-        public string? team { get; set; }
-        [JsonPropertyName("activity")]
-        public string? activity { get; set; }
-
-        [JsonPropertyName("state")]
-        public State? state { get; set; }
-
-        [JsonPropertyName("match_stats")]
-        public Stats? MVP { get; set; }
-
-
-    }
-    public class State
-    {
-        public int health { get; set; }
-        public int armor { get; set; }
-        public bool helmet { get; set; }
-        public int flashed { get; set; }
-        public int smoked { get; set; }
-        public int burning { get; set; }
-        public int money { get; set; }
-
-        [JsonPropertyName("round_kills")]
-        public int round_kills { get; set; }
-        public int round_killshs { get; set; }
-        public int equip_value { get; set; }
-    }
-    public object Clone()
-    {
-        return MemberwiseClone();
     }
 }
