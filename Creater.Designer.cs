@@ -46,35 +46,21 @@
             CreateKit = new Button();
             NameKit = new TextBox();
             SelectImage = new Button();
-            StartGameDir = new TextBox();
-            Update = new Button();
             textBox10 = new TextBox();
             MusicKitImage = new PictureBox();
-            MVPDir = new TextBox();
             textBox9 = new TextBox();
-            TenSecondDir = new TextBox();
             textBox11 = new TextBox();
-            KillSoundDir = new TextBox();
             textBox12 = new TextBox();
-            EndGameDir = new TextBox();
             textBox13 = new TextBox();
             textBox8 = new TextBox();
             ImageDir = new TextBox();
-            MainMenu_dir = new TextBox();
-            StartRoundDir = new TextBox();
             LoseRound = new TextBox();
-            StartAction_dir = new TextBox();
             DeathCam = new TextBox();
-            WinRound_dir = new TextBox();
-            Bomb_dir = new TextBox();
             Bomb = new TextBox();
             WinRound = new TextBox();
-            DeathCam_dir = new TextBox();
-            LoseRound_dir = new TextBox();
             StartAction = new TextBox();
             textBox15 = new TextBox();
             MainMusic = new TextBox();
-            TenSecondRoundDir = new TextBox();
             TextErr = new ErrorProvider(components);
             ImageErr = new ErrorProvider(components);
             panel3.SuspendLayout();
@@ -101,38 +87,24 @@
             panel3.Controls.Add(CreateKit);
             panel3.Controls.Add(NameKit);
             panel3.Controls.Add(SelectImage);
-            panel3.Controls.Add(StartGameDir);
-            panel3.Controls.Add(Update);
             panel3.Controls.Add(textBox10);
             panel3.Controls.Add(MusicKitImage);
-            panel3.Controls.Add(MVPDir);
             panel3.Controls.Add(textBox9);
-            panel3.Controls.Add(TenSecondDir);
             panel3.Controls.Add(textBox11);
-            panel3.Controls.Add(KillSoundDir);
             panel3.Controls.Add(textBox12);
-            panel3.Controls.Add(EndGameDir);
             panel3.Controls.Add(textBox13);
             panel3.Controls.Add(textBox8);
             panel3.Controls.Add(ImageDir);
-            panel3.Controls.Add(MainMenu_dir);
-            panel3.Controls.Add(StartRoundDir);
             panel3.Controls.Add(LoseRound);
-            panel3.Controls.Add(StartAction_dir);
             panel3.Controls.Add(DeathCam);
-            panel3.Controls.Add(WinRound_dir);
-            panel3.Controls.Add(Bomb_dir);
             panel3.Controls.Add(Bomb);
             panel3.Controls.Add(WinRound);
-            panel3.Controls.Add(DeathCam_dir);
-            panel3.Controls.Add(LoseRound_dir);
             panel3.Controls.Add(StartAction);
             panel3.Controls.Add(textBox15);
             panel3.Controls.Add(MainMusic);
-            panel3.Controls.Add(TenSecondRoundDir);
-            panel3.Location = new Point(1, 0);
+            panel3.Location = new Point(-168, 0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(1143, 714);
+            panel3.Size = new Size(1120, 492);
             panel3.TabIndex = 50;
             panel3.Paint += panel3_Paint;
             // 
@@ -140,11 +112,11 @@
             // 
             DeathCamSelect.FlatStyle = FlatStyle.Flat;
             DeathCamSelect.ForeColor = SystemColors.Control;
-            DeathCamSelect.Location = new Point(596, 375);
+            DeathCamSelect.Location = new Point(328, 375);
             DeathCamSelect.Name = "DeathCamSelect";
             DeathCamSelect.Size = new Size(117, 23);
             DeathCamSelect.TabIndex = 74;
-            DeathCamSelect.Text = "Выбери файл";
+            DeathCamSelect.Text = "Конфигуратор";
             DeathCamSelect.UseVisualStyleBackColor = true;
             DeathCamSelect.Click += DeathCamSelect_Click;
             // 
@@ -152,11 +124,11 @@
             // 
             KillSoundSelect.FlatStyle = FlatStyle.Flat;
             KillSoundSelect.ForeColor = SystemColors.Control;
-            KillSoundSelect.Location = new Point(596, 347);
+            KillSoundSelect.Location = new Point(328, 347);
             KillSoundSelect.Name = "KillSoundSelect";
             KillSoundSelect.Size = new Size(117, 23);
             KillSoundSelect.TabIndex = 73;
-            KillSoundSelect.Text = "Выбери файл";
+            KillSoundSelect.Text = "Конфигуратор";
             KillSoundSelect.UseVisualStyleBackColor = true;
             KillSoundSelect.Click += KillSoundSelect_Click;
             // 
@@ -164,11 +136,11 @@
             // 
             EndGameSelect.FlatStyle = FlatStyle.Flat;
             EndGameSelect.ForeColor = SystemColors.Control;
-            EndGameSelect.Location = new Point(596, 318);
+            EndGameSelect.Location = new Point(328, 318);
             EndGameSelect.Name = "EndGameSelect";
             EndGameSelect.Size = new Size(117, 23);
             EndGameSelect.TabIndex = 72;
-            EndGameSelect.Text = "Выбери файл";
+            EndGameSelect.Text = "Конфигуратор";
             EndGameSelect.UseVisualStyleBackColor = true;
             EndGameSelect.Click += EndGameSelect_Click;
             // 
@@ -176,11 +148,11 @@
             // 
             TenSecondRoundSelect.FlatStyle = FlatStyle.Flat;
             TenSecondRoundSelect.ForeColor = SystemColors.Control;
-            TenSecondRoundSelect.Location = new Point(596, 289);
+            TenSecondRoundSelect.Location = new Point(328, 289);
             TenSecondRoundSelect.Name = "TenSecondRoundSelect";
             TenSecondRoundSelect.Size = new Size(117, 23);
             TenSecondRoundSelect.TabIndex = 71;
-            TenSecondRoundSelect.Text = "Выбери файл";
+            TenSecondRoundSelect.Text = "Конфигуратор";
             TenSecondRoundSelect.UseVisualStyleBackColor = true;
             TenSecondRoundSelect.Click += TenSecondRoundSelect_Click;
             // 
@@ -188,11 +160,11 @@
             // 
             TenSecondSelect.FlatStyle = FlatStyle.Flat;
             TenSecondSelect.ForeColor = SystemColors.Control;
-            TenSecondSelect.Location = new Point(596, 260);
+            TenSecondSelect.Location = new Point(328, 260);
             TenSecondSelect.Name = "TenSecondSelect";
             TenSecondSelect.Size = new Size(117, 23);
             TenSecondSelect.TabIndex = 70;
-            TenSecondSelect.Text = "Выбери файл";
+            TenSecondSelect.Text = "Конфигуратор";
             TenSecondSelect.UseVisualStyleBackColor = true;
             TenSecondSelect.Click += TenSecondSelect_Click;
             // 
@@ -200,11 +172,11 @@
             // 
             BombSelect.FlatStyle = FlatStyle.Flat;
             BombSelect.ForeColor = SystemColors.Control;
-            BombSelect.Location = new Point(596, 231);
+            BombSelect.Location = new Point(328, 231);
             BombSelect.Name = "BombSelect";
             BombSelect.Size = new Size(117, 23);
             BombSelect.TabIndex = 69;
-            BombSelect.Text = "Выбери файл";
+            BombSelect.Text = "Конфигуратор";
             BombSelect.UseVisualStyleBackColor = true;
             BombSelect.Click += BombSelect_Click;
             // 
@@ -212,11 +184,11 @@
             // 
             MVPSelect.FlatStyle = FlatStyle.Flat;
             MVPSelect.ForeColor = SystemColors.Control;
-            MVPSelect.Location = new Point(596, 202);
+            MVPSelect.Location = new Point(328, 202);
             MVPSelect.Name = "MVPSelect";
             MVPSelect.Size = new Size(117, 23);
             MVPSelect.TabIndex = 68;
-            MVPSelect.Text = "Выбери файл";
+            MVPSelect.Text = "Конфигуратор";
             MVPSelect.UseVisualStyleBackColor = true;
             MVPSelect.Click += MVPSelect_Click;
             // 
@@ -224,11 +196,11 @@
             // 
             LoseRoundSelect.FlatStyle = FlatStyle.Flat;
             LoseRoundSelect.ForeColor = SystemColors.Control;
-            LoseRoundSelect.Location = new Point(596, 173);
+            LoseRoundSelect.Location = new Point(328, 173);
             LoseRoundSelect.Name = "LoseRoundSelect";
             LoseRoundSelect.Size = new Size(117, 23);
             LoseRoundSelect.TabIndex = 67;
-            LoseRoundSelect.Text = "Выбери файл";
+            LoseRoundSelect.Text = "Конфигуратор";
             LoseRoundSelect.UseVisualStyleBackColor = true;
             LoseRoundSelect.Click += LoseRoundSelect_Click;
             // 
@@ -236,11 +208,11 @@
             // 
             WinRoundSelect.FlatStyle = FlatStyle.Flat;
             WinRoundSelect.ForeColor = SystemColors.Control;
-            WinRoundSelect.Location = new Point(596, 144);
+            WinRoundSelect.Location = new Point(328, 144);
             WinRoundSelect.Name = "WinRoundSelect";
             WinRoundSelect.Size = new Size(117, 23);
             WinRoundSelect.TabIndex = 66;
-            WinRoundSelect.Text = "Выбери файл";
+            WinRoundSelect.Text = "Конфигуратор";
             WinRoundSelect.UseVisualStyleBackColor = true;
             WinRoundSelect.Click += WinRoundSelect_Click;
             // 
@@ -248,11 +220,11 @@
             // 
             StartActionSelect.FlatStyle = FlatStyle.Flat;
             StartActionSelect.ForeColor = SystemColors.Control;
-            StartActionSelect.Location = new Point(596, 114);
+            StartActionSelect.Location = new Point(328, 114);
             StartActionSelect.Name = "StartActionSelect";
             StartActionSelect.Size = new Size(117, 23);
             StartActionSelect.TabIndex = 65;
-            StartActionSelect.Text = "Выбери файл";
+            StartActionSelect.Text = "Конфигуратор";
             StartActionSelect.UseVisualStyleBackColor = true;
             StartActionSelect.Click += StartActionSelect_Click;
             // 
@@ -260,11 +232,11 @@
             // 
             StartRound.FlatStyle = FlatStyle.Flat;
             StartRound.ForeColor = SystemColors.Control;
-            StartRound.Location = new Point(596, 85);
+            StartRound.Location = new Point(328, 85);
             StartRound.Name = "StartRound";
             StartRound.Size = new Size(117, 23);
             StartRound.TabIndex = 64;
-            StartRound.Text = "Выбери файл";
+            StartRound.Text = "Конфигуратор";
             StartRound.UseVisualStyleBackColor = true;
             StartRound.Click += StartRound_Click;
             // 
@@ -272,11 +244,11 @@
             // 
             MainMenuSelect.FlatStyle = FlatStyle.Flat;
             MainMenuSelect.ForeColor = SystemColors.Control;
-            MainMenuSelect.Location = new Point(596, 27);
+            MainMenuSelect.Location = new Point(328, 27);
             MainMenuSelect.Name = "MainMenuSelect";
             MainMenuSelect.Size = new Size(117, 23);
             MainMenuSelect.TabIndex = 62;
-            MainMenuSelect.Text = "Выбери файл";
+            MainMenuSelect.Text = "Конфигуратор";
             MainMenuSelect.UseVisualStyleBackColor = true;
             MainMenuSelect.Click += MainMenuSelect_Click;
             // 
@@ -284,11 +256,11 @@
             // 
             StartGameSelect.FlatStyle = FlatStyle.Flat;
             StartGameSelect.ForeColor = SystemColors.Control;
-            StartGameSelect.Location = new Point(596, 55);
+            StartGameSelect.Location = new Point(328, 55);
             StartGameSelect.Name = "StartGameSelect";
             StartGameSelect.Size = new Size(117, 23);
             StartGameSelect.TabIndex = 63;
-            StartGameSelect.Text = "Выбери файл";
+            StartGameSelect.Text = "Конфигуратор";
             StartGameSelect.UseVisualStyleBackColor = true;
             StartGameSelect.Click += StartGameSelect_Click;
             // 
@@ -296,7 +268,7 @@
             // 
             CreateKit.BackColor = Color.Black;
             CreateKit.ForeColor = Color.White;
-            CreateKit.Location = new Point(775, 437);
+            CreateKit.Location = new Point(467, 437);
             CreateKit.Name = "CreateKit";
             CreateKit.Size = new Size(182, 23);
             CreateKit.TabIndex = 35;
@@ -308,7 +280,7 @@
             // 
             NameKit.BackColor = SystemColors.WindowText;
             NameKit.ForeColor = SystemColors.Window;
-            NameKit.Location = new Point(775, 379);
+            NameKit.Location = new Point(467, 379);
             NameKit.Name = "NameKit";
             NameKit.Size = new Size(330, 23);
             NameKit.TabIndex = 39;
@@ -318,7 +290,7 @@
             // SelectImage
             // 
             SelectImage.BackColor = Color.Black;
-            SelectImage.Location = new Point(985, 408);
+            SelectImage.Location = new Point(677, 408);
             SelectImage.Name = "SelectImage";
             SelectImage.Size = new Size(120, 23);
             SelectImage.TabIndex = 37;
@@ -326,33 +298,11 @@
             SelectImage.UseVisualStyleBackColor = false;
             SelectImage.Click += SelectImage_Click;
             // 
-            // StartGameDir
-            // 
-            StartGameDir.BackColor = SystemColors.ActiveCaptionText;
-            StartGameDir.ForeColor = Color.White;
-            StartGameDir.Location = new Point(142, 56);
-            StartGameDir.Name = "StartGameDir";
-            StartGameDir.Size = new Size(431, 23);
-            StartGameDir.TabIndex = 37;
-            // 
-            // Update
-            // 
-            Update.BackColor = Color.Black;
-            Update.DialogResult = DialogResult.No;
-            Update.ForeColor = SystemColors.ButtonFace;
-            Update.Location = new Point(775, 466);
-            Update.Name = "Update";
-            Update.Size = new Size(182, 23);
-            Update.TabIndex = 40;
-            Update.Text = "Update";
-            Update.UseVisualStyleBackColor = false;
-            Update.Click += Update_Click;
-            // 
             // textBox10
             // 
             textBox10.BackColor = SystemColors.ActiveCaptionText;
             textBox10.ForeColor = Color.White;
-            textBox10.Location = new Point(11, 56);
+            textBox10.Location = new Point(184, 56);
             textBox10.Name = "textBox10";
             textBox10.Size = new Size(120, 23);
             textBox10.TabIndex = 38;
@@ -360,84 +310,48 @@
             // 
             // MusicKitImage
             // 
-            MusicKitImage.Location = new Point(775, 27);
+            MusicKitImage.Location = new Point(467, 27);
             MusicKitImage.Name = "MusicKitImage";
             MusicKitImage.Size = new Size(330, 330);
             MusicKitImage.SizeMode = PictureBoxSizeMode.StretchImage;
             MusicKitImage.TabIndex = 41;
             MusicKitImage.TabStop = false;
             // 
-            // MVPDir
-            // 
-            MVPDir.BackColor = SystemColors.ActiveCaptionText;
-            MVPDir.ForeColor = Color.White;
-            MVPDir.Location = new Point(142, 202);
-            MVPDir.Name = "MVPDir";
-            MVPDir.Size = new Size(431, 23);
-            MVPDir.TabIndex = 43;
-            // 
             // textBox9
             // 
             textBox9.BackColor = SystemColors.ActiveCaptionText;
             textBox9.ForeColor = Color.White;
-            textBox9.Location = new Point(11, 202);
+            textBox9.Location = new Point(184, 202);
             textBox9.Name = "textBox9";
             textBox9.Size = new Size(120, 23);
             textBox9.TabIndex = 44;
             textBox9.Text = "MVP";
             // 
-            // TenSecondDir
-            // 
-            TenSecondDir.BackColor = SystemColors.ActiveCaptionText;
-            TenSecondDir.ForeColor = Color.White;
-            TenSecondDir.Location = new Point(142, 260);
-            TenSecondDir.Name = "TenSecondDir";
-            TenSecondDir.Size = new Size(431, 23);
-            TenSecondDir.TabIndex = 47;
-            // 
             // textBox11
             // 
             textBox11.BackColor = SystemColors.ActiveCaptionText;
             textBox11.ForeColor = Color.White;
-            textBox11.Location = new Point(10, 260);
+            textBox11.Location = new Point(183, 260);
             textBox11.Name = "textBox11";
             textBox11.Size = new Size(120, 23);
             textBox11.TabIndex = 48;
             textBox11.Text = "TenSecond";
             // 
-            // KillSoundDir
-            // 
-            KillSoundDir.BackColor = SystemColors.ActiveCaptionText;
-            KillSoundDir.ForeColor = Color.White;
-            KillSoundDir.Location = new Point(142, 346);
-            KillSoundDir.Name = "KillSoundDir";
-            KillSoundDir.Size = new Size(431, 23);
-            KillSoundDir.TabIndex = 51;
-            // 
             // textBox12
             // 
             textBox12.BackColor = SystemColors.ActiveCaptionText;
             textBox12.ForeColor = Color.White;
-            textBox12.Location = new Point(11, 346);
+            textBox12.Location = new Point(184, 346);
             textBox12.Name = "textBox12";
             textBox12.Size = new Size(120, 23);
             textBox12.TabIndex = 52;
             textBox12.Text = "KillSound";
             // 
-            // EndGameDir
-            // 
-            EndGameDir.BackColor = SystemColors.ActiveCaptionText;
-            EndGameDir.ForeColor = Color.White;
-            EndGameDir.Location = new Point(142, 318);
-            EndGameDir.Name = "EndGameDir";
-            EndGameDir.Size = new Size(431, 23);
-            EndGameDir.TabIndex = 55;
-            // 
             // textBox13
             // 
             textBox13.BackColor = SystemColors.ActiveCaptionText;
             textBox13.ForeColor = Color.White;
-            textBox13.Location = new Point(10, 317);
+            textBox13.Location = new Point(183, 317);
             textBox13.Name = "textBox13";
             textBox13.Size = new Size(120, 23);
             textBox13.TabIndex = 56;
@@ -447,7 +361,7 @@
             // 
             textBox8.BackColor = SystemColors.ActiveCaptionText;
             textBox8.ForeColor = Color.White;
-            textBox8.Location = new Point(10, 85);
+            textBox8.Location = new Point(183, 85);
             textBox8.Name = "textBox8";
             textBox8.Size = new Size(120, 23);
             textBox8.TabIndex = 34;
@@ -457,81 +371,37 @@
             // 
             ImageDir.BackColor = SystemColors.MenuText;
             ImageDir.ForeColor = Color.White;
-            ImageDir.Location = new Point(775, 408);
+            ImageDir.Location = new Point(467, 408);
             ImageDir.Name = "ImageDir";
             ImageDir.Size = new Size(196, 23);
             ImageDir.TabIndex = 36;
-            // 
-            // MainMenu_dir
-            // 
-            MainMenu_dir.BackColor = SystemColors.ActiveCaptionText;
-            MainMenu_dir.ForeColor = Color.White;
-            MainMenu_dir.Location = new Point(142, 27);
-            MainMenu_dir.Name = "MainMenu_dir";
-            MainMenu_dir.Size = new Size(431, 23);
-            MainMenu_dir.TabIndex = 8;
-            // 
-            // StartRoundDir
-            // 
-            StartRoundDir.BackColor = SystemColors.ActiveCaptionText;
-            StartRoundDir.ForeColor = Color.White;
-            StartRoundDir.Location = new Point(142, 85);
-            StartRoundDir.Name = "StartRoundDir";
-            StartRoundDir.Size = new Size(431, 23);
-            StartRoundDir.TabIndex = 33;
+            ImageDir.TextChanged += ImageDir_TextChanged;
             // 
             // LoseRound
             // 
             LoseRound.BackColor = SystemColors.ActiveCaptionText;
             LoseRound.ForeColor = Color.White;
-            LoseRound.Location = new Point(11, 173);
+            LoseRound.Location = new Point(184, 173);
             LoseRound.Name = "LoseRound";
             LoseRound.Size = new Size(120, 23);
             LoseRound.TabIndex = 18;
             LoseRound.Text = "LoseRound";
             // 
-            // StartAction_dir
-            // 
-            StartAction_dir.BackColor = SystemColors.ActiveCaptionText;
-            StartAction_dir.ForeColor = Color.White;
-            StartAction_dir.Location = new Point(142, 114);
-            StartAction_dir.Name = "StartAction_dir";
-            StartAction_dir.Size = new Size(431, 23);
-            StartAction_dir.TabIndex = 23;
-            // 
             // DeathCam
             // 
             DeathCam.BackColor = SystemColors.ActiveCaptionText;
             DeathCam.ForeColor = Color.White;
-            DeathCam.Location = new Point(11, 375);
+            DeathCam.Location = new Point(184, 375);
             DeathCam.Name = "DeathCam";
             DeathCam.Size = new Size(120, 23);
             DeathCam.TabIndex = 15;
             DeathCam.Text = "DeathCam";
             // 
-            // WinRound_dir
-            // 
-            WinRound_dir.BackColor = SystemColors.ActiveCaptionText;
-            WinRound_dir.ForeColor = Color.White;
-            WinRound_dir.Location = new Point(142, 144);
-            WinRound_dir.Name = "WinRound_dir";
-            WinRound_dir.Size = new Size(431, 23);
-            WinRound_dir.TabIndex = 11;
-            // 
-            // Bomb_dir
-            // 
-            Bomb_dir.BackColor = SystemColors.ActiveCaptionText;
-            Bomb_dir.ForeColor = Color.White;
-            Bomb_dir.Location = new Point(142, 231);
-            Bomb_dir.Name = "Bomb_dir";
-            Bomb_dir.Size = new Size(431, 23);
-            Bomb_dir.TabIndex = 20;
-            // 
             // Bomb
             // 
             Bomb.BackColor = SystemColors.ActiveCaptionText;
             Bomb.ForeColor = Color.White;
-            Bomb.Location = new Point(11, 231);
+            Bomb.Location = new Point(184, 231);
             Bomb.Name = "Bomb";
             Bomb.Size = new Size(120, 23);
             Bomb.TabIndex = 21;
@@ -541,35 +411,17 @@
             // 
             WinRound.BackColor = SystemColors.ActiveCaptionText;
             WinRound.ForeColor = Color.White;
-            WinRound.Location = new Point(11, 143);
+            WinRound.Location = new Point(184, 143);
             WinRound.Name = "WinRound";
             WinRound.Size = new Size(120, 23);
             WinRound.TabIndex = 12;
             WinRound.Text = "WinRound";
             // 
-            // DeathCam_dir
-            // 
-            DeathCam_dir.BackColor = SystemColors.ActiveCaptionText;
-            DeathCam_dir.ForeColor = Color.White;
-            DeathCam_dir.Location = new Point(142, 375);
-            DeathCam_dir.Name = "DeathCam_dir";
-            DeathCam_dir.Size = new Size(431, 23);
-            DeathCam_dir.TabIndex = 14;
-            // 
-            // LoseRound_dir
-            // 
-            LoseRound_dir.BackColor = SystemColors.ActiveCaptionText;
-            LoseRound_dir.ForeColor = Color.White;
-            LoseRound_dir.Location = new Point(142, 173);
-            LoseRound_dir.Name = "LoseRound_dir";
-            LoseRound_dir.Size = new Size(431, 23);
-            LoseRound_dir.TabIndex = 17;
-            // 
             // StartAction
             // 
             StartAction.BackColor = SystemColors.ActiveCaptionText;
             StartAction.ForeColor = Color.White;
-            StartAction.Location = new Point(11, 114);
+            StartAction.Location = new Point(184, 114);
             StartAction.Name = "StartAction";
             StartAction.Size = new Size(120, 23);
             StartAction.TabIndex = 24;
@@ -579,7 +431,7 @@
             // 
             textBox15.BackColor = SystemColors.ActiveCaptionText;
             textBox15.ForeColor = Color.White;
-            textBox15.Location = new Point(11, 288);
+            textBox15.Location = new Point(184, 288);
             textBox15.Name = "textBox15";
             textBox15.Size = new Size(120, 23);
             textBox15.TabIndex = 60;
@@ -589,20 +441,11 @@
             // 
             MainMusic.BackColor = SystemColors.ActiveCaptionText;
             MainMusic.ForeColor = Color.White;
-            MainMusic.Location = new Point(10, 27);
+            MainMusic.Location = new Point(183, 27);
             MainMusic.Name = "MainMusic";
             MainMusic.Size = new Size(120, 23);
             MainMusic.TabIndex = 9;
             MainMusic.Text = "MainMenu";
-            // 
-            // TenSecondRoundDir
-            // 
-            TenSecondRoundDir.BackColor = SystemColors.ActiveCaptionText;
-            TenSecondRoundDir.ForeColor = Color.White;
-            TenSecondRoundDir.Location = new Point(142, 289);
-            TenSecondRoundDir.Name = "TenSecondRoundDir";
-            TenSecondRoundDir.Size = new Size(431, 23);
-            TenSecondRoundDir.TabIndex = 59;
             // 
             // TextErr
             // 
@@ -617,7 +460,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            ClientSize = new Size(1139, 711);
+            ClientSize = new Size(662, 487);
             Controls.Add(panel3);
             ForeColor = SystemColors.Control;
             Name = "Creater";
@@ -636,35 +479,21 @@
         private Button CreateKit;
         private TextBox NameKit;
         private Button SelectImage;
-        private TextBox StartGameDir;
-        private Button Update;
         private TextBox textBox10;
         private PictureBox MusicKitImage;
-        private TextBox MVPDir;
         private TextBox textBox9;
-        private TextBox TenSecondDir;
         private TextBox textBox11;
-        private TextBox KillSoundDir;
         private TextBox textBox12;
-        private TextBox EndGameDir;
         private TextBox textBox13;
         private TextBox textBox8;
         private TextBox ImageDir;
-        private TextBox MainMenu_dir;
-        private TextBox StartRoundDir;
         private TextBox LoseRound;
-        private TextBox StartAction_dir;
         private TextBox DeathCam;
-        private TextBox WinRound_dir;
-        private TextBox Bomb_dir;
         private TextBox Bomb;
         private TextBox WinRound;
-        private TextBox DeathCam_dir;
-        private TextBox LoseRound_dir;
         private TextBox StartAction;
         private TextBox textBox15;
         private TextBox MainMusic;
-        private TextBox TenSecondRoundDir;
         private Button MainMenuSelect;
         private Button BombSelect;
         private Button MVPSelect;

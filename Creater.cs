@@ -1,46 +1,54 @@
-﻿using System;
+﻿using CustomMusic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Windows.Documents;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace MusicComanderGUI
 {
     public partial class Creater : Form
     {
         private Main form;
-        private Kit_Sound? kit = new Kit_Sound();
+        private Kit_Sound kit = new Kit_Sound();
         public Creater(Main _form)
-        {
-            kit.music = new string[13];
+        { 
             InitializeComponent();
             //LoadJsonSetings();
             form = _form;
+
+            for (int i = 0; i < kit.music?.Length; i++) {
+                kit.music[i] = new List<AudioFiles>();
+            }
+
         }
 
-        private void LoadJsonSetings()
-        {
-            kit.image = MusicKitImage.ImageLocation;
-            kit.name = NameKit.Text;
-            kit.music[(int)MusicIvents.Menu] = MainMenu_dir.Text;
-            kit.music[(int)MusicIvents.DeathCam] = DeathCam_dir.Text;
-            kit.music[(int)MusicIvents.WinRound] = WinRound_dir.Text;
-            kit.music[(int)MusicIvents.LoseRound] = LoseRound_dir.Text;
-            kit.music[(int)MusicIvents.Bomb] = Bomb_dir.Text;
-            kit.music[(int)MusicIvents.StartAction] = StartAction_dir.Text;
-            kit.music[(int)MusicIvents.Mvp] = MVPDir.Text;
-            kit.music[(int)MusicIvents.StartGame] = StartGameDir.Text;
-            kit.music[(int)MusicIvents.StartRound] = StartRoundDir.Text;
-            kit.music[(int)MusicIvents.TenSecondBomb] = TenSecondDir.Text;
-            kit.music[(int)MusicIvents.KillSound] = KillSoundDir.Text;
-            kit.music[(int)MusicIvents.TenSecondRound] = TenSecondRoundDir.Text;
-            kit.music[(int)MusicIvents.EndGame] = EndGameDir.Text;
+        //private void LoadJsonSetings()
+        //{
+        //    kit.image = MusicKitImage.ImageLocation;
+        //    kit.name = NameKit.Text;
+        //    kit.music[(int)MusicIvents.Menu] = MainMenu_dir.Text;
+        //    kit.music[(int)MusicIvents.DeathCam] = DeathCam_dir.Text;
+        //    kit.music[(int)MusicIvents.WinRound] = WinRound_dir.Text;
+        //    kit.music[(int)MusicIvents.LoseRound] = LoseRound_dir.Text;
+        //    kit.music[(int)MusicIvents.Bomb] = Bomb_dir.Text;
+        //    kit.music[(int)MusicIvents.StartAction] = StartAction_dir.Text;
+        //    kit.music[(int)MusicIvents.Mvp] = MVPDir.Text;
+        //    kit.music[(int)MusicIvents.StartGame] = StartGameDir.Text;
+        //    kit.music[(int)MusicIvents.StartRound] = StartRoundDir.Text;
+        //    kit.music[(int)MusicIvents.TenSecondBomb] = TenSecondDir.Text;
+        //    kit.music[(int)MusicIvents.KillSound] = KillSoundDir.Text;
+        //    kit.music[(int)MusicIvents.TenSecondRound] = TenSecondRoundDir.Text;
+        //    kit.music[(int)MusicIvents.EndGame] = EndGameDir.Text;
 
-            MusicKits.SaveSetting();
-        }
+        //    MusicKits.SaveSetting();
+        //}
+
         private void MusicKitImage_Click(object sender, EventArgs e)
         {
 
@@ -48,119 +56,80 @@ namespace MusicComanderGUI
 
         private void MainMenuSelect_Click(object sender, EventArgs e)
         {
-            OpenFileDialog direct = new OpenFileDialog();
-            if (direct.ShowDialog() == DialogResult.OK)
-            {
-                MainMenu_dir.Text = direct.FileName;
-            }
+            IventMusicConf conf = new IventMusicConf(kit.music[(int)MusicIvents.Menu], "Menu");
+            conf.Show();
         }
 
         private void StartGameSelect_Click(object sender, EventArgs e)
         {
-            OpenFileDialog direct = new OpenFileDialog();
-            if (direct.ShowDialog() == DialogResult.OK)
-            {
-                StartGameDir.Text = direct.FileName;
-            }
+            IventMusicConf conf = new IventMusicConf(kit.music[(int)MusicIvents.StartGame], "StartGame");
+            conf.Show();
         }
 
         private void StartRound_Click(object sender, EventArgs e)
         {
-            OpenFileDialog direct = new OpenFileDialog();
-            if (direct.ShowDialog() == DialogResult.OK)
-            {
-                StartRoundDir.Text = direct.FileName;
-            }
+            IventMusicConf conf = new IventMusicConf(kit.music[(int)MusicIvents.StartRound], "StartRound", kit.music[(int)MusicIvents.StartAction], "StartAction");
+            conf.Show();
         }
 
         private void StartActionSelect_Click(object sender, EventArgs e)
         {
-            OpenFileDialog direct = new OpenFileDialog();
-            if (direct.ShowDialog() == DialogResult.OK)
-            {
-                StartAction_dir.Text = direct.FileName;
-            }
+            IventMusicConf conf = new IventMusicConf(kit.music[(int)MusicIvents.StartRound], "StartRound", kit.music[(int)MusicIvents.StartAction], "StartAction");
+            conf.Show();
         }
 
         private void WinRoundSelect_Click(object sender, EventArgs e)
         {
-            OpenFileDialog direct = new OpenFileDialog();
-            if (direct.ShowDialog() == DialogResult.OK)
-            {
-                WinRound_dir.Text = direct.FileName;
-            }
+            IventMusicConf conf = new IventMusicConf(kit.music[(int)MusicIvents.WinRound], "WinRound");
+            conf.Show();
         }
 
         private void LoseRoundSelect_Click(object sender, EventArgs e)
         {
-            OpenFileDialog direct = new OpenFileDialog();
-            if (direct.ShowDialog() == DialogResult.OK)
-            {
-                LoseRound_dir.Text = direct.FileName;
-            }
+            IventMusicConf conf = new IventMusicConf(kit.music[(int)MusicIvents.LoseRound], "LoseRound");
+            conf.Show();
         }
 
         private void MVPSelect_Click(object sender, EventArgs e)
         {
-            OpenFileDialog direct = new OpenFileDialog();
-            if (direct.ShowDialog() == DialogResult.OK)
-            {
-                MVPDir.Text = direct.FileName;
-            }
+            IventMusicConf conf = new IventMusicConf(kit.music[(int)MusicIvents.Mvp], "Mvp");
+            conf.Show();
         }
 
         private void BombSelect_Click(object sender, EventArgs e)
         {
-            OpenFileDialog direct = new OpenFileDialog();
-            if (direct.ShowDialog() == DialogResult.OK)
-            {
-                Bomb_dir.Text = direct.FileName;
-            }
+            IventMusicConf conf = new IventMusicConf(kit.music[(int)MusicIvents.Bomb], "Bomb");
+            conf.Show();
         }
 
         private void TenSecondSelect_Click(object sender, EventArgs e)
         {
-            OpenFileDialog direct = new OpenFileDialog();
-            if (direct.ShowDialog() == DialogResult.OK)
-            {
-                TenSecondDir.Text = direct.FileName;
-            }
+            IventMusicConf conf = new IventMusicConf(kit.music[(int)MusicIvents.TenSecondBomb], "TenSecondBomb");
+            conf.Show();
         }
 
         private void TenSecondRoundSelect_Click(object sender, EventArgs e)
         {
-            OpenFileDialog direct = new OpenFileDialog();
-            if (direct.ShowDialog() == DialogResult.OK)
-            {
-                TenSecondRoundDir.Text = direct.FileName;
-            }
+            IventMusicConf conf = new IventMusicConf(kit.music[(int)MusicIvents.TenSecondRound], "TenSecondRound");
+            conf.Show();
         }
 
         private void EndGameSelect_Click(object sender, EventArgs e)
         {
-            OpenFileDialog direct = new OpenFileDialog();
-            if (direct.ShowDialog() == DialogResult.OK)
-            {
-                EndGameDir.Text = direct.FileName;
-            }
+            IventMusicConf conf = new IventMusicConf(kit.music[(int)MusicIvents.EndGame], "EndGame");
+            conf.Show();
         }
 
         private void KillSoundSelect_Click(object sender, EventArgs e)
         {
-            OpenFileDialog direct = new OpenFileDialog();
-            if (direct.ShowDialog() == DialogResult.OK)
-            {
-                KillSoundDir.Text = direct.FileName;
-            }
+            IventMusicConf conf = new IventMusicConf(kit.music[(int)MusicIvents.KillSound], "KillSound");
+            conf.Show();
         }
 
         private void DeathCamSelect_Click(object sender, EventArgs e)
         {
-            OpenFileDialog direct = new OpenFileDialog();
-            if (direct.ShowDialog() == DialogResult.OK)
-            {
-                DeathCam_dir.Text = direct.FileName;
-            }
+            IventMusicConf conf = new IventMusicConf(kit.music[(int)MusicIvents.DeathCam], "DeathCam");
+            conf.Show();
         }
 
         private void SelectImage_Click(object sender, EventArgs e)
@@ -173,28 +142,13 @@ namespace MusicComanderGUI
             }
         }
 
-        private void Update_Click(object sender, EventArgs e)
-        {
-            //MusicKits.UpdateMusicKit(kit);
-        }
-
         private void CreateKit_Click(object sender, EventArgs e)
         {
             try
             {
                 FolderBrowserDialog direct = new FolderBrowserDialog();
-                LoadJsonSetings();
-                if (direct.ShowDialog() == DialogResult.OK)
-                    MusicKits.CreateMusicKit(direct.SelectedPath, NameKit.Text, kit);
-                else
-                {
-                    MessageBox.Show(
-                        "Ошибка при создании окна",
-                        "Неизвестаная ошибка",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error
-                        );
-                }
+                kit.image = MusicKitImage.ImageLocation;
+                kit.name = NameKit.Text;
                 if (NameKit.Text == null || !Path.Exists(ImageDir.Text))
                 {
                     MessageBox.Show(
@@ -205,15 +159,34 @@ namespace MusicComanderGUI
                         );
                     return;
                 }
+                if (direct.ShowDialog() == DialogResult.OK)
+                {
+                    string path = Path.Combine(direct.SelectedPath, NameKit.Text);
+                    if (!Path.Exists(path))
+                        MusicKits.CreateMusicKit(direct.SelectedPath, NameKit.Text, kit);
+                    else
+                    {
+                        DialogResult result = MessageBox.Show(
+                        "Данный набор музыки уже существет, хотите перезаписать",
+                        "Копия",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Error
+                        );
+                        if (result == DialogResult.Yes)
+                        {
+                            Directory.Delete(path);
+                            MusicKits.CreateMusicKit(direct.SelectedPath, NameKit.Text, kit);
+                        }
+                        else
+                            return;
+                    }
+                }
                 int size = MusicKits.settings.Music_Paths.Count();
                 string name = NameKit.Text;
                 form.imageList1.Images.Add(Image.FromFile(ImageDir.Text));
                 int newImageIndex = form.imageList1.Images.Count - 1;
                 ListViewItem item = new ListViewItem(name, newImageIndex);
                 form.MusicNumbers.Items.Add(item);
-                form.TSide.Items.Add(name);
-                form.CtSide.Items.Add(name);
-                form.MainMusic.Items.Add(name);
                 MusicKits.SaveSetting();
             }
             catch (Exception ex)
@@ -242,6 +215,31 @@ namespace MusicComanderGUI
             {
                 TextErr.SetError(NameKit, string.Empty);
             }
+        }
+
+        private void ImageDir_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(NameKit.Text))
+            {
+                ImageErr.SetError(SelectImage, "Выберите путь");
+            }
+            else
+            {
+                TextErr.SetError(SelectImage, string.Empty);
+            }
+            if (Path.Exists(ImageDir.Text))
+            {
+                TextErr.SetError(SelectImage, "Файл не найден");
+            }
+            else
+            {
+                TextErr.SetError(SelectImage, string.Empty);
+            }
+        }
+
+        private void textBox12_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
