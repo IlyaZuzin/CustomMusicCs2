@@ -12,13 +12,36 @@ namespace MusicComanderGUI
         public static SoundPlayer[]? music;
         private static Random rnd = new Random();
         private static Kit_Sound loaded = new Kit_Sound();
-        public static void SetupMusic(Kit_Sound? load) 
-        { 
+        public static void SetupMusic(Kit_Sound? load)
+        {
             AudioStop();
             if (load == null) return;
             loaded = load;
             music = new SoundPlayer[13];
             ChangeMusicRandom();
+            // FIX: "Отсутствует звук при загрузке приложения" — сразу запускаем фоновую
+            // музыку меню, чтобы аудио-устройство инициализировалось без необходимости
+            // вручную менять громкость.
+            TryStartMenuMusic();
+        }
+
+        // Запускает музыку в главном меню, если сервер запущен, а музыка ещё не играет
+        public static void TryStartMenuMusic()
+        {
+            try
+            {
+                if (!Server.is_Running || music == null) return;
+                if (music[(int)MusicIvents.Menu] == null) return;
+                if (Ivents.LastMusic == MusicIvents.Menu && music[(int)MusicIvents.Menu].player != null) return;
+                music[(int)MusicIvents.Menu].file.Position = 0;
+                music[(int)MusicIvents.Menu].player.Play();
+                Ivents.LastMusic = MusicIvents.Menu;
+                if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog("Menu music started on setup");
+            }
+            catch (Exception ex)
+            {
+                if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog("TryStartMenuMusic error: " + ex.Message);
+            }
         }
 
         public static void PlayMusic(MusicIvents state)
@@ -43,6 +66,8 @@ namespace MusicComanderGUI
         {
             try
             {
+                if (music == null) return;
+                if (Ivents.LastMusic == null) return;
                 if (music[(int)Ivents.LastMusic] != null)
                 {
                     music[(int)Ivents.LastMusic].player?.Stop();
@@ -109,6 +134,15 @@ namespace MusicComanderGUI
             if (load == null) { if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog("Null to reload " + path); return; }
             AudioStop();
             SetupMusic(load);
+            // FIX: Если текущее событие не было загружено в новом наборе (music == null),
+            // SetupMusic не запустит музыку и она «исчезнет». В таком случае
+            // запускаем фоновую музыку меню.
+            if (Ivents.LastMusic == null || music[(int)Ivents.LastMusic] == null)
+            {
+                TryStartMenuMusic();
+                if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog("Reload: last event missing in kit, fallback to Menu music");
+                return;
+            }
             if (music[(int)Ivents.LastMusic] != null)
             {
                 music[(int)Ivents.LastMusic].file.Position = 0;
@@ -121,11 +155,13 @@ namespace MusicComanderGUI
 
         public static void changevolume(MusicIvents id, float vol)
         {
-            if(Server.is_Running == true && music[(int)id] != null)
-            {
-                vol /= 100.0f;
-                music[(int)id].file.Volume = vol;
-            }
+            if (music == null || music[(int)id] == null) return;
+            vol /= 100.0f;
+            // FIX: раньше громкость применялась только при запущенном сервере
+            // (Server.is_Running), поэтому «при загрузке приложения отсутствовал звук,
+            // пока не изменишь громкость». Теперь volume применяется всегда —
+            // AudioFileReader.Volume работает и на остановленном проигрывателе.
+            music[(int)id].file.Volume = vol;
         }
 
         private static void ChangeMusicRandom()
@@ -133,7 +169,14 @@ namespace MusicComanderGUI
             for (int i = 0; i < 13; i++)
             {
                 try { 
-                    int random_music = rnd.Next(loaded.music[i].Count - 1);
+                    if (loaded.music == null || loaded.music[i] == null || loaded.music[i].Count == 0)
+                    {
+                        music[i] = null;
+                        continue;
+                    }
+                    // FIX: rnd.Next(count - 1) никогда не выбирал последний трек набора,
+                    // а при count == 1 кидал исключение и обнулял всю дорожку события.
+                    int random_music = rnd.Next(loaded.music[i].Count);
                     if (string.IsNullOrEmpty(loaded.music[i][random_music].path) && music[i] != null)
                     {
                         music[i] = null;
@@ -198,6 +241,8 @@ namespace MusicComanderGUI
         public static void RandomMusic(MusicIvents? id)
         {
             if (id == null) return;
+            // FIX: защита от null/пустого списка дорожек в наборе
+            if (loaded.music == null || loaded.music[(int)id] == null) return;
             int size = loaded.music[(int)id].Count;
             if (size <= 1) { 
                 return;
@@ -208,12 +253,14 @@ namespace MusicComanderGUI
 
         public static void Randomizate(int first, int second)
         {
+            // FIX: защита от null/пустого списка дорожек в наборе
+            if (loaded.music == null || loaded.music[first] == null || loaded.music[first].Count == 0) return;
             int rand = rnd.Next(loaded.music[first].Count);
             music[first] = LoadMusic(first, rand);
-            int? next = loaded.music[(int)first][rand].next_music;
+            int? next = loaded.music[first][rand].next_music;
             if (next != null)
             {
-                if (next != null)
+                if (loaded.music[second] != null && next.Value >= 0 && next.Value < loaded.music[second].Count)
                     music[second] = LoadMusic(second, next.Value);
             }
             RandomMusic(MusicIvents.DeathCam);
