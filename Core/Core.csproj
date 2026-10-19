@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Ядро: библиотека-плагин (нативная DLL = managed-сборка, загружаемая хостом) -->
+    <OutputType>Library</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- Ядро НЕ зависит от WinForms: GUI живёт в аддоне MusicGui -->
+    <AssemblyName>Core</AssemblyName>
+    <RootNamespace>MusicCore</RootNamespace>
+    <!-- Экспорт C-функций (Setup/Inject/.../LoadAddon/UnloadAddon) через [UnmanagedCallersOnly] -->
+    <EnableNativeAOTExports>true</EnableNativeAOTExports>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!-- Аддоны собираются в подпапку addons рядом с ядром -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NAudio" Version="2.3.0" />
+    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="10.0.*" Condition="'$(PublishAot)' == 'true'" />
+  </ItemGroup>
+
+</Project>
