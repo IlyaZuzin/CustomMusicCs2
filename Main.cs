@@ -1,4 +1,5 @@
 using CustomMusic;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.IO;
 namespace MusicComanderGUI
@@ -11,6 +12,7 @@ namespace MusicComanderGUI
         public static string? main;
         public static Mode mode;
         public static string? PlayingPath;
+        public static Profile? loaded_profile;
         public Main()
         {
             InitializeComponent();
@@ -79,23 +81,33 @@ namespace MusicComanderGUI
                     }
                 }
             }
-
-            if (MusicKits.settings.DoubleMode == false)
+            foreach (Profile profile in MusicKits.settings.profiles)
             {
-
+                Profiles.Items.Add(profile.name);
             }
             SetConsoleLog($"[Settings] Load {newImageIndex} MusicKits");
 
-            MusicNumbers.LargeImageList = imageList1;
+            int? last_profile_index = MusicKits.settings?.profile;
+
+            // Проверяем: если индекс есть И в списке профилей реально что-то лежит
+            if (last_profile_index != null && MusicKits.settings.profiles != null && MusicKits.settings.profiles.Count > last_profile_index.Value)
+            {
+                loaded_profile = LoadProfile(MusicKits.settings.profiles[last_profile_index.Value]);
+            }
+
+            // КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Если профиль всё еще null (первый запуск или сбой), 
+            // создаем пустой объект в памяти, чтобы методы не падали!
+            if (loaded_profile == null)
+            {
+                loaded_profile = new Profile();
+                loaded_profile.name = "Default"; // Назовем по умолчанию
+                SetConsoleLog("[Settings] loaded_profile был null, создан дефолтный профиль.");
+            }
         }
 
         public void SetConsoleLog(string Log)
         {
-            if (this.InvokeRequired)
-            {
-                this.BeginInvoke(new Action(() => SetConsoleLog(Log)));
-                return;
-            }
+            if (MusicComanderGUI.Server.Logging) ConsoleLog.Instance?.SendConsoleLog(Log);
         }
 
         private void LoadJson_Click(object sender, EventArgs e)
@@ -114,10 +126,11 @@ namespace MusicComanderGUI
                         imageList1.Images.Add(Image.FromFile(load.image));
 
                     int newImageIndex = imageList1.Images.Count - 1;
-                    ListViewItem item = new ListViewItem(name, newImageIndex);
-                    MusicNumbers.Items.Add(item);
-                    CtList.Items.Add(item);
-                    TList.Items.Add(item);
+
+                    // Создаем ТРИ РАЗНЫХ айтема для ТРЕХ РАЗНЫХ списков:
+                    MusicNumbers.Items.Add(new ListViewItem(name, newImageIndex));
+                    CtList.Items.Add(new ListViewItem(name, newImageIndex));
+                    TList.Items.Add(new ListViewItem(name, newImageIndex));
                 }
             }
             catch (Exception ex) { SetConsoleLog(ex.Message); }
@@ -225,11 +238,16 @@ namespace MusicComanderGUI
 
         private void KeepMusic_Click(object sender, EventArgs e)
         {
-            if (MusicKits.settings.DoubleMode == true)
+            loaded_profile.Standart_mode = !loaded_profile.Standart_mode;
+            EnableStandartMode(loaded_profile.Standart_mode);
+        }
+
+        private void EnableStandartMode(bool enable)
+        {
+            if (enable == true)
             {
                 TWorkStation.Visible = false;
                 CTWorkStation.Visible = false;
-                MusicKits.settings.DoubleMode = false;
                 SoloMod.Visible = true;
             }
             else
@@ -237,9 +255,7 @@ namespace MusicComanderGUI
                 SoloMod.Visible = false;
                 TWorkStation.Visible = true;
                 CTWorkStation.Visible = true;
-                MusicKits.settings.DoubleMode = true;
             }
-
         }
 
         private void CTSelectMK_Click(object sender, EventArgs e)
@@ -260,10 +276,10 @@ namespace MusicComanderGUI
                 {
                     var selectedKit = MusicKits.settings.Music_Paths[index];
 
-                    teamPath.Ct = selectedKit.path;
+                    loaded_profile.ct_path = selectedKit.path;
 
                     CTImageMK.ImageLocation = Path.Combine(selectedKit.path, selectedKit.image);
-                    
+
                     CTNameMK.Text = selectedKit.name;
                     CtList.Visible = false;
                 }
@@ -288,7 +304,7 @@ namespace MusicComanderGUI
                 {
                     var selectedKit = MusicKits.settings.Music_Paths[index];
 
-                    teamPath.T = selectedKit.path;
+                    loaded_profile.t_path = selectedKit.path;
 
                     // Если в настройках лежит только имя файла (например, "icon.png"), склеиваем путь:
                     TImageMK.ImageLocation = Path.Combine(selectedKit.path, selectedKit.image);
@@ -311,25 +327,27 @@ namespace MusicComanderGUI
 
         private void CTModMK_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(teamPath.Ct))
+            if (String.IsNullOrEmpty(loaded_profile.ct_path))
             {
                 return;
             }
-            ChangeMusicVolume change = new ChangeMusicVolume(teamPath.Ct);
+            ChangeMusicVolume change = new ChangeMusicVolume(loaded_profile.ct_path);
+            change.Show();
         }
 
         private void TModMK_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(teamPath.T))
+            if (String.IsNullOrEmpty(loaded_profile.t_path))
             {
                 return;
             }
-            ChangeMusicVolume change = new ChangeMusicVolume(teamPath.T);
+            ChangeMusicVolume change = new ChangeMusicVolume(loaded_profile.t_path);
+            change.Show();
         }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            CustomMusic.ConsoleLog console = new CustomMusic.ConsoleLog();
+            ConsoleLog console = new ConsoleLog();
             console.Show();
         }
 
@@ -350,6 +368,49 @@ namespace MusicComanderGUI
         {
             if (String.IsNullOrEmpty(main)) return;
             ChangeMusicVolume change = new ChangeMusicVolume(main);
+        }
+
+        private void AddProfile_Click(object sender, EventArgs e)
+        {
+            Profile new_profile = new Profile();
+            if (loaded_profile != null) new_profile = loaded_profile.Copy();
+            new_profile.name = ProfileName.Text;
+            Profiles.Items.Add(new_profile.name);
+            MusicKits.settings.profiles.Add(new_profile);
+        }
+
+        private Profile LoadProfile(Profile profile)
+        {
+            loaded_profile = profile;
+            Profiles.Text = profile.name;
+            EnableStandartMode(profile.Standart_mode);
+            Kit_Sound? buf = MusicKits.loadJson(profile.ct_path);
+            CTNameMK.Text = buf.name;
+            CTImageMK.ImageLocation = buf.image;
+
+            buf = MusicKits.loadJson(profile.t_path);
+            TNameMK.Text = buf.name;
+            TImageMK.ImageLocation = buf.image;
+
+            buf = MusicKits.loadJson(profile.t_path);
+            SoloMK.Text = buf?.name;
+            SoloImage.ImageLocation = buf?.image;
+
+            return profile;
+        }
+
+        private void Profiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Profiles.SelectedIndex != -1)
+            {
+                LoadProfile(MusicKits.settings.profiles[Profiles.SelectedIndex]);
+                MusicKits.settings.profile = Profiles.SelectedIndex;
+            }
+        }
+
+        private void Main_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            MusicKits.SaveSetting();
         }
     }
 }

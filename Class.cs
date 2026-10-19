@@ -147,4 +147,18 @@ namespace MusicComanderGUI
             return MemberwiseClone();
         }
     }
+
+    public class Profile
+    {
+        public string name { get; set; } = "Unnamed";
+        public string? ct_path { get; set; }
+        public string? t_path { get; set; }
+        public bool Standart_mode { get; set; } = false; 
+        public string? global_path { get; set; }
+
+        public Profile Copy()
+        {
+            return (Profile)this.MemberwiseClone();
+        }
+    }
 }

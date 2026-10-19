@@ -18,6 +18,11 @@ namespace CustomMusic
             ConsoleLogBox.AppendText(currentTime + " " +  message + Environment.NewLine);
         }
 
+        public void SendJson(string message)
+        {
+            message = message.Replace("\n", Environment.NewLine);
+            Json.Text = message;
+        }
         ~ConsoleLog() { 
             Server.Logging = false;
         }

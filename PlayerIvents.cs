@@ -1,6 +1,7 @@
 ﻿// ----------------------------------------------------------------------------------------------
 // Данный файл определяет события, которые происходят во время игры и запускает необходимое аудио
 // ----------------------------------------------------------------------------------------------
+using CustomMusic;
 using System.Text.Json.Serialization;
 using System.Windows.Automation;
 
@@ -114,7 +115,7 @@ namespace MusicComanderGUI
 
         private static async Task CheckTeam(CancellationToken cts)
         {
-            if (Team != player?.player?.team && player?.player?.team != null && MusicKits.settings.DoubleMode)
+            if (Team != player?.player?.team && player?.player?.team != null)
             {
                 try
                 {
@@ -122,18 +123,18 @@ namespace MusicComanderGUI
                     {
                         if (teams?.T != null)
                         {
-                            await Task.Run(() => WavPlayer.ReloadMusicKit(cts, teams.T), cts);
+                            await Task.Run(() => WavPlayer.ReloadMusicKit(cts, Main.loaded_profile.t_path), cts);
                         }
                     }
                     else
                     {
                         if (teams?.Ct != null)
                         {
-                            await Task.Run(() => WavPlayer.ReloadMusicKit(cts, teams.Ct), cts);
+                            await Task.Run(() => WavPlayer.ReloadMusicKit(cts, Main.loaded_profile.ct_path), cts);
                         }
                     }
                 }
-                catch { Main.Instance?.SetConsoleLog($"Ошибка при включении"); }
+                catch { if(Server.Logging) ConsoleLog.Instance.SendConsoleLog($"Ошибка при включении"); }
                 Team = player?.player?.team;
             }
         }

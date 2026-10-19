@@ -19,9 +19,17 @@ namespace CustomMusic
         public ChangeMusicVolume(string? path)
         {
             kit = MusicKits.loadJson(path);
-            MusicKitImage.ImageLocation = kit?.image;
-            NameKit.Text = kit?.name; 
             InitializeComponent();
+            try
+            {
+                MusicKitImage.ImageLocation = kit?.image;
+                NameKit.Text = kit?.name; 
+            }
+            catch(Exception ex) {
+                if(Server.Logging) {
+                    ConsoleLog.Instance?.SendConsoleLog(ex.Message);
+                }
+            }
         }
 
         private void MainMenuSelect_Click(object sender, EventArgs e)

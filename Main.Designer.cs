@@ -34,6 +34,8 @@
             imageList1 = new ImageList(components);
             imageList2 = new ImageList(components);
             Menu = new Panel();
+            ProfileName = new TextBox();
+            AddProfile = new Button();
             Console = new Button();
             Server = new Button();
             KeepMusic = new PictureBox();
@@ -65,9 +67,9 @@
             OpenFolder = new Button();
             CurrectMK = new TextBox();
             textBox17 = new TextBox();
+            Profiles = new ComboBox();
             ProfileText = new TextBox();
             textBox6 = new TextBox();
-            Profiles = new ComboBox();
             Library = new Panel();
             Python = new Button();
             OpenMusicKitForm = new Button();
@@ -133,6 +135,8 @@
             // 
             // Menu
             // 
+            Menu.Controls.Add(ProfileName);
+            Menu.Controls.Add(AddProfile);
             Menu.Controls.Add(Console);
             Menu.Controls.Add(Server);
             Menu.Controls.Add(KeepMusic);
@@ -144,11 +148,29 @@
             Menu.Controls.Add(OpenFolder);
             Menu.Controls.Add(CurrectMK);
             Menu.Controls.Add(textBox17);
+            Menu.Controls.Add(Profiles);
             Menu.Location = new Point(0, 0);
             Menu.Name = "Menu";
             Menu.Size = new Size(1200, 800);
             Menu.TabIndex = 34;
             Menu.Paint += Menu_Paint;
+            // 
+            // ProfileName
+            // 
+            ProfileName.Location = new Point(623, 48);
+            ProfileName.Name = "ProfileName";
+            ProfileName.Size = new Size(326, 23);
+            ProfileName.TabIndex = 54;
+            // 
+            // AddProfile
+            // 
+            AddProfile.Location = new Point(1122, 17);
+            AddProfile.Name = "AddProfile";
+            AddProfile.Size = new Size(50, 23);
+            AddProfile.TabIndex = 53;
+            AddProfile.Text = "+";
+            AddProfile.UseVisualStyleBackColor = true;
+            AddProfile.Click += AddProfile_Click;
             // 
             // Console
             // 
@@ -465,6 +487,17 @@
             textBox17.Text = "Сейчас играет";
             textBox17.TextChanged += textBox17_TextChanged;
             // 
+            // Profiles
+            // 
+            Profiles.FlatStyle = FlatStyle.Flat;
+            Profiles.Font = new Font("Segoe UI", 10F);
+            Profiles.FormattingEnabled = true;
+            Profiles.Location = new Point(623, 17);
+            Profiles.Name = "Profiles";
+            Profiles.Size = new Size(493, 25);
+            Profiles.TabIndex = 2;
+            Profiles.SelectedIndexChanged += Profiles_SelectedIndexChanged;
+            // 
             // ProfileText
             // 
             ProfileText.Font = new Font("Segoe UI", 10F);
@@ -485,16 +518,6 @@
             textBox6.TabIndex = 1;
             textBox6.Text = "[GSI] status";
             textBox6.TextChanged += textBox6_TextChanged;
-            // 
-            // Profiles
-            // 
-            Profiles.FlatStyle = FlatStyle.Flat;
-            Profiles.Font = new Font("Segoe UI", 10F);
-            Profiles.FormattingEnabled = true;
-            Profiles.Location = new Point(647, 17);
-            Profiles.Name = "Profiles";
-            Profiles.Size = new Size(493, 25);
-            Profiles.TabIndex = 2;
             // 
             // Library
             // 
@@ -749,7 +772,6 @@
             Controls.Add(textBox20);
             Controls.Add(HomePage);
             Controls.Add(LibraryPage);
-            Controls.Add(Profiles);
             Controls.Add(pictureBox4);
             Controls.Add(pictureBox5);
             Controls.Add(MVP);
@@ -766,6 +788,7 @@
             MaximizeBox = false;
             Name = "Main";
             Text = "Form1";
+            FormClosed += Main_FormClosed;
             Menu.ResumeLayout(false);
             Menu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)KeepMusic).EndInit();
@@ -851,5 +874,7 @@
         private Button SoloSelectMk;
         private TextBox textBox2;
         private TextBox SoloMK;
+        private Button AddProfile;
+        private TextBox ProfileName;
     }
 }
