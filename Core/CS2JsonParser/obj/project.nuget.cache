@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "jaHCosVsVoI=",
+  "dgSpecHash": "OqJPh+YR3NE=",
   "success": true,
   "projectFilePath": "H:\\Проекты\\Addon\\MusicIvents\\Core\\CS2JsonParser\\CS2JsonParser.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\илья\\.nuget\\packages\\microsoft.dotnet.ilcompiler\\9.0.20\\microsoft.dotnet.ilcompiler.9.0.20.nupkg.sha512",
+    "C:\\Users\\илья\\.nuget\\packages\\microsoft.net.illink.tasks\\9.0.20\\microsoft.net.illink.tasks.9.0.20.nupkg.sha512",
+    "C:\\Users\\илья\\.nuget\\packages\\runtime.win-x64.microsoft.dotnet.ilcompiler\\9.0.20\\runtime.win-x64.microsoft.dotnet.ilcompiler.9.0.20.nupkg.sha512"
+  ],
   "logs": []
 }

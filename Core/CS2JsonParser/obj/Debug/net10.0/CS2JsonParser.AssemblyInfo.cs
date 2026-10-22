@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CS2JsonParser")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5f50e8e15e30fbf0466a6725d3dccbbe28b29dae")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2640721a69dff5719208685853eebc0934cf425f")]
 [assembly: System.Reflection.AssemblyProductAttribute("CS2JsonParser")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CS2JsonParser")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

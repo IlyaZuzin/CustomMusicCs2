@@ -3,7 +3,7 @@ using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 
 namespace MyNativeLib;
-
+// TODO: Еще не все функции инициализированны
 public static class NativeFunctions
 {
     [UnmanagedCallersOnly(EntryPoint = "InitProgram")]
