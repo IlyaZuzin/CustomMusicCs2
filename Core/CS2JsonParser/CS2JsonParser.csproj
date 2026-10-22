@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework> <!-- или net9.0 -->
+    <TargetFramework>net9.0-windows</TargetFramework> <!-- или net9.0 -->
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
@@ -8,6 +8,7 @@
     <PublishAot>true</PublishAot>
     
     <!-- 2. Говорим, что это библиотека, а не исполняемый .exe -->
+    <UseWPF>true</UseWPF>
     <NativeLib>Shared</NativeLib>
   </PropertyGroup>
 </Project>

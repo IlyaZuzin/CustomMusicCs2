@@ -1,7 +1,7 @@
 {
   "version": 4,
   "targets": {
-    "net9.0": {
+    "net9.0-windows": {
       "Microsoft.DotNet.ILCompiler/9.0.20": {
         "type": "package",
         "build": {
@@ -99,7 +99,7 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net9.0": [
+    "net9.0-windows": [
       "Microsoft.DotNet.ILCompiler >= 9.0.20",
       "Microsoft.NET.ILLink.Tasks >= 9.0.20"
     ]
@@ -121,16 +121,16 @@
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net9.0"
+        "net9.0-windows"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net9.0": {
-          "framework": "net9.0",
-          "targetAlias": "net9.0",
+        "net9.0-windows": {
+          "framework": "net9.0-windows7.0",
+          "targetAlias": "net9.0-windows",
           "projectReferences": {}
         }
       },
@@ -147,9 +147,9 @@
       "SdkAnalysisLevel": "10.0.400"
     },
     "frameworks": {
-      "net9.0": {
-        "framework": "net9.0",
-        "targetAlias": "net9.0",
+      "net9.0-windows": {
+        "framework": "net9.0-windows7.0",
+        "targetAlias": "net9.0-windows",
         "dependencies": {
           "Microsoft.DotNet.ILCompiler": {
             "suppressParent": "All",
@@ -184,6 +184,9 @@
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
+          },
+          "Microsoft.WindowsDesktop.App.WPF": {
+            "privateAssets": "none"
           }
         },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json"
