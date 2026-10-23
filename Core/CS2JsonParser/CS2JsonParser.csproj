@@ -2,13 +2,13 @@
   <PropertyGroup>
     <TargetFramework>net9.0-windows</TargetFramework> <!-- или net9.0 -->
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-
     <!-- 1. Включаем Native AOT -->
     <PublishAot>true</PublishAot>
     
     <!-- 2. Говорим, что это библиотека, а не исполняемый .exe -->
     <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
     <NativeLib>Shared</NativeLib>
+
   </PropertyGroup>
 </Project>

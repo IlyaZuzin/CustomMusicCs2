@@ -1,6 +1,6 @@
-using Microsoft.Win32;
 using Files;
 using System.Reflection;
+using Microsoft.Win32;
 using CS2Parser;
 namespace CoreAPI
 {
@@ -50,7 +50,9 @@ namespace CoreAPI
             bool status_ok = true;
             try
             {
+                #nullable enable
                 Type? addonFunctions = addon.GetType("Addon.Api");
+                #nullable disable
                 if (addonFunctions == null) { return false; }
                 string[] API = new[]
                 {
@@ -61,7 +63,9 @@ namespace CoreAPI
                 };
                 foreach (string func in API)
                 {
+                    #nullable enable
                     MethodInfo? method = addonFunctions.GetMethod(func,  BindingFlags.Public | BindingFlags.Static);
+                    #nullable disable
                     if (method == null) { 
                         FileSystem.Log("Not found func " + func + " in addon"); 
                         // status_ok = false // Инициализация не прошла. Не выходим сразу чтобы найти недостающие функции    

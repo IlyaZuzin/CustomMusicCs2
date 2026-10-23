@@ -1,6 +1,5 @@
 using System.IO;
-using System.Reflection;
-using System.Text.Json;
+using serialization;
 namespace Files
 {
     public static class FileSystem{
@@ -66,11 +65,11 @@ namespace Files
 
         private static void LoadSettings()
         {
+            Setting setting;
             string OutPath = Directory.GetCurrentDirectory() + "\\setting.json";
             try
             {
-                string json = File.ReadAllText(OutPath);
-                Setting? settings = JsonSerializer.Deserialize<Setting>(json);
+                setting = Serialize.JsonSetting(OutPath);
             }catch (Exception ex) { Log(ex.Message); } 
         }
 
@@ -79,7 +78,6 @@ namespace Files
             
         }
     }
-
     public class Setting
     {
         
