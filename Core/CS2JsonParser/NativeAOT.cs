@@ -1,7 +1,7 @@
 ﻿
 using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
-
+using CoreAPI;
 namespace MyNativeLib;
 // TODO: Еще не все функции инициализированны
 public static class NativeFunctions
@@ -12,6 +12,8 @@ public static class NativeFunctions
         // Запускается только когда приложение запустилось
         // Запускаем работу приложения, проверяем все ли файлы загружены,
         // В противном случае просит путь к папке игры
+
+        Core.init();
         return true;
     }
 
@@ -26,7 +28,7 @@ public static class NativeFunctions
     {
         // Срабатывает один раз после установки
         // Если все удачно возращаем true в ином false
-        return true;
+        return Core.setup();
     }
 
     [UnmanagedCallersOnly(EntryPoint = "CloseProgram")]

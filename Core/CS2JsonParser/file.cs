@@ -1,5 +1,6 @@
 using System.IO;
-
+using System.Reflection;
+using System.Text.Json;
 namespace Files
 {
     public static class FileSystem{
@@ -19,7 +20,7 @@ namespace Files
 
         public static void Log(string text)
         {
-            if (!File.Exists("log.txt")) { File.Create("log.txt"); }
+            isExistsAndCreate("Log.txt");
             using (StreamWriter writer = new StreamWriter("log.txt"))
             {
                 writer.WriteLine(MessageWithData(text));
@@ -37,5 +38,50 @@ namespace Files
         {
             return Path.GetFullPath(p1).Equals(Path.GetFullPath(p2), StringComparison.OrdinalIgnoreCase)  || !File.Exists(p1) || string.IsNullOrEmpty(p2);    
         }
+
+        public static void CheckFiles()
+        {
+            if (isExistsAndCreate("settings.json"))
+            {
+                LoadSettings();
+            }
+        }
+        private static bool isExistsAndCreate(string path, string? from_copy = null)
+        {
+            if (!File.Exists(path))
+            {
+                try
+                {
+                    if (from_copy == null)
+                        File.Create(path);
+                    else
+                        CopyFile(from_copy, path);
+                }
+                catch (Exception ex) { Log(ex.Message); }
+                return false;
+            }
+            else 
+                return true;
+        }
+
+        private static void LoadSettings()
+        {
+            string OutPath = Directory.GetCurrentDirectory() + "\\setting.json";
+            try
+            {
+                string json = File.ReadAllText(OutPath);
+                Setting? settings = JsonSerializer.Deserialize<Setting>(json);
+            }catch (Exception ex) { Log(ex.Message); } 
+        }
+
+        private static void SaveSettings()
+        {
+            
+        }
+    }
+
+    public class Setting
+    {
+        
     }
 }
