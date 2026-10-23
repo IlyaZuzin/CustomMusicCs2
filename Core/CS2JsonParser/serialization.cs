@@ -13,11 +13,8 @@ namespace serialization
         {
             PlayerStats? playerStats;
             using (Stream body = httpListenerRequest.InputStream)
-            using (StreamReader reader = new StreamReader(body, Encoding.UTF8))
-            {
-                string json = reader.ReadToEnd();
-                playerStats = JsonSerializer.Deserialize(json, PlayerStatsJsonContext.Default.PlayerStats);
-            }
+                playerStats = JsonSerializer.Deserialize(body, PlayerStatsJsonContext.Default.PlayerStats);
+            
             return playerStats;
         } 
 

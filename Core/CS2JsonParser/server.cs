@@ -60,16 +60,10 @@ namespace CS2Parser{
             HttpListenerRequest request = context.Request;
             try
             {
-                PlayerStats stats = new PlayerStats();
-                //using (Stream body = request.InputStream)
-                //{
-                //    stats = await JsonSerializer.DeserializeAsync<PlayerStats>(body, JsonOptions).ConfigureAwait(false);
-
-                //}
-                
+                PlayerStats? stats = new PlayerStats();
                 try
                 {
-                    // Обязательно отвечаем игре "OK", иначе она перестанет слать пакеты
+                    stats = serialization.Serialize.JsonPlayerData(request);
                     HttpListenerResponse response = context.Response;
                     byte[] buffer = Encoding.UTF8.GetBytes("OK");
                     response.ContentLength64 = buffer.Length;
@@ -79,7 +73,7 @@ namespace CS2Parser{
                     }
                     response.Close();
                 }
-                catch {}
+                catch (Exception ex){ FileSystem.Log(ex.Message); }
             }
             catch (Exception ex)
             {
