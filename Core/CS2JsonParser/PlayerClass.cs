@@ -23,7 +23,6 @@ namespace CS2Parser
             [JsonPropertyName("timestamp")]
             public long time { get; set; }
         }
-
         public class Map
         {
             public string? mode { get; set; }
@@ -54,7 +53,6 @@ namespace CS2Parser
             [JsonPropertyName("bomb")]
             public string? bomb { get; set; }
         }
-
         public class Stats
         {
             [JsonPropertyName("mvps")]
@@ -92,9 +90,25 @@ namespace CS2Parser
             public int round_killshs { get; set; }
             public int equip_value { get; set; }
         }
-        public object Clone()
+        
+        public PlayerStats() {}
+        public PlayerStats(PlayerStats? other) // std::move from C++ to C# realisation
         {
-            return MemberwiseClone();
+            if (other == null) return;
+
+            // Переносим ссылки на тяжелые объекты (копируются только указатели, это бесплатно)
+            this.client = other.client;
+            this.round = other.round;
+            this.player = other.player;
+            this.map = other.map;
+
+            // Полная очистка старого объекта (как в C++ после std::move)
+            // Теперь старый объект пустой и никому не помешает, а его данные живут здесь
+            other.client = null;
+            other.round = null;
+            other.player = null;
+            other.map = null;
         }
     }
+
 }

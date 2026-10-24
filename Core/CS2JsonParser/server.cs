@@ -4,15 +4,17 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using Files;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization.Json;
 
 namespace CS2Parser{
     public static class Server
     {
         private static HttpListener listener = new HttpListener();
-        private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions{
-            PropertyNameCaseInsensitive = true,
-            NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString
-        };
+        // private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions{
+        //     PropertyNameCaseInsensitive = true,
+        //     NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString
+        // };
         private static CancellationTokenSource cancellationToken = new CancellationTokenSource();
         public static bool start()
         {   
@@ -64,6 +66,7 @@ namespace CS2Parser{
                 try
                 {
                     stats = serialization.Serialize.JsonPlayerData(request);
+                    _ = JsonReader(stats, cancellationToken);
                     HttpListenerResponse response = context.Response;
                     byte[] buffer = Encoding.UTF8.GetBytes("OK");
                     response.ContentLength64 = buffer.Length;
@@ -79,6 +82,12 @@ namespace CS2Parser{
             {
                 Console.WriteLine($"Error parsing JSON: {ex.Message}");
             }
+        }
+
+        private static async Task JsonReader(PlayerStats? newData, CancellationTokenSource cancellationToken)
+        {
+            PlayerStats data = new PlayerStats(newData);
+            
         }
     }
 }
