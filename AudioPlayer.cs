@@ -33,8 +33,6 @@ namespace MusicComanderGUI
                     music[(int)state].player.Play();
                 }
 
-                if (Ivents.LastMusic != MusicIvents.StartAction && Ivents.LastMusic != MusicIvents.StartAction)
-                    RandomMusic(Ivents.LastMusic);
             }
             catch (Exception ex) { 
                 if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog("Something went wrong: " + state.ToString() + "ERROR: " + ex.Message);
@@ -51,6 +49,8 @@ namespace MusicComanderGUI
                     music[(int)Ivents.LastMusic].file?.Position = 0;
                     if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog($"Last music {Ivents.LastMusic.ToString()} stopped");
                 }
+                if (Ivents.LastMusic != MusicIvents.StartAction && Ivents.LastMusic != MusicIvents.StartAction)
+                    RandomMusic(Ivents.LastMusic);
             }
             catch(Exception ex) {
                 if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog($"{ex.Message}");
@@ -105,13 +105,13 @@ namespace MusicComanderGUI
 
         public static async void ReloadMusicKit(CancellationToken cts, string path)
         {
-            Kit_Sound load = MusicKits.loadJson(path);
+            Kit_Sound? load = MusicKits.loadJson(path);
+            if (load == null) { if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog("Null to reload " + path); return; }
             AudioStop();
             SetupMusic(load);
             if (music[(int)Ivents.LastMusic] != null)
             {
                 music[(int)Ivents.LastMusic].file.Position = 0;
-                music[(int)Ivents.LastMusic].file.Volume = MusicKits.settings.Volume[(int)Ivents.LastMusic] / 100.0f;
                 music[(int)Ivents.LastMusic].player.Play();
             }
             if (Server.Logging) ConsoleLog.Instance?.SendConsoleLog("Reload MusicKit " + path);
@@ -200,7 +200,6 @@ namespace MusicComanderGUI
             if (id == null) return;
             int size = loaded.music[(int)id].Count;
             if (size <= 1) { 
-                music[(int)id] = LoadMusic((int)id, size);
                 return;
             }
             int rand = rnd.Next(size);
@@ -217,6 +216,8 @@ namespace MusicComanderGUI
                 if (next != null)
                     music[second] = LoadMusic(second, next.Value);
             }
+            RandomMusic(MusicIvents.DeathCam);
+            RandomMusic(MusicIvents.KillSound);
         }
     }
 }

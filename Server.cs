@@ -1,9 +1,11 @@
 ﻿
+using CustomMusic;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using static MusicComanderGUI.PlayerStats;
 
 
 namespace MusicComanderGUI
@@ -37,7 +39,7 @@ namespace MusicComanderGUI
                 // Запускаем полностью асин обработку
                 Task.Run(() => ReadJsonAsync(cts.Token));
                 Main.Instance?.SetConsoleLog($"Start server {Addr}");
-                Kit_Sound load = MusicKits.loadJson(Main.teamPath.Ct);
+                Kit_Sound load = MusicKits.loadJson(Main.loaded_profile.ct_path);
                 WavPlayer.SetupMusic(load);
                 is_Running = true; 
             }
@@ -95,11 +97,25 @@ namespace MusicComanderGUI
             try
             {
                 PlayerStats stats = new PlayerStats();
-                using (Stream body = request.InputStream)
-                {
-                    stats = await JsonSerializer.DeserializeAsync<PlayerStats>(body, JsonOptions).ConfigureAwait(false);
-                }
+                //using (Stream body = request.InputStream)
+                //{
+                //    stats = await JsonSerializer.DeserializeAsync<PlayerStats>(body, JsonOptions).ConfigureAwait(false);
 
+                //}
+                using (Stream body = request.InputStream)
+                using (StreamReader reader = new StreamReader(body, Encoding.UTF8))
+                {
+                    string readableText = await reader.ReadToEndAsync().ConfigureAwait(false);
+
+                    // 2. Логируем сырой текст, если включено логирование
+                    if (Logging)
+                    {
+                        ConsoleLog.Instance.SendJson(readableText);
+                    }
+
+                    // 3. Десериализуем НАПРЯМУЮ из строки (это быстро и не ломает потоки)
+                    stats = JsonSerializer.Deserialize<PlayerStats>(readableText, JsonOptions);
+                }
                 await Ivents.Tick(stats, cts.Token);
                 Task.Delay(5);
                 try

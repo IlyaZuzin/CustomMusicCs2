@@ -3,6 +3,7 @@
 // загрузки конфигураций наборов.
 // ---------------------------------------------------------------------------------------
 
+using CustomMusic;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -12,10 +13,11 @@ namespace MusicComanderGUI
     {
         [JsonPropertyName("Music_Paths")]
         public List<Music> Music_Paths { get; set; } = new List<Music>();
-        [JsonPropertyName("Volume")]
-        public int[] Volume { get; set; } = new int[13];
-        [JsonPropertyName("DoubleMode")]
-        public bool DoubleMode = false;
+        [JsonPropertyName("LastProfile")]
+        public int? profile { get; set; }
+        [JsonPropertyName("Profiles")]
+        public List<Profile> profiles { get; set; } = new List<Profile>();
+
     }
 
     class MusicKits
@@ -29,42 +31,44 @@ namespace MusicComanderGUI
                 string json = File.ReadAllText(OutPath);
                 settings = JsonSerializer.Deserialize<Setting>(json);
             }
-            catch (FileNotFoundException) { 
+            catch (FileNotFoundException) {
                 if (settings == null) settings = new Setting();
-                for(int i =0; i < 13; i++)
-                {
-                    settings?.Volume[i] = 100;
-                }
                 SaveSetting();
             }
             catch (System.Text.Json.JsonException){
                 if (settings == null) settings = new Setting();
-                for(int i = 0; i < 13; i++)
-                {
-                    settings?.Volume[i] = 100;
-                }
                 SaveSetting();
             }
 
             if (settings?.Music_Paths == null) settings?.Music_Paths = new List<Music>();
+            if (settings.profiles == null) settings.profiles = new List<Profile>();
         }
 
-        public static Kit_Sound? loadJson(string path)
+        public static Kit_Sound? loadJson(string? path)
         {
+            if (path == null)
+            {
+                throw new Exception("Path empty!");
+            }
             try
             {
                 Directory.SetCurrentDirectory(path);
                 path += "\\profile.json";
                 string json = File.ReadAllText(path);
+                SaveSetting();
                 return JsonSerializer.Deserialize<Kit_Sound>(json);
             }
-            catch { return null; }
+            catch (Exception ex){
+                if (Server.Logging) { ConsoleLog.Instance?.SendConsoleLog(ex.Message); }
+                return null; 
+            }
         }
 
         public static void SaveSetting()
         {
             if (settings == null) settings = new Setting();
             if (settings.Music_Paths == null) settings.Music_Paths = new List<Music>();
+            if (settings.profiles == null) settings.profiles = new List<Profile>();
             var options = new JsonSerializerOptions { WriteIndented = true };
             File.WriteAllText(OutPath, JsonSerializer.Serialize(settings, options));
         }
@@ -126,7 +130,6 @@ namespace MusicComanderGUI
                     return null;
                 }
             }
-
         }
     }
 

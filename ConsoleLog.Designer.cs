@@ -30,14 +30,16 @@
         {
             ConsoleLogBox = new TextBox();
             Command = new TextBox();
+            Json = new TextBox();
             SuspendLayout();
             // 
-            // ConsoleLog
+            // ConsoleLogBox
             // 
             ConsoleLogBox.Location = new Point(12, 11);
             ConsoleLogBox.Multiline = true;
             ConsoleLogBox.Name = "ConsoleLogBox";
-            ConsoleLogBox.Size = new Size(682, 582);
+            ConsoleLogBox.ScrollBars = ScrollBars.Both;
+            ConsoleLogBox.Size = new Size(541, 582);
             ConsoleLogBox.TabIndex = 0;
             // 
             // Command
@@ -48,14 +50,24 @@
             Command.Size = new Size(682, 34);
             Command.TabIndex = 1;
             // 
-            // Console
+            // Json
+            // 
+            Json.Location = new Point(569, 11);
+            Json.Multiline = true;
+            Json.Name = "Json";
+            Json.ScrollBars = ScrollBars.Both;
+            Json.Size = new Size(428, 582);
+            Json.TabIndex = 2;
+            // 
+            // ConsoleLog
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(712, 650);
+            ClientSize = new Size(1009, 650);
+            Controls.Add(Json);
             Controls.Add(Command);
             Controls.Add(ConsoleLogBox);
-            Name = "Console";
+            Name = "ConsoleLog";
             Text = "Console";
             ResumeLayout(false);
             PerformLayout();
@@ -65,5 +77,6 @@
 
         private TextBox ConsoleLogBox;
         private TextBox Command;
+        private TextBox Json;
     }
 }
