@@ -1,5 +1,5 @@
 using System.IO;
-using serialization;
+
 namespace Files
 {
     public static class FileSystem{
@@ -38,13 +38,6 @@ namespace Files
             return Path.GetFullPath(p1).Equals(Path.GetFullPath(p2), StringComparison.OrdinalIgnoreCase)  || !File.Exists(p1) || string.IsNullOrEmpty(p2);    
         }
 
-        public static void CheckFiles()
-        {
-            if (isExistsAndCreate("settings.json"))
-            {
-                LoadSettings();
-            }
-        }
         private static bool isExistsAndCreate(string path, string? from_copy = null)
         {
             if (!File.Exists(path))
@@ -62,24 +55,5 @@ namespace Files
             else 
                 return true;
         }
-
-        private static void LoadSettings()
-        {
-            Setting setting;
-            string OutPath = Directory.GetCurrentDirectory() + "\\setting.json";
-            try
-            {
-                setting = Serialize.JsonSetting(OutPath);
-            }catch (Exception ex) { Log(ex.Message); } 
-        }
-
-        private static void SaveSettings()
-        {
-            
-        }
-    }
-    public class Setting
-    {
-        
     }
 }

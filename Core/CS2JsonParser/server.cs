@@ -1,12 +1,8 @@
-using System.Text.Json.Serialization;
+
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Text.Json;
 using Files;
-using System.Runtime.CompilerServices;
-using System.Runtime.Serialization.Json;
-
 namespace CS2Parser{
     public static class Server
     {
@@ -87,7 +83,7 @@ namespace CS2Parser{
         private static async Task JsonReader(PlayerStats? newData, CancellationTokenSource cancellationToken)
         {
             PlayerStats data = new PlayerStats(newData);
-            
+
         }
     }
 }

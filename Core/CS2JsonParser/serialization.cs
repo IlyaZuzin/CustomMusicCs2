@@ -3,8 +3,7 @@ using System.Text.Json.Serialization;
 using CS2Parser;
 using System.Net;
 using System.IO;
-using System.Text;
-using Files;
+using core_settings;
 
 namespace serialization
 {
@@ -18,11 +17,11 @@ namespace serialization
             return playerStats;
         } 
 
-        public static Setting JsonSetting(string path)
+        public static Settings_Api JsonSetting(string path)
         {
             string json = File.ReadAllText(path);
-            Setting? setting = JsonSerializer.Deserialize(json, SettingJsonContext.Default.Setting);
-            if (setting == null) { setting = new Setting(); }
+            Settings_Api? setting = JsonSerializer.Deserialize(json, SettingJsonContext.Default.Settings_Api);
+            if (setting == null) { setting = new Settings_Api(); }
             return setting;
         }
     }
@@ -40,7 +39,7 @@ namespace serialization
     {
     }
 
-    [JsonSerializable(typeof(Setting))]
+    [JsonSerializable(typeof(Settings_Api))]
     public partial class SettingJsonContext : JsonSerializerContext
     {
     }
